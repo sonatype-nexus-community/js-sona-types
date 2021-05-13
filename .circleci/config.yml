@@ -8,13 +8,13 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run:
-          name: install-npm-wee
-          command: npm ci install
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - run:
+          name: install deps
+          command: yarn install
       - run:
           name: build
           command: yarn build

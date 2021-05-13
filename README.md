@@ -1,5 +1,7 @@
 # JS SONA TYPES
 
+[![CircleCI](https://circleci.com/gh/sonatype-nexus-community/js-sona-types.svg?style=svg)](https://circleci.com/gh/sonatype-nexus-community/js-sona-types)
+
 Hi, hello! This library is mostly for consumption by Sonatype projects that need a common way to talk to OSS Index, Nexus IQ, and etc...
 
 ## Development
