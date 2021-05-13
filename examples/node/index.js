@@ -18,7 +18,7 @@ import {join} from 'path';
 import {homedir} from 'os';
 import storage from 'node-persist';
 
-const PATH = join(homedir(), '.ossindex', 'auditjs');
+const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 const test = async () => {
@@ -29,13 +29,9 @@ const test = async () => {
   const coordinates = [];
   coordinates.push(new Coordinates("jquery", "3.1.1"));
   
-  ossIndexRequestService.callOSSIndexOrGetFromCache(coordinates, "npm")
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const res = await ossIndexRequestService.callOSSIndexOrGetFromCache(coordinates, "npm");
+
+  console.log(res);
 }
 
 test();

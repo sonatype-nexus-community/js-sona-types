@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "esm": "^3.2.25",
-    "js-sona-types": "file:./../../dist/es6",
+    "js-sona-types": "file:./../../dist",
     "node-persist": "^3.1.0"
   }
 }

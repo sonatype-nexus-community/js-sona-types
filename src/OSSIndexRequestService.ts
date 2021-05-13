@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import {OSSIndexCoordinates} from './OSSIndexCoordinates';
 import {Coordinates} from './Coordinates';
 import { OSSIndexServerResult } from './OSSIndexServerResult';
@@ -29,7 +28,6 @@ interface Options {
   user?: string;
   token?: string;
   baseURL?: string;
-  cacheLocation: string;
   browser: boolean;
 }
 

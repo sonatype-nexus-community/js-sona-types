@@ -1,0 +1,59 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/js-sona-types
+    docker:
+      - image: circleci/node:12.14.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: install-npm-wee
+          command: npm ci install
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: build
+          command: yarn build
+  
+  release:
+    working_directory: ~/js-sona-types
+    docker:
+      - image: circleci/node:12.14.0
+    steps:
+      - checkout
+      - run:
+          name: Allow global installs of npm packages
+          command: sudo chown -R circleci:circleci /usr/local/lib && sudo chown -R circleci:circleci /usr/local/bin
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Build auditjs
+          command: yarn build
+
+workflows:
+  version: 2.1
+  build_and_release:
+    jobs:
+      - build
+      - release:
+          filters:
+            branches:
+              only: main
+          context: auditjs
+          requires:
+            - build
+
+  build_nightly:
+    triggers:
+      - schedule:
+          cron: "40 20 * * *"
+          filters:
+            branches:
+              only: main
+    jobs:
+      - build

@@ -2,7 +2,7 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "declaration": true,
-    "outDir": "./dist/es6",
+    "outDir": "./dist/",
     "module": "commonjs",
     "target": "es6"
   }

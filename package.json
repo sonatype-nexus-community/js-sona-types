@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "type": "module",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
-  "main": "dist/umd/index.js",
-  "module": "dist/es6/index.js",
-  "types": "dist/es6/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
@@ -15,7 +15,7 @@
   "private": false,
   "scripts": {
     "clean": "shx rm -rf dist",
-    "build": "yarn clean && tsc --project tsconfig.es6.json && tsc --project tsconfig.umd.json"
+    "build": "yarn clean && tsc --project tsconfig.es6.json"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.35",
