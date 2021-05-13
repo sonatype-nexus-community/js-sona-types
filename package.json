@@ -1,6 +1,6 @@
 {
   "name": "@sonatype/js-sona-types",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
   "main": "dist/index.js",
@@ -12,7 +12,6 @@
   "repository": "git@github.com:sonatype-nexus-community/js-sona-types.git",
   "author": "Jeffry Hesse <5544326+DarthHater@users.noreply.github.com>",
   "license": "Apache-2.0",
-  "private": false,
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "yarn clean && tsc --project tsconfig.es6.json"
@@ -29,5 +28,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "ts-loader": "^9.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
