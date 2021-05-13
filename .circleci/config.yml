@@ -19,9 +19,6 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: install deps
-          command: yarn install
-      - run:
           name: build
           command: yarn build
   
@@ -31,12 +28,25 @@ jobs:
       - image: circleci/node:12.14.0
     steps:
       - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install dependencies
-          command: yarn install
+          name: Install Dependencies
+          command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Build auditjs
           command: yarn build
+      - run:
+          name: Install globals
+          command: yarn global add semantic-release@beta @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@beta
+
 
 workflows:
   version: 2.1
