@@ -41,12 +41,14 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: Build auditjs
+          name: Build js-sona-types
           command: yarn build
       - run:
           name: Install globals
           command: yarn global add semantic-release@beta @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@beta
-
+      - run:
+          name: Publish
+          command: yarn exec semantic-release
 
 workflows:
   version: 2.1
