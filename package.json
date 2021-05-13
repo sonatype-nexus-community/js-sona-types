@@ -1,5 +1,5 @@
 {
-  "name": "js-sona-types",
+  "name": "@sonatype/js-sona-types",
   "version": "0.0.1",
   "type": "module",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
