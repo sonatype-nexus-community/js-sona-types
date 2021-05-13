@@ -1,0 +1,33 @@
+{
+  "name": "js-sona-types",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Useful libraries for talking to Sonatype services, using javascript",
+  "main": "dist/umd/index.js",
+  "module": "dist/es6/index.js",
+  "types": "dist/es6/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "repository": "git@github.com:sonatype-nexus-community/js-sona-types.git",
+  "author": "Jeffry Hesse <5544326+DarthHater@users.noreply.github.com>",
+  "license": "Apache-2.0",
+  "private": false,
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "yarn clean && tsc --project tsconfig.es6.json && tsc --project tsconfig.umd.json"
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "^0.0.35",
+    "awesome-typescript-loader": "^5.2.1",
+    "shx": "^0.3.3",
+    "tsc": "^2.0.3",
+    "typescript": "^4.2.4",
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "ts-loader": "^9.1.2"
+  }
+}
