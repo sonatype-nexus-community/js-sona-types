@@ -24,14 +24,14 @@ const COMPONENT_REPORT_ENDPOINT = 'api/v3/component-report';
 
 const MAX_COORDINATES = 128;
 
-interface Options {
+export interface Options {
   user?: string;
   token?: string;
   baseURL?: string;
   browser: boolean;
 }
 
-class OSSIndexRequestService {
+export class OSSIndexRequestService {
   readonly TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
   constructor(readonly options: Options, readonly store: Storage) {
@@ -146,7 +146,7 @@ class OSSIndexRequestService {
    * @param data - {@link Coordinates} Array
    * @returns a {@link Promise} of all Responses
    */
-  public callOSSIndexOrGetFromCache = async (data: Coordinates[], format = 'npm'): Promise<any> => {
+  public callOSSIndexOrGetFromCache = async (data: Coordinates[], format = 'npm'): Promise<Array<OSSIndexServerResult>> => {
     const responses = new Array();
     const results = await this.checkIfResultsAreInCache(data, format);
     const chunkedPurls = this.chunkData(results.notInCache);
@@ -178,5 +178,3 @@ interface Item {
   value: any;
   expiry: number;
 }
-
-export {OSSIndexRequestService};

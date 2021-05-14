@@ -6612,7 +6612,7 @@ jest@26.6.0:
     import-local "^3.0.2"
     jest-cli "^26.6.0"
 
-"js-sona-types@file:../../dist/es6":
+"js-sona-types@file:../../dist":
   version "0.0.0"
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:

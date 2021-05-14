@@ -21,7 +21,7 @@ const App = (): JSX.Element => {
   const [packages, setPackages] = useState();
 
   const callOSSIndex = () => {
-    const service = new OSSIndexRequestService({cacheLocation: "", browser: true}, localStorage);
+    const service = new OSSIndexRequestService({browser: true}, localStorage);
 
     const coordinates = [];
     coordinates.push(new Coordinates("jquery", "3.1.1"));

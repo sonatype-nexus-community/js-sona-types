@@ -13,12 +13,17 @@
   "author": "Jeffry Hesse <5544326+DarthHater@users.noreply.github.com>",
   "license": "Apache-2.0",
   "scripts": {
-    "clean": "shx rm -rf dist",
-    "build": "yarn clean && tsc --project tsconfig.es6.json"
+    "build": "rimraf dist && tsc && rollup -c rollup.config.js"
   },
   "devDependencies": {
+    "@open-wc/building-rollup": "^1.10.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@types/isomorphic-fetch": "^0.0.35",
     "awesome-typescript-loader": "^5.2.1",
+    "deepmerge": "^4.2.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.47.0",
     "shx": "^0.3.3",
     "tsc": "^2.0.3",
     "typescript": "^4.2.4",
