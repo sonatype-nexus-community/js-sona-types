@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 import React from 'react';
-import {useState} from 'react';
 import {OSSIndexRequestService, Coordinates} from 'js-sona-types';
 
 const App = (): JSX.Element => {
-  const [packages, setPackages] = useState();
-
   const callOSSIndex = () => {
     const service = new OSSIndexRequestService({browser: true}, localStorage);
 
