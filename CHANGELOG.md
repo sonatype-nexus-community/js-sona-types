@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.2...v1.0.3) (2021-05-17)
+
+
+### Bug Fixes
+
+* remove unused variables ([44b4eee](https://github.com/sonatype-nexus-community/js-sona-types/commit/44b4eee6c2466d1331f7c4fbf8a27389350808a3))
+
 ## [1.0.2](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.1...v1.0.2) (2021-05-17)
 
 
