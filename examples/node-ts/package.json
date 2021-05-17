@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --project ./",
-    "start": "nodemon index.ts"
+    "start": "ts-node index.ts"
   },
   "dependencies": {
     "esm": "^3.2.25",

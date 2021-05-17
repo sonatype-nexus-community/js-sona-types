@@ -21,6 +21,9 @@ jobs:
       - run:
           name: build
           command: yarn build
+      - run:
+          name: test examples
+          command: yarn ci
   
   release:
     working_directory: ~/js-sona-types

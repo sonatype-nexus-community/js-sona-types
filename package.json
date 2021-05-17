@@ -13,6 +13,7 @@
   "author": "Jeffry Hesse <5544326+DarthHater@users.noreply.github.com>",
   "license": "Apache-2.0",
   "scripts": {
+    "ci": "./test.sh",
     "build": "rimraf dist && tsc && rollup -c rollup.config.js"
   },
   "devDependencies": {
