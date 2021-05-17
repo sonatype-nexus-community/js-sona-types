@@ -15,4 +15,4 @@ To get started you'll need node, yarn, and that's about it!
 
 ### Examples
 
-In the `/examples` dir, there is a README that has examples of how to test that the project is working for both node, and React. Go browser there for more information!
+In the `/examples` dir, there is a README that has examples of how to test that the project is working for both node, and React. Go browse there for more information!
