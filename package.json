@@ -4,7 +4,6 @@
   "type": "module",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
   "main": "dist/index.js",
-  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
