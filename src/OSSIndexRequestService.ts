@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexCoordinates} from './OSSIndexCoordinates';
-import {Coordinates} from './Coordinates';
-import { OSSIndexServerResult } from './OSSIndexServerResult';
+import {OSSIndexCoordinates} from './OSSIndexCoordinates.js';
+import {Coordinates} from './Coordinates.js';
+import { OSSIndexServerResult } from './OSSIndexServerResult.js';
 import axios, { AxiosResponse } from 'axios';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
