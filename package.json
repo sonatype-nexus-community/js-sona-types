@@ -1,6 +1,6 @@
 {
   "name": "@sonatype/js-sona-types",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
   "main": "dist/index.js",
