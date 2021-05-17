@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.3...v1.0.4) (2021-05-17)
+
+
+### Bug Fixes
+
+* dot js ([892d948](https://github.com/sonatype-nexus-community/js-sona-types/commit/892d948037d0f45e928a6e77f0da6518ee6bda05))
+
 ## [1.0.3](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.2...v1.0.3) (2021-05-17)
 
 
