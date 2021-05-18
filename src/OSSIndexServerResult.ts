@@ -34,9 +34,9 @@ export class OSSIndexServerResult {
   }
 
   private vulnerabilityMessage(): string {
-    if (this.vulnerabilities && this.vulnerabilities?.length > 1) {
+    if (this.vulnerabilities && this.vulnerabilities.length > 1) {
       return `${this.vulnerabilities.length} vulnerabilities found!`;
-    } else if (this.vulnerabilities && this.vulnerabilities?.length === 1) {
+    } else if (this.vulnerabilities && this.vulnerabilities.length === 1) {
       return `${this.vulnerabilities.length} vulnerability found!`;
     } else {
       return `No vulnerabilities found!`;

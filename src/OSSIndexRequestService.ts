@@ -15,14 +15,16 @@
  */
 import {OSSIndexCoordinates} from './OSSIndexCoordinates.js';
 import {Coordinates} from './Coordinates.js';
-import { OSSIndexServerResult } from './OSSIndexServerResult.js';
-import axios, { AxiosResponse } from 'axios';
+import {OSSIndexServerResult} from './OSSIndexServerResult.js';
+import axios, {AxiosResponse} from 'axios';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
 const COMPONENT_REPORT_ENDPOINT = 'api/v3/component-report';
 
 const MAX_COORDINATES = 128;
+
+const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 export interface Options {
   user?: string;
@@ -32,8 +34,6 @@ export interface Options {
 }
 
 export class OSSIndexRequestService {
-  readonly TWELVE_HOURS = 12 * 60 * 60 * 1000;
-
   constructor(readonly options: Options, readonly store: Storage) {
 
     axios.interceptors.request.use((request: any) => {
@@ -54,11 +54,11 @@ export class OSSIndexRequestService {
 
 
 
-  private getHeaders = (): object => {
+  private getHeaders(): object {
     return {'Content-Type': 'application/json'};
   }
 
-  private getResultsFromOSSIndex = async (data: OSSIndexCoordinates): Promise<Array<OSSIndexServerResult>> => {
+  private async getResultsFromOSSIndex(data: OSSIndexCoordinates): Promise<Array<OSSIndexServerResult>> {
      try {
       const response: AxiosResponse<Array<OSSIndexServerResult>> = await axios.post(
         `${COMPONENT_REPORT_ENDPOINT}`,
@@ -71,7 +71,7 @@ export class OSSIndexRequestService {
      }
   }
 
-  private chunkData = (data: Coordinates[]): Array<Array<Coordinates>> => {
+  private chunkData(data: Coordinates[]): Array<Array<Coordinates>> {
     const chunks = [];
     while (data.length > 0) {
       chunks.push(data.splice(0, MAX_COORDINATES));
@@ -79,22 +79,22 @@ export class OSSIndexRequestService {
     return chunks;
   }
 
-  private combineResponseChunks = (data: [][]): Array<OSSIndexServerResult> => {
+  private combineResponseChunks(data: [][]): Array<OSSIndexServerResult> {
     return [].concat.apply([], data);
   }
 
-  private combineCacheAndResponses = (
+  private combineCacheAndResponses(
     combinedChunks: Array<OSSIndexServerResult>,
     dataInCache: Array<OSSIndexServerResult>,
-  ): Array<OSSIndexServerResult> => {
+  ): Array<OSSIndexServerResult> {
     return combinedChunks.concat(dataInCache);
   }
 
-  private insertResponsesIntoCache = async (response: Array<OSSIndexServerResult>): Promise<Array<OSSIndexServerResult>> => {
+  private async insertResponsesIntoCache(response: Array<OSSIndexServerResult>): Promise<Array<OSSIndexServerResult>> {
     for (let i = 0; i < response.length; i++) {
       const item = {
         value: response[i],
-        expiry: new Date().getTime() + this.TWELVE_HOURS,
+        expiry: new Date().getTime() + TWELVE_HOURS,
       };
 
       await this.store.setItem(
@@ -106,7 +106,7 @@ export class OSSIndexRequestService {
     return response;
   }
 
-  private checkIfResultsAreInCache = async (data: Coordinates[], format = 'npm'): Promise<PurlContainer> =>{
+  private async checkIfResultsAreInCache(data: Coordinates[], format = 'npm'): Promise<PurlContainer> {
     const inCache = new Array<OSSIndexServerResult>();
     const notInCache = new Array<Coordinates>();
 
@@ -146,7 +146,7 @@ export class OSSIndexRequestService {
    * @param data - {@link Coordinates} Array
    * @returns a {@link Promise} of all Responses
    */
-  public callOSSIndexOrGetFromCache = async (data: Coordinates[], format = 'npm'): Promise<Array<OSSIndexServerResult>> => {
+  public async callOSSIndexOrGetFromCache(data: Coordinates[], format = 'npm'): Promise<Array<OSSIndexServerResult>> {
     const responses = new Array();
     const results = await this.checkIfResultsAreInCache(data, format);
     const chunkedPurls = this.chunkData(results.notInCache);

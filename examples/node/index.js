@@ -13,10 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexRequestService, Coordinates} from 'js-sona-types';
-import {join} from 'path';
-import {homedir} from 'os';
-import storage from 'node-persist';
+const thing = require('@sonatype/js-sona-types');
+const {OSSIndexRequestService, Coordinates} = thing;
+
+const path = require('path');
+const {join} = path;
+
+const os = require('os');
+const {homedir} = os;
+
+const storage = require('node-persist');
 
 const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;

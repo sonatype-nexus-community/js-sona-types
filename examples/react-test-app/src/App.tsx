@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react';
-import {OSSIndexRequestService, Coordinates} from 'js-sona-types';
+import {OSSIndexRequestService, Coordinates} from '@sonatype/js-sona-types';
 
 const App = (): JSX.Element => {
   const callOSSIndex = () => {
