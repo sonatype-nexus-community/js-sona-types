@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.4...v1.0.5) (2021-05-17)
+
+
+### Bug Fixes
+
+* remove module since its just commonjs ([06ba508](https://github.com/sonatype-nexus-community/js-sona-types/commit/06ba508844550b965028929d2daf657456beed90))
+
 ## [1.0.4](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.3...v1.0.4) (2021-05-17)
 
 
