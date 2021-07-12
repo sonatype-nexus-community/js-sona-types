@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.6...v1.0.7) (2021-07-12)
+
+
+### Bug Fixes
+
+* I think we have lift off ([5ae8807](https://github.com/sonatype-nexus-community/js-sona-types/commit/5ae8807080b18c7baa483d4ac47a4d73ebf107dc))
+
 ## [1.0.6](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.5...v1.0.6) (2021-05-18)
 
 
