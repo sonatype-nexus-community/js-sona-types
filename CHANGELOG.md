@@ -1,3 +1,13 @@
+## [1.0.6](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.5...v1.0.6) (2021-05-18)
+
+
+### Bug Fixes
+
+* ok ([59e9147](https://github.com/sonatype-nexus-community/js-sona-types/commit/59e9147c2e67654a516fe14a54db504ce1de2dba))
+* only link ([db4e2cc](https://github.com/sonatype-nexus-community/js-sona-types/commit/db4e2ccb5a3534ecee78b95f90a98170294ce2e5))
+* remove immutable for now so we can link ([717a83f](https://github.com/sonatype-nexus-community/js-sona-types/commit/717a83fde4dad537b1c371aab4905b82d71b0c98))
+* this might be it ([2bf3865](https://github.com/sonatype-nexus-community/js-sona-types/commit/2bf3865dbca6cb1faff4bdddc7bb57901a1ee9ef))
+
 ## [1.0.5](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.4...v1.0.5) (2021-05-17)
 
 
