@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "name": "Debug node-ts index.ts",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeArgs": [
+        "-r",
+        "${workspaceRoot}/examples/node-ts/node_modules/ts-node/register"
+      ],
+      "env": {
+        "TS_NODE_PROJECT": "${workspaceRoot}/examples/node-ts/tsconfig.json"
+      },
+      "args": [
+        "${workspaceFolder}/examples/node-ts/index.ts"
+      ]
+    },
+  ]
+}

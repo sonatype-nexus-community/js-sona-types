@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-Present Sonatype Inc.
+ * Copyright 2021-Present Sonatype Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { ComponentDetails } from './ComponentDetails';
+import { PackageURL } from 'packageurl-js';
 
-export class Coordinates {
-  constructor(readonly name: string, readonly version: string, readonly group?: string) {}
-
-  public toPurl(ecosystem = 'npm'): string {
-    if (this.group) {
-      // TODO: IQ does not need the @ sign replaced with %40, probably want to figure out someway to handle this correctly
-      return `pkg:${ecosystem}/${this.group.replace('@', '%40')}/${this.name}@${this.version}`;
-    }
-    return `pkg:${ecosystem}/${this.name}@${this.version}`;
-  }
+export interface RequestService {
+  getComponentDetails(p: PackageURL[]): Promise<ComponentDetails>;
 }

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexCoordinates} from './OSSIndexCoordinates.js';
-import {Coordinates} from './Coordinates.js';
-import {OSSIndexServerResult} from './OSSIndexServerResult.js';
-import axios, {AxiosResponse} from 'axios';
+import { OSSIndexCoordinates } from './OSSIndexCoordinates';
+import { OSSIndexServerResult } from './OSSIndexServerResult';
+import axios, { AxiosResponse } from 'axios';
+import { RequestService } from './RequestService';
+import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
+import { PackageURL } from 'packageurl-js';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -33,18 +35,17 @@ export interface Options {
   browser: boolean;
 }
 
-export class OSSIndexRequestService {
+export class OSSIndexRequestService implements RequestService {
   constructor(readonly options: Options, readonly store: Storage) {
-
     axios.interceptors.request.use((request: any) => {
       if (options.user && options.token) {
         request.auth = {
           username: options.user,
-          password: options.token
-        }
+          password: options.token,
+        };
       }
 
-      request.baseURL = (options.baseURL) ? options.baseURL : OSS_INDEX_BASE_URL;
+      request.baseURL = options.baseURL ? options.baseURL : OSS_INDEX_BASE_URL;
 
       request.headers = this.getHeaders();
 
@@ -52,26 +53,72 @@ export class OSSIndexRequestService {
     });
   }
 
-
-
-  private getHeaders(): object {
-    return {'Content-Type': 'application/json'};
+  private getHeaders(): Record<string, unknown> {
+    return { 'Content-Type': 'application/json' };
   }
 
-  private async getResultsFromOSSIndex(data: OSSIndexCoordinates): Promise<Array<OSSIndexServerResult>> {
-     try {
+  private async _getResultsFromOSSIndex(data: OSSIndexCoordinates): Promise<ComponentDetails> {
+    try {
       const response: AxiosResponse<Array<OSSIndexServerResult>> = await axios.post(
         `${COMPONENT_REPORT_ENDPOINT}`,
-        data
-        );
+        data,
+      );
 
-      return response.data;
-     } catch (error) {
-       throw new Error(`There was an error making your request to OSS Index: ${error}`);
-     }
+      if (response.status != 200) {
+        throw Error(response.statusText);
+      }
+
+      const componentDetails: ComponentDetails = {} as ComponentDetails;
+
+      const componentContainers: ComponentContainer[] = new Array<ComponentContainer>();
+
+      response.data.forEach((val) => {
+        const purl = PackageURL.fromString(val.coordinates);
+
+        const securityIssues: SecurityIssue[] = new Array<SecurityIssue>();
+        if (val.vulnerabilities) {
+          val.vulnerabilities.forEach((vuln) => {
+            const source: string = vuln.cve ? 'cve' : vuln.cwe ? 'cwe' : 'unknown';
+            const securityIssue: SecurityIssue = {
+              reference: vuln.title,
+              severity: vuln.cvssScore,
+              url: vuln.reference,
+              source: source,
+              description: vuln.description,
+            };
+            securityIssues.push(securityIssue);
+          });
+        }
+        const componentContainer: ComponentContainer = {
+          component: {
+            componentIdentifier: {
+              format: purl.type,
+            },
+            packageUrl: val.coordinates,
+            name: purl.name,
+            hash: '',
+          },
+          matchState: 'PURL',
+          catalogDate: '',
+          relativePopularity: '',
+          securityData: { securityIssues: securityIssues },
+          licenseData: undefined,
+        };
+
+        componentContainers.push(componentContainer);
+      });
+
+      componentDetails.componentDetails = componentContainers;
+
+      return componentDetails;
+    } catch (error) {
+      console.log(error);
+
+      throw new Error(`There was an error making your request to OSS Index: ${error}`);
+    }
   }
 
-  private chunkData(data: Coordinates[]): Array<Array<Coordinates>> {
+  private chunkData(data: PackageURL[]): Array<Array<PackageURL>> {
     const chunks = [];
     while (data.length > 0) {
       chunks.push(data.splice(0, MAX_COORDINATES));
@@ -79,59 +126,64 @@ export class OSSIndexRequestService {
     return chunks;
   }
 
-  private combineResponseChunks(data: [][]): Array<OSSIndexServerResult> {
-    return [].concat.apply([], data);
-  }
-
-  private combineCacheAndResponses(
-    combinedChunks: Array<OSSIndexServerResult>,
-    dataInCache: Array<OSSIndexServerResult>,
-  ): Array<OSSIndexServerResult> {
-    return combinedChunks.concat(dataInCache);
-  }
-
-  private async insertResponsesIntoCache(response: Array<OSSIndexServerResult>): Promise<Array<OSSIndexServerResult>> {
-    for (let i = 0; i < response.length; i++) {
-      const item = {
-        value: response[i],
-        expiry: new Date().getTime() + TWELVE_HOURS,
-      };
-
-      await this.store.setItem(
-        response[i].coordinates, 
-        JSON.stringify(item),
-      );
+  private combineResponseChunks(data: ComponentDetails[]): ComponentDetails {
+    const [compDetails] = data;
+    if (compDetails && compDetails.componentDetails) {
+      return { componentDetails: compDetails.componentDetails };
     }
-
-    return response;
   }
 
-  private async checkIfResultsAreInCache(data: Coordinates[], format = 'npm'): Promise<PurlContainer> {
-    const inCache = new Array<OSSIndexServerResult>();
-    const notInCache = new Array<Coordinates>();
+  private combineCacheAndResponses(combinedChunks: ComponentDetails, dataInCache: ComponentDetails): ComponentDetails {
+    if (dataInCache && dataInCache.componentDetails) {
+      if (combinedChunks && combinedChunks.componentDetails) {
+        return { componentDetails: combinedChunks.componentDetails.concat(dataInCache.componentDetails) };
+      }
+      return dataInCache;
+    }
+    return combinedChunks;
+  }
+
+  private async insertResponsesIntoCache(response: ComponentDetails): Promise<ComponentDetails> {
+    if (response && response.componentDetails) {
+      for (let i = 0; i < response.componentDetails.length; i++) {
+        const item = {
+          value: response.componentDetails[i],
+          expiry: new Date().getTime() + TWELVE_HOURS,
+        };
+
+        await this.store.setItem(response.componentDetails[i].component.packageUrl, JSON.stringify(item));
+      }
+
+      return response;
+    }
+  }
+
+  private async checkIfResultsAreInCache(data: PackageURL[]): Promise<PurlContainer> {
+    const inCache: ComponentDetails = { componentDetails: new Array<ComponentContainer>() } as any;
+    const notInCache = new Array<PackageURL>();
 
     for (let i = 0; i < data.length; i++) {
       const coord = data[i];
-      const dataInCache = await this.store.getItem(coord.toPurl(format));
+      const dataInCache = await this.store.getItem(coord.toString());
 
       if (dataInCache) {
         if (this.options.browser) {
-          console.info("Browser based cache");
+          console.info('Browser based cache');
 
           const value: Item = JSON.parse(dataInCache);
           console.info(value);
 
           if (new Date().getTime() > value.expiry) {
-            console.info("Cache item expired");
+            console.info('Cache item expired');
 
-            await this.store.removeItem(coord.toPurl(format));
+            await this.store.removeItem(coord.toString());
             notInCache.push(coord);
           } else {
-            inCache.push(value.value);
+            inCache.componentDetails.push(value.value);
           }
         } else {
           const value: Item = JSON.parse(dataInCache);
-          inCache.push(value.value);
+          inCache.componentDetails.push(value.value);
         }
       } else {
         notInCache.push(coord);
@@ -146,17 +198,18 @@ export class OSSIndexRequestService {
    * @param data - {@link Coordinates} Array
    * @returns a {@link Promise} of all Responses
    */
-  public async callOSSIndexOrGetFromCache(data: Coordinates[], format = 'npm'): Promise<Array<OSSIndexServerResult>> {
-    const responses = new Array();
-    const results = await this.checkIfResultsAreInCache(data, format);
+  public async getComponentDetails(data: PackageURL[]): Promise<ComponentDetails> {
+    const responses = new Array<Promise<ComponentDetails>>();
+    const results = await this.checkIfResultsAreInCache(data);
     const chunkedPurls = this.chunkData(results.notInCache);
 
     for (const chunk of chunkedPurls) {
       try {
-        const res = this.getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((x) => x.toPurl(format))));
+        const res = this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((x) => x.toString())));
+
         responses.push(res);
-      } catch (e) {
-        throw new Error(e);
+      } catch (err) {
+        throw Error(err);
       }
     }
 
@@ -165,16 +218,16 @@ export class OSSIndexRequestService {
       .then((combinedResponses) => this.insertResponsesIntoCache(combinedResponses))
       .then((combinedResponses) => this.combineCacheAndResponses(combinedResponses, results.inCache))
       .catch((err) => {
-        throw err;
+        throw Error(err);
       });
   }
 }
 
 class PurlContainer {
-  constructor(readonly inCache: OSSIndexServerResult[], readonly notInCache: Coordinates[]) {}
+  constructor(readonly inCache: ComponentDetails, readonly notInCache: PackageURL[]) {}
 }
 
 interface Item {
-  value: any;
+  value: ComponentContainer;
   expiry: number;
 }

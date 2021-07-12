@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 import React from 'react';
-import {OSSIndexRequestService, Coordinates} from '@sonatype/js-sona-types';
+import {OSSIndexRequestService} from '@sonatype/js-sona-types';
+import {PackageURL} from 'packageurl-js';
 
 const App = (): JSX.Element => {
   const callOSSIndex = () => {
     const service = new OSSIndexRequestService({browser: true}, localStorage);
 
     const coordinates = [];
-    coordinates.push(new Coordinates("jquery", "3.1.1"));
+    coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
 
-    service.callOSSIndexOrGetFromCache(coordinates, "npm")
+    service.getComponentDetails(coordinates)
       .then((res) => {
         console.log(res);
       })

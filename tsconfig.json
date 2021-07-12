@@ -1,14 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "rootDir": "./src",
-    "outDir": "dist/types",
-  },
-  "exclude": [
-    "examples/**/*"
-  ],
-  "include": [
-    "./src/**/*.ts"
-  ]
+    "lib": ["ES2019", "DOM"],
+    "esModuleInterop": true
+  }
 }

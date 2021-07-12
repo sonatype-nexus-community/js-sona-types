@@ -48,9 +48,10 @@ export class Vulnerability {
   readonly id: string;
   readonly title: string;
   readonly description: string;
-  readonly cvssScore: string;
+  readonly cvssScore: number;
   readonly cvssVector: string;
-  readonly cve: string;
+  readonly cve?: string;
+  readonly cwe?: string;
   readonly reference: string;
   constructor(vulnerability: any) {
     this.id = vulnerability.id;
@@ -59,6 +60,7 @@ export class Vulnerability {
     this.cvssScore = vulnerability.cvssScore;
     this.cvssVector = vulnerability.cvssVector;
     this.cve = vulnerability.cve;
+    this.cwe = vulnerability.cwe;
     this.reference = vulnerability.reference;
   }
 }

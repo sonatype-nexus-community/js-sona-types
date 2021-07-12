@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "rootDir": "./src",
+    "outDir": "dist/types",
+  },
+  "exclude": [
+    "examples/**/*"
+  ],
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

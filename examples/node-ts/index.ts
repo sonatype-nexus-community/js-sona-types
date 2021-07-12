@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexRequestService, Coordinates} from '@sonatype/js-sona-types';
+import {OSSIndexRequestService} from '@sonatype/js-sona-types';
 import {join} from 'path';
 import {homedir} from 'os';
 import storage from 'node-persist';
+import {PackageURL} from 'packageurl-js';
 
 const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
@@ -27,9 +28,9 @@ const test = async () => {
   const ossIndexRequestService = new OSSIndexRequestService({browser: false}, storage as any);
   
   const coordinates = [];
-  coordinates.push(new Coordinates("jquery", "3.1.1"));
+  coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
   
-  const res = await ossIndexRequestService.callOSSIndexOrGetFromCache(coordinates, "npm");
+  const res = await ossIndexRequestService.getComponentDetails(coordinates);
 
   console.log(res);
 }

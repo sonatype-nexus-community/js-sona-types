@@ -27,15 +27,18 @@ const storage = require('node-persist');
 const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
+const purl = require('packageurl-js');
+const {PackageURL} = purl;
+
 const test = async () => {
   await storage.init({dir: PATH, ttl: TWELVE_HOURS});
   
   const ossIndexRequestService = new OSSIndexRequestService({}, storage);
   
   const coordinates = [];
-  coordinates.push(new Coordinates("jquery", "3.1.1"));
+  coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
   
-  const res = await ossIndexRequestService.callOSSIndexOrGetFromCache(coordinates, "npm");
+  const res = await ossIndexRequestService.getComponentDetails(coordinates);
 
   console.log(res);
 }

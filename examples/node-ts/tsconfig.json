@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
     "target": "es6",
     "rootDir": "./",
     "outDir": "./build",
+    "sourceMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "strict": true

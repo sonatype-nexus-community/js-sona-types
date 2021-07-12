@@ -11,3 +11,8 @@ node-persist@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/node-persist/-/node-persist-3.1.0.tgz#9d4b03950bba70d37d13d3d3551840e25fd17e09"
   integrity sha512-/j+fd/u71wNgKf3V2bx4tnDm+3GvLnlCuvf2MXbJ3wern+67IAb6zN9Leu1tCWPlPNZ+v1hLSibVukkPK2HqJw==
+
+packageurl-js@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/packageurl-js/-/packageurl-js-0.0.5.tgz#a48c9e5ca6855cd23660257ad2b0199593b3373a"
+  integrity sha512-BISQVKLiu7EsWF5Qhx8OvX6K5vOfFcYuQBggFfrF2dHu+/Z2snuabilb0EyLvHZH0XXqbEz20pqFRonTt8z6QA==

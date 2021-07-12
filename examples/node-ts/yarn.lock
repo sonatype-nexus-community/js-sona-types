@@ -593,6 +593,11 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
+packageurl-js@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/packageurl-js/-/packageurl-js-0.0.5.tgz#a48c9e5ca6855cd23660257ad2b0199593b3373a"
+  integrity sha512-BISQVKLiu7EsWF5Qhx8OvX6K5vOfFcYuQBggFfrF2dHu+/Z2snuabilb0EyLvHZH0XXqbEz20pqFRonTt8z6QA==
+
 picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.3.tgz#465547f359ccc206d3c48e46a1bcb89bf7ee619d"

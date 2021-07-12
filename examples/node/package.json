@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "esm": "^3.2.25",
-    "node-persist": "^3.1.0"
+    "node-persist": "^3.1.0",
+    "packageurl-js": "^0.0.5"
   }
 }
