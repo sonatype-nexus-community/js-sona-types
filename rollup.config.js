@@ -1,13 +1,11 @@
 // rollup.config.js
 
-import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+import { babel } from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 import dts from "rollup-plugin-dts";
 import typescript from 'rollup-plugin-typescript2';
-
 
 const extensions = ['.js', '.ts' ];
 
@@ -19,12 +17,12 @@ const config = [
       {
         file: pkg.main,
         format: 'cjs',
-        sourcemap: 'inline'
+        sourcemap: true
       },
       {
         file: pkg.module,
         format: 'esm',
-        sourcemap: 'inline'
+        sourcemap: true
       },
     ],
 
@@ -32,10 +30,9 @@ const config = [
 
     plugins: [
       resolve({ extensions }),
+      typescript({ sourceMap: true }),
       sourcemaps(),
-      terser(),
-      typescript({ sourceMap: false, inlineSources: true }),
-      getBabelOutputPlugin(),
+      babel({ inputSourceMap: false }),
     ]
   },
   {
