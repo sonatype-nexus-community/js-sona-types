@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.11...v1.0.12) (2021-07-13)
+
+
+### Bug Fixes
+
+* remove this promise for now ([bfe41bc](https://github.com/sonatype-nexus-community/js-sona-types/commit/bfe41bc9db8eec8882ee0f7f484f933d677d1d32))
+
 ## [1.0.11](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.10...v1.0.11) (2021-07-13)
 
 
