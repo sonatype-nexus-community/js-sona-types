@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.14...v1.0.15) (2021-07-13)
+
+
+### Bug Fixes
+
+* lint, user agent, better objects for headers ([23b2d82](https://github.com/sonatype-nexus-community/js-sona-types/commit/23b2d821fab9a3995ddcd980ff8435e707480af1))
+
 ## [1.0.14](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.13...v1.0.14) (2021-07-13)
 
 
