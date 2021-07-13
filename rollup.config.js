@@ -2,6 +2,8 @@
 
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
+import sourcemaps from 'rollup-plugin-sourcemaps';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 import dts from "rollup-plugin-dts";
 import typescript from 'rollup-plugin-typescript2';
@@ -17,12 +19,12 @@ const config = [
       {
         file: pkg.main,
         format: 'cjs',
-        sourcemap: "inline",
+        sourcemap: 'inline'
       },
       {
         file: pkg.module,
         format: 'esm',
-        sourcemap: "inline",
+        sourcemap: 'inline'
       },
     ],
 
@@ -30,7 +32,9 @@ const config = [
 
     plugins: [
       resolve({ extensions }),
-      typescript(),
+      sourcemaps(),
+      terser(),
+      typescript({ sourceMap: false, inlineSources: true }),
       getBabelOutputPlugin(),
     ]
   },
