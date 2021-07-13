@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentDetails } from './ComponentDetails';
-import { PackageURL } from 'packageurl-js';
-import { ILogger } from './ILogger';
+// A response from endpoint similar to: GET /api/v2/scan/applications/{applicationInternalId}/status/{statusId}
 
-export interface RequestService {
-  getComponentDetails(p: PackageURL[]): Promise<ComponentDetails>;
+export interface IqThirdPartyAPIServerPollingResult {
+  policyAction: string;
+  errorMessage: string;
+  reportHtmlUrl: string;
+  reportPdfUrl: string;
+  reportDataUrl: string;
+  embeddableReportHtmlUrl: string;
+  isError: boolean;
+  componentsAffected: ComponentsAffected;
+  openPolicyViolations: ComponentsAffected;
+  grandfatheredPolicyViolations: number;
 }
 
-export interface RequestServiceOptions {
-  user?: string;
-  token?: string;
-  host?: string;
-  application?: string;
-  stage?: string;
-  timeout?: number;
-  insecure?: boolean;
-  browser: boolean;
-  product: string;
-  version: string;
-  logger: ILogger;
+export interface ComponentsAffected {
+  critical: number;
+  severe: number;
+  moderate: number;
 }

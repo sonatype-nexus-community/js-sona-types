@@ -16,9 +16,11 @@
 import { OSSIndexCoordinates } from './OSSIndexCoordinates';
 import { OSSIndexServerResult } from './OSSIndexServerResult';
 import axios, { AxiosResponse } from 'axios';
-import { RequestService } from './RequestService';
+import { RequestService, RequestServiceOptions } from './RequestService';
 import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
 import { PackageURL } from 'packageurl-js';
+import { UserAgentHelper } from './UserAgentHelper';
+import { DEBUG } from './ILogger';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -28,15 +30,8 @@ const MAX_COORDINATES = 128;
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
-export interface Options {
-  user?: string;
-  token?: string;
-  baseURL?: string;
-  browser: boolean;
-}
-
 export class OSSIndexRequestService implements RequestService {
-  constructor(readonly options: Options, readonly store: Storage) {
+  constructor(readonly options: RequestServiceOptions, readonly store: Storage) {
     axios.interceptors.request.use((request: any) => {
       if (options.user && options.token) {
         request.auth = {
@@ -45,7 +40,7 @@ export class OSSIndexRequestService implements RequestService {
         };
       }
 
-      request.baseURL = options.baseURL ? options.baseURL : OSS_INDEX_BASE_URL;
+      request.baseURL = options.host ? options.host : OSS_INDEX_BASE_URL;
 
       request.headers = this.getHeaders();
 
@@ -59,9 +54,18 @@ export class OSSIndexRequestService implements RequestService {
 
   private async _getResultsFromOSSIndex(data: OSSIndexCoordinates): Promise<ComponentDetails> {
     try {
+      const userAgent = await UserAgentHelper.getUserAgent(
+        this.options.browser,
+        this.options.product,
+        this.options.version,
+      );
+
       const response: AxiosResponse<Array<OSSIndexServerResult>> = await axios.post(
         `${COMPONENT_REPORT_ENDPOINT}`,
         data,
+        {
+          headers: [userAgent],
+        },
       );
 
       if (response.status != 200) {
@@ -159,6 +163,7 @@ export class OSSIndexRequestService implements RequestService {
   }
 
   private async checkIfResultsAreInCache(data: PackageURL[]): Promise<PurlContainer> {
+    this.options.logger.logMessage(`Checking if results are in cache`, DEBUG, data);
     const inCache: ComponentDetails = { componentDetails: new Array<ComponentContainer>() } as any;
     const notInCache = new Array<PackageURL>();
 
@@ -199,11 +204,13 @@ export class OSSIndexRequestService implements RequestService {
    * @returns a {@link Promise} of all Responses
    */
   public async getComponentDetails(data: PackageURL[]): Promise<ComponentDetails> {
+    this.options.logger.logMessage(`Starting request to OSS Index`, DEBUG, data);
     const responses = new Array<Promise<ComponentDetails>>();
     const results = await this.checkIfResultsAreInCache(data);
     const chunkedPurls = this.chunkData(results.notInCache);
 
     for (const chunk of chunkedPurls) {
+      this.options.logger.logMessage(`Checking chunk against OSS Index`, DEBUG, chunk);
       try {
         const res = this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((x) => x.toString())));
 

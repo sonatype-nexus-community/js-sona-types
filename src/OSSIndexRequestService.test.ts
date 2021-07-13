@@ -20,6 +20,8 @@ import { join } from 'path';
 import { homedir } from 'os';
 import { PackageURL } from 'packageurl-js';
 import axios from 'axios';
+import { UserAgentHelper } from './UserAgentHelper';
+import { TestLogger } from './ILogger';
 
 const PATH = join(homedir(), '.ossindex', 'js-sona-types-test');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
@@ -31,7 +33,11 @@ describe('OSS Index Request Service', () => {
   let service: OSSIndexRequestService;
 
   beforeAll(() => {
-    service = new OSSIndexRequestService({ browser: false }, storage as any);
+    const logger = new TestLogger();
+    service = new OSSIndexRequestService(
+      { browser: false, product: 'test', version: '0.0.1', logger: logger },
+      storage as any,
+    );
   });
 
   beforeEach(async () => {
@@ -60,7 +66,18 @@ describe('OSS Index Request Service', () => {
 
     const res = await service.getComponentDetails(coordinates);
 
-    expect(mockedAxios.post).toHaveBeenCalledWith(`api/v3/component-report`, { coordinates: ['pkg:npm/jquery@3.1.1'] });
+    const userAgent = await UserAgentHelper.getUserAgent(false, 'test', '0.0.1');
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      `api/v3/component-report`,
+      {
+        coordinates: ['pkg:npm/jquery@3.1.1'],
+      },
+      {
+        headers: [userAgent],
+      },
+    );
+
     expect(res).toBeDefined();
     expect(res.componentDetails.length).toBe(1);
     expect(res.componentDetails[0].component.name).toBe('jquery');

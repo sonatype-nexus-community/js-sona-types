@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentDetails } from './ComponentDetails';
-import { PackageURL } from 'packageurl-js';
-import { ILogger } from './ILogger';
+// A response from endpoints similar to: GET /api/v2/applications?publicId={YourPublicId}
 
-export interface RequestService {
-  getComponentDetails(p: PackageURL[]): Promise<ComponentDetails>;
+export interface IqApplicationResponse {
+  applications: Application[];
 }
 
-export interface RequestServiceOptions {
-  user?: string;
-  token?: string;
-  host?: string;
-  application?: string;
-  stage?: string;
-  timeout?: number;
-  insecure?: boolean;
-  browser: boolean;
-  product: string;
-  version: string;
-  logger: ILogger;
+export interface Application {
+  id: string;
+  publicId: string;
+  name: string;
+  organizationId: string;
+  contactUserName: string;
 }

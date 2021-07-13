@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ComponentDetails } from './ComponentDetails';
-import { PackageURL } from 'packageurl-js';
-import { ILogger } from './ILogger';
-
-export interface RequestService {
-  getComponentDetails(p: PackageURL[]): Promise<ComponentDetails>;
+export interface ILogger {
+  logMessage(message: string, level: string, ...meta: any): void;
 }
 
-export interface RequestServiceOptions {
-  user?: string;
-  token?: string;
-  host?: string;
-  application?: string;
-  stage?: string;
-  timeout?: number;
-  insecure?: boolean;
-  browser: boolean;
-  product: string;
-  version: string;
-  logger: ILogger;
+export class TestLogger implements ILogger {
+  public logMessage = (message: string, level: string, ...meta: any): void => {
+    console.log('You are using the test logger, and test logging is good');
+    console.log(message, level, meta);
+  };
 }
+
+export const DEBUG = 'debug';
+export const ERROR = 'error';

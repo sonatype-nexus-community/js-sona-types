@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 import React from 'react';
-import {OSSIndexRequestService} from '@sonatype/js-sona-types';
+import {OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {PackageURL} from 'packageurl-js';
+import packageJson from '../package.json';
 
 const App = (): JSX.Element => {
   const callOSSIndex = () => {
-    const service = new OSSIndexRequestService({browser: true}, localStorage);
+    const logger = new TestLogger();
+    const service = new OSSIndexRequestService({browser: true, product: packageJson.name, version: packageJson.version, logger: logger}, localStorage);
 
     const coordinates = [];
     coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));

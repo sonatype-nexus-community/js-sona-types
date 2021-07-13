@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "lib": ["ES2019", "DOM"],
-    "module": "ESNext",
     "esModuleInterop": true
   }
 }

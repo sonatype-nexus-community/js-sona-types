@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "https-proxy-agent": "^5.0.0",
     "packageurl-js": "^0.0.5"
   },
   "publishConfig": {

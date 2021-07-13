@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 const thing = require('@sonatype/js-sona-types');
-const {OSSIndexRequestService, Coordinates} = thing;
+const pack = require('./package.json');
+const {OSSIndexRequestService, Coordinates, TestLogger} = thing;
 
 const path = require('path');
 const {join} = path;
@@ -32,8 +33,10 @@ const {PackageURL} = purl;
 
 const test = async () => {
   await storage.init({dir: PATH, ttl: TWELVE_HOURS});
+
+  const logger = new TestLogger();
   
-  const ossIndexRequestService = new OSSIndexRequestService({}, storage);
+  const ossIndexRequestService = new OSSIndexRequestService({browser: false, product: pack.name, version: pack.version, logger: logger}, storage);
   
   const coordinates = [];
   coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));

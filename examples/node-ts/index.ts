@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexRequestService} from '@sonatype/js-sona-types';
+import {OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {join} from 'path';
 import {homedir} from 'os';
 import storage from 'node-persist';
 import {PackageURL} from 'packageurl-js';
+import packageJson from './package.json';
 
 const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 const test = async () => {
   await storage.init({dir: PATH, ttl: TWELVE_HOURS});
+
+  const logger = new TestLogger();
   
-  const ossIndexRequestService = new OSSIndexRequestService({browser: false}, storage as any);
+  const ossIndexRequestService = new OSSIndexRequestService({browser: false, product: packageJson.name, version: packageJson.version, logger: logger}, storage as any);
   
   const coordinates = [];
   coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
