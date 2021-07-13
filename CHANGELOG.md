@@ -1,3 +1,11 @@
+## [1.0.9](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.8...v1.0.9) (2021-07-13)
+
+
+### Bug Fixes
+
+* Add in description for OSS Index ([bb1b933](https://github.com/sonatype-nexus-community/js-sona-types/commit/bb1b9331038edff3e561231b356b3ad66f46dd80))
+* add in id for vulnerability ([a9f5f3d](https://github.com/sonatype-nexus-community/js-sona-types/commit/a9f5f3dbbc2c8e12552f0dd4a085161a67c064ff))
+
 ## [1.0.8](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.7...v1.0.8) (2021-07-13)
 
 
