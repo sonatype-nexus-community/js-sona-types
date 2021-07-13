@@ -6,7 +6,8 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/dist",
+    "/src"
   ],
   "repository": "git@github.com:sonatype-nexus-community/js-sona-types.git",
   "author": "Jeffry Hesse <5544326+DarthHater@users.noreply.github.com>",
