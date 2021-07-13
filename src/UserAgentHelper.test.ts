@@ -23,14 +23,14 @@ describe('RequestHelpers', () => {
     const environmentVersion = nodeVersion.node;
     const system = `${os.type()} ${os.release()}`;
     const res = await UserAgentHelper.getUserAgent(false, 'AuditJS', '1.0.0');
-    const expected = ['User-Agent', `AuditJS/1.0.0 (${environment} ${environmentVersion}; ${system})`];
+    const expected = { 'User-Agent': `AuditJS/1.0.0 (${environment} ${environmentVersion}; ${system})` };
 
     expect(res).toStrictEqual(expected);
   });
 
   it('should return a valid user agent from getUserAgent for browser ', async () => {
     const res = await UserAgentHelper.getUserAgent(true, 'AuditJS', '1.0.0');
-    const expected = ['User-Agent', `AuditJS/1.0.0`];
+    const expected = { 'User-Agent': `AuditJS/1.0.0` };
 
     expect(res).toStrictEqual(expected);
   });

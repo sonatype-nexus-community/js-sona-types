@@ -14,24 +14,28 @@
  * limitations under the License.
  */
 export class UserAgentHelper {
-  public static async getUserAgent(browser: boolean, product: string, version: string): Promise<string[]> {
+  public static async getUserAgent(
+    browser: boolean,
+    product: string,
+    version: string,
+  ): Promise<Record<string, unknown>> {
     if (browser) {
       return this.getUserAgentBrowser(product, version);
     }
     return this.getUserAgentNode(product, version);
   }
 
-  private static async getUserAgentNode(product: string, version: string): Promise<string[]> {
+  private static async getUserAgentNode(product: string, version: string): Promise<Record<string, unknown>> {
     const os = await import('os');
     const nodeVersion = process.versions;
     const environment = 'NodeJS';
     const environmentVersion = nodeVersion.node;
     const system = `${os.type()} ${os.release()}`;
 
-    return ['User-Agent', `${product}/${version} (${environment} ${environmentVersion}; ${system})`];
+    return { 'User-Agent': `${product}/${version} (${environment} ${environmentVersion}; ${system})` };
   }
 
-  private static getUserAgentBrowser(product: string, version: string): string[] {
-    return ['User-Agent', `${product}/${version}`];
+  private static getUserAgentBrowser(product: string, version: string): Record<string, unknown> {
+    return { 'User-Agent': `${product}/${version}` };
   }
 }

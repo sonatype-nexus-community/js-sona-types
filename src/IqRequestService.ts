@@ -79,7 +79,11 @@ export class IqRequestService implements RequestService {
     try {
       this.internalId = await this.getApplicationInternalId();
       this.isInitialized = true;
-      //this.userAgent = await UserAgentHelper.getUserAgent(this.options.browser, this.options.product, this.options.version);
+      this.userAgent = await UserAgentHelper.getUserAgent(
+        this.options.browser,
+        this.options.product,
+        this.options.version,
+      );
     } catch (e) {
       throw new Error(e);
     }
@@ -135,7 +139,9 @@ export class IqRequestService implements RequestService {
       reportUrl = reportUrl.substr(0, reportUrl.length - 3) + 'policy';
     }
 
-    const response: AxiosResponse<IqServerPolicyReportResult> = await axios.get(`${this.options.host}/${reportUrl}`);
+    const response: AxiosResponse<IqServerPolicyReportResult> = await axios.get(`${this.options.host}/${reportUrl}`, {
+      headers: { ...this.userAgent },
+    });
 
     if (response.status == 200) {
       return response.data;
@@ -156,7 +162,7 @@ export class IqRequestService implements RequestService {
       `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
       data,
       {
-        headers: { 'Content-Type': 'application/xml' },
+        headers: { 'Content-Type': 'application/xml', ...this.userAgent },
       },
     );
     if (response.status == 200) {
