@@ -183,7 +183,9 @@ export class IqRequestService implements RequestService {
     try {
       mergeUrl = this.getURLOrMerge(url);
 
-      const response: AxiosResponse<IqThirdPartyAPIServerPollingResult> = await axios.get(mergeUrl.href, { validateStatus: (status) => status === 200 || status === 404 });
+      const response: AxiosResponse<IqThirdPartyAPIServerPollingResult> = await axios.get(mergeUrl.href, {
+        validateStatus: (status) => status === 200 || status === 404,
+      });
 
       const body = response.status == 200;
       // TODO: right now I think we cover 500s and 400s the same and we'd continue polling as a result. We should likely switch
