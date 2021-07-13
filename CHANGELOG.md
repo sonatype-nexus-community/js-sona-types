@@ -1,3 +1,11 @@
+## [1.0.14](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.13...v1.0.14) (2021-07-13)
+
+
+### Bug Fixes
+
+* do post correctly ([455b69f](https://github.com/sonatype-nexus-community/js-sona-types/commit/455b69fd0258c5a5b4fe2b07dfa5b677c607f22a))
+* lint and overtures ([30ed3ce](https://github.com/sonatype-nexus-community/js-sona-types/commit/30ed3ceb1cb6bae71ab075100931c8a657c88650))
+
 ## [1.0.13](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.12...v1.0.13) (2021-07-13)
 
 
