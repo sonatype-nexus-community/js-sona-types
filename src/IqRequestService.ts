@@ -156,7 +156,7 @@ export class IqRequestService implements RequestService {
       `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
       data,
       {
-        headers: [{ 'Content-Type': 'application/xml' }],
+        headers: { 'Content-Type': 'application/xml' },
       },
     );
     if (response.status == 200) {
