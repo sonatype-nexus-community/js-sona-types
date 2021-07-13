@@ -52,6 +52,7 @@ export interface SecurityData {
 }
 
 export interface SecurityIssue {
+  id?: string;
   source: string;
   reference: string;
   severity: number;

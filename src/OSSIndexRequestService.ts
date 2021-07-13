@@ -84,6 +84,7 @@ export class OSSIndexRequestService implements RequestService {
           val.vulnerabilities.forEach((vuln) => {
             const source: string = vuln.cve ? 'cve' : vuln.cwe ? 'cwe' : 'unknown';
             const securityIssue: SecurityIssue = {
+              id: vuln.id,
               reference: vuln.title,
               severity: vuln.cvssScore,
               url: vuln.reference,
