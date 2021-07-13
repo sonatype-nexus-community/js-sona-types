@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.17...v1.0.18) (2021-07-13)
+
+
+### Bug Fixes
+
+* add source files for source maps ([63a20c4](https://github.com/sonatype-nexus-community/js-sona-types/commit/63a20c4b2039be85e831504d36de20c1189e565d))
+
 ## [1.0.17](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.16...v1.0.17) (2021-07-13)
 
 
