@@ -1,3 +1,10 @@
+## [1.0.19](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.18...v1.0.19) (2021-07-13)
+
+
+### Bug Fixes
+
+* sorry linty boi ([d2f0b0b](https://github.com/sonatype-nexus-community/js-sona-types/commit/d2f0b0b762373bd78817dcdd54f40bcc1dcd3ed0))
+
 ## [1.0.18](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.17...v1.0.18) (2021-07-13)
 
 
