@@ -1,3 +1,10 @@
+## [1.0.16](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.15...v1.0.16) (2021-07-13)
+
+
+### Bug Fixes
+
+* correct http status code ([1c365c3](https://github.com/sonatype-nexus-community/js-sona-types/commit/1c365c3e954b94380c9454d75e37bfc3c973479a))
+
 ## [1.0.15](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.14...v1.0.15) (2021-07-13)
 
 
