@@ -165,7 +165,7 @@ export class IqRequestService implements RequestService {
         headers: { 'Content-Type': 'application/xml', ...this.userAgent },
       },
     );
-    if (response.status == 200) {
+    if (response.status == 202) {
       return response.data.statusUrl as string;
     } else {
       this.options.logger.logMessage('Response from third party API', ERROR, { response: response.data });
