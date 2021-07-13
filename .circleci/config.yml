@@ -24,7 +24,25 @@ jobs:
       - run:
           name: test examples
           command: yarn ci
-  
+      - run:
+          name: scan project
+          command: npx auditjs@latest ossi -q
+      - run:
+          name: scan node example
+          command: |
+            cd examples/node
+            npx auditjs@latest ossi -q
+      - run:
+          name: scan react example
+          command: |
+            cd examples/react-test-app
+            npx auditjs@latest ossi -q
+      - run:
+          name: scan node ts example
+          command: |
+            cd examples/node-ts
+            npx auditjs@latest ossi -q
+
   release:
     working_directory: ~/js-sona-types
     docker:
