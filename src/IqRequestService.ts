@@ -50,35 +50,27 @@ export class IqRequestService implements RequestService {
       this.options.stage = 'develop';
     }
 
-    const headers = new Array();
+    axios.interceptors.request.use((request: any) => {
+      if (options.user && options.token) {
+        request.auth = {
+          username: options.user,
+          password: options.token,
+        };
+      }
 
-    UserAgentHelper.getUserAgent(options.browser, options.product, options.version).then((val) => {
-      headers.push(val);
+      if (options.browser) {
+        request.mode = 'cors';
+      } else {
+        const agent = RequestHelpers.getAgent(options.insecure);
 
-      axios.interceptors.request.use((request: any) => {
-        if (options.user && options.token) {
-          request.auth = {
-            username: options.user,
-            password: options.token,
-          };
+        if (agent) {
+          request.httpsAgent = agent;
         }
+      }
 
-        if (options.browser) {
-          request.mode = 'cors';
-        } else {
-          const agent = RequestHelpers.getAgent(options.insecure);
+      request.baseURL = options.host;
 
-          if (agent) {
-            request.httpsAgent = agent;
-          }
-        }
-
-        request.baseURL = options.host;
-
-        request.headers = headers;
-
-        return request;
-      });
+      return request;
     });
   }
 
