@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.9...v1.0.10) (2021-07-13)
+
+
+### Bug Fixes
+
+* export some more types ([28ee4d7](https://github.com/sonatype-nexus-community/js-sona-types/commit/28ee4d72fc90994ce2a122c1261c7d898db8fd30))
+
 ## [1.0.9](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.8...v1.0.9) (2021-07-13)
 
 
