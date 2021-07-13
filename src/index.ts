@@ -11,5 +11,15 @@ export { IqThirdPartyAPIStatusResponse } from './IqThirdPartyAPIStatusResponse.j
 export { IqServerPolicyReportResult } from './IqServerPolicyReportResult.js';
 
 // Common
-export { ComponentDetails } from './ComponentDetails.js';
+export {
+  ComponentDetails,
+  ComponentContainer,
+  Component,
+  ComponentIdentifier,
+  Coordinates,
+  SecurityData,
+  SecurityIssue,
+  LicenseData,
+  LicenseDetail,
+} from './ComponentDetails.js';
 export { ILogger, TestLogger, DEBUG, ERROR } from './ILogger.js';
