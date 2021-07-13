@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.7...v1.0.8) (2021-07-13)
+
+
+### Bug Fixes
+
+* IQRequestService stub stuff ([f82594c](https://github.com/sonatype-nexus-community/js-sona-types/commit/f82594cebf2c67110f40172091b188f6965d72d9))
+
 ## [1.0.7](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.6...v1.0.7) (2021-07-12)
 
 
