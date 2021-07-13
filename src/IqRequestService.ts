@@ -32,6 +32,7 @@ export class IqRequestService implements RequestService {
   private internalId = '';
   private isInitialized = false;
   private timeoutAttempts = 0;
+  private userAgent: Record<string, unknown>;
 
   constructor(readonly options: RequestServiceOptions) {
     if (!this.options.application || !this.options.user || !this.options.host || !this.options.user) {
@@ -78,6 +79,7 @@ export class IqRequestService implements RequestService {
     try {
       this.internalId = await this.getApplicationInternalId();
       this.isInitialized = true;
+      //this.userAgent = await UserAgentHelper.getUserAgent(this.options.browser, this.options.product, this.options.version);
     } catch (e) {
       throw new Error(e);
     }
@@ -154,7 +156,7 @@ export class IqRequestService implements RequestService {
       `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
       data,
       {
-        headers: [{'Content-Type': 'application/xml'}],
+        headers: [{ 'Content-Type': 'application/xml' }],
       },
     );
     if (response.status == 200) {
