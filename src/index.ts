@@ -23,3 +23,4 @@ export {
   LicenseDetail,
 } from './ComponentDetails.js';
 export { ILogger, TestLogger, DEBUG, ERROR } from './ILogger.js';
+export { RequestServiceOptions } from './RequestService';
