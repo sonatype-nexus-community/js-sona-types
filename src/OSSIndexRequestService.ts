@@ -100,6 +100,7 @@ export class OSSIndexRequestService implements RequestService {
             },
             packageUrl: val.coordinates,
             name: purl.name,
+            description: val.description,
             hash: '',
           },
           matchState: 'PURL',

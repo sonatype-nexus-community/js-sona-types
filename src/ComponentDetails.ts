@@ -30,6 +30,7 @@ export interface Component {
   packageUrl: string;
   name: string | null | undefined;
   hash: string | null | undefined;
+  description?: string;
   componentIdentifier?: ComponentIdentifier;
 }
 
