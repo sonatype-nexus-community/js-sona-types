@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.12...v1.0.13) (2021-07-13)
+
+
+### Bug Fixes
+
+* use terser and play with sourcemaps a bit ([9d36998](https://github.com/sonatype-nexus-community/js-sona-types/commit/9d36998d6573636ed077c9c5982910c9a6a5d6e3))
+
 ## [1.0.12](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.11...v1.0.12) (2021-07-13)
 
 
