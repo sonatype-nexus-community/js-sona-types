@@ -1,3 +1,11 @@
+## [1.0.21](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.20...v1.0.21) (2021-07-14)
+
+
+### Bug Fixes
+
+* downgrade uuid since crypto.getRandomValues is not available ([f05fe72](https://github.com/sonatype-nexus-community/js-sona-types/commit/f05fe7242b817d43a855fd1874fc23f46bcd8de8))
+* remove uuid, generate using node ([0f1f072](https://github.com/sonatype-nexus-community/js-sona-types/commit/0f1f072003ba96988d8bbd2da392c48c30adb05f))
+
 ## [1.0.20](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.19...v1.0.20) (2021-07-14)
 
 
