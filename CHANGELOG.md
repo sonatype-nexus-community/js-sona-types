@@ -1,3 +1,10 @@
+## [1.0.22](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.21...v1.0.22) (2021-07-14)
+
+
+### Bug Fixes
+
+* add in CycloneDX SBOM example to node example ([13d2b19](https://github.com/sonatype-nexus-community/js-sona-types/commit/13d2b19f3c3ba3e0d1940d6cc0298d7ead00cfec))
+
 ## [1.0.21](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.20...v1.0.21) (2021-07-14)
 
 
