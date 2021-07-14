@@ -3,6 +3,7 @@
     "lib": ["ES2019", "DOM"],
     "module": "ESNext",
     "esModuleInterop": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "moduleResolution": "node"
   }
 }

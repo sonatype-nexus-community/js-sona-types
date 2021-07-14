@@ -26,7 +26,17 @@ const config = [
       },
     ],
 
-    external: ['axios', 'packageurl-js', 'https-proxy-agent'],
+    external: [
+      'axios', 
+      'packageurl-js', 
+      'https-proxy-agent', 
+      'dependency-graph', 
+      'xmlbuilder2',
+      'ssri',
+      'read-installed',
+      'spdx-license-ids',
+      'spdx-license-ids/deprecated'
+    ],
 
     plugins: [
       resolve({ extensions }),

@@ -4,7 +4,7 @@ module.exports = {
   },
   testEnvironment: 'jsdom',
   testRegex: '/src/.*\\.test?\\.ts$',
-  moduleFileExtensions: ['ts', 'js'],
+  moduleFileExtensions: ['ts', 'js', 'json'],
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.test.json'

@@ -18,7 +18,7 @@ export interface ComponentDetails {
 }
 
 export interface ComponentContainer {
-  component: Component;
+  component: SonatypeComponent;
   matchState: string | null | undefined;
   catalogDate: string | null | undefined;
   relativePopularity: string | null | undefined;
@@ -26,7 +26,7 @@ export interface ComponentContainer {
   licenseData: LicenseData | null | undefined;
 }
 
-export interface Component {
+export interface SonatypeComponent {
   packageUrl: string;
   name: string | null | undefined;
   hash: string | null | undefined;

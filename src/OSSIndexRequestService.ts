@@ -214,7 +214,7 @@ export class OSSIndexRequestService implements RequestService {
     for (const chunk of chunkedPurls) {
       this.options.logger.logMessage(`Checking chunk against OSS Index`, DEBUG, chunk);
       try {
-        const res = this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((x) => x.toString())));
+        const res = this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((purl) => purl.toString())));
 
         responses.push(res);
       } catch (err) {
