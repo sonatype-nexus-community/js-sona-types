@@ -1,3 +1,10 @@
+## [1.0.20](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.19...v1.0.20) (2021-07-14)
+
+
+### Bug Fixes
+
+* add in CycloneDXCreator ([54fcbcb](https://github.com/sonatype-nexus-community/js-sona-types/commit/54fcbcb2c8a61d191fadbccb9399c09fe1b71765))
+
 ## [1.0.19](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.18...v1.0.19) (2021-07-13)
 
 
