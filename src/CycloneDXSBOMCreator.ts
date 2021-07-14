@@ -16,7 +16,6 @@
 /// <reference types="./typings/read-installed" />
 /// <reference types="./typings/spdx-license-ids" />
 
-import uuidv4 from 'uuid/v4';
 import { create } from 'xmlbuilder2';
 import readInstalled from 'read-installed';
 import * as ssri from 'ssri';
@@ -33,6 +32,7 @@ import { Metadata } from './CycloneDXSBOMTypes';
 import { Bom } from './CycloneDXSBOMTypes';
 import { DEBUG, ILogger } from './ILogger';
 import { PackageURL } from 'packageurl-js';
+import { randomBytes } from 'crypto';
 
 export class CycloneDXSBOMCreator {
   public graph: DepGraph<CycloneDXComponent>;
@@ -72,7 +72,7 @@ export class CycloneDXSBOMCreator {
     this.listDependencies(this.getPurlFromPkgInfo(pkgInfo).toString(), dependencies);
 
     const bom: Bom = {
-      '@serial-number': 'urn:uuid:' + uuidv4(),
+      '@serial-number': 'urn:uuid:' + randomBytes(16).toString('hex'),
       '@version': 1,
       '@xmlns': this.SBOMSCHEMA,
       metadata: this.getMetadata(pkgInfo),
