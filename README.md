@@ -17,6 +17,12 @@ To get started you'll need node, yarn, and that's about it!
 
 In the `/examples` dir, there is a README that has examples of how to test that the project is working for both node, and React. Go browse there for more information!
 
+You can see if the examples are working by running in the root of this project:
+
+- `yarn run ci`
+
+Alternatively you can look at `test.sh` to see the "magic" we are running to locally link the library in case you want to run only one project.
+
 ## Releasing
 
 We use [semantic-release](https://github.com/semantic-release/semantic-release) to generate releases

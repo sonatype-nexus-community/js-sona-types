@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
+import {CycloneDXSBOMCreator, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {join} from 'path';
 import {homedir} from 'os';
 import storage from 'node-persist';
@@ -28,7 +28,13 @@ const test = async () => {
 
   const logger = new TestLogger();
   
-  const ossIndexRequestService = new OSSIndexRequestService({browser: false, product: packageJson.name, version: packageJson.version, logger: logger}, storage as any);
+  const ossIndexRequestService = new OSSIndexRequestService(
+    {
+      browser: false, 
+      product: packageJson.name, 
+      version: packageJson.version, 
+      logger: logger
+    }, storage as any);
   
   const coordinates = [];
   coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
@@ -36,6 +42,16 @@ const test = async () => {
   const res = await ossIndexRequestService.getComponentDetails(coordinates);
 
   console.log(res);
+
+  const sbom = new CycloneDXSBOMCreator(process.cwd(), {devDependencies: true, logger: logger});
+
+  const packages = await sbom.getPackageInfoFromReadInstalled();
+
+  const bom = await sbom.getBom(packages);
+
+  const xml = sbom.toXml(bom, true);
+
+  console.log(xml);
 }
 
 test();

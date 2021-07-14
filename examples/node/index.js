@@ -55,8 +55,6 @@ const test = async () => {
 
   const packages = await sbom.getPackageInfoFromReadInstalled();
 
-  console.log(packages);
-
   const bom = await sbom.getBom(packages);
 
   const xml = sbom.toXml(bom, true);
