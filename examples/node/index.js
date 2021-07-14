@@ -15,7 +15,7 @@
  */
 const thing = require('@sonatype/js-sona-types');
 const pack = require('./package.json');
-const {OSSIndexRequestService, Coordinates, TestLogger} = thing;
+const {OSSIndexRequestService, Coordinates, TestLogger, CycloneDXSBOMCreator} = thing;
 
 const path = require('path');
 const {join} = path;
@@ -36,7 +36,13 @@ const test = async () => {
 
   const logger = new TestLogger();
   
-  const ossIndexRequestService = new OSSIndexRequestService({browser: false, product: pack.name, version: pack.version, logger: logger}, storage);
+  const ossIndexRequestService = new OSSIndexRequestService(
+    {
+      browser: false, 
+      product: pack.name, 
+      version: pack.version, 
+      logger: logger
+    }, storage);
   
   const coordinates = [];
   coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
@@ -44,6 +50,18 @@ const test = async () => {
   const res = await ossIndexRequestService.getComponentDetails(coordinates);
 
   console.log(res);
+
+  const sbom = new CycloneDXSBOMCreator(process.cwd(), {logger: logger});
+
+  const packages = await sbom.getPackageInfoFromReadInstalled();
+
+  console.log(packages);
+
+  const bom = await sbom.getBom(packages);
+
+  const xml = sbom.toXml(bom, true);
+
+  console.log(xml);
 }
 
 test();
