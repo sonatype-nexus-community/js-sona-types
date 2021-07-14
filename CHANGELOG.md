@@ -1,3 +1,10 @@
+## [1.0.23](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.22...v1.0.23) (2021-07-14)
+
+
+### Bug Fixes
+
+* fun with examples and better readme for great profit ([92291e5](https://github.com/sonatype-nexus-community/js-sona-types/commit/92291e5cbcfe5218970a2229980f0c664820e36a))
+
 ## [1.0.22](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.21...v1.0.22) (2021-07-14)
 
 
