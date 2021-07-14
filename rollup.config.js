@@ -35,7 +35,8 @@ const config = [
       'ssri',
       'read-installed',
       'spdx-license-ids',
-      'spdx-license-ids/deprecated'
+      'spdx-license-ids/deprecated',
+      'node-get-random-values'
     ],
 
     plugins: [

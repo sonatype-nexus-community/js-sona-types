@@ -16,7 +16,7 @@
 /// <reference types="./typings/read-installed" />
 /// <reference types="./typings/spdx-license-ids" />
 
-import { v4 as uuidv4 } from 'uuid';
+import uuidv4 from 'uuid/v4';
 import { create } from 'xmlbuilder2';
 import readInstalled from 'read-installed';
 import * as ssri from 'ssri';
