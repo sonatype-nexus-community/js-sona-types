@@ -23,7 +23,7 @@ export interface IqServerPolicyReportResult {
   initiator: string;
   application: Application;
   counts: Counts;
-  components: Component[];
+  components: PolicyComponent[];
 }
 
 export interface Application {
@@ -34,7 +34,7 @@ export interface Application {
   contactUserName: string;
 }
 
-export interface Component {
+export interface PolicyComponent {
   hash: string;
   matchState: string;
   componentIdentifier: ComponentIdentifier;
