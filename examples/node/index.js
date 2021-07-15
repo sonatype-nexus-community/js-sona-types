@@ -15,7 +15,7 @@
  */
 const thing = require('@sonatype/js-sona-types');
 const pack = require('./package.json');
-const {OSSIndexRequestService, Coordinates, TestLogger, CycloneDXSBOMCreator} = thing;
+const {OSSIndexRequestService, TestLogger, CycloneDXSBOMCreator} = thing;
 
 const path = require('path');
 const {join} = path;
