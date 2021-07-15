@@ -1,3 +1,10 @@
+## [1.0.25](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.24...v1.0.25) (2021-07-15)
+
+
+### Bug Fixes
+
+* IqThirdPartyAPIServerPollingResult only isError is required ([dc867c4](https://github.com/sonatype-nexus-community/js-sona-types/commit/dc867c42d1c7d088f37ffc269f16a9a7d975a942))
+
 ## [1.0.24](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.23...v1.0.24) (2021-07-15)
 
 
