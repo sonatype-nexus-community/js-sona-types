@@ -16,9 +16,9 @@
 // A response from endpoint similar to: GET /api/v2/scan/applications/{applicationInternalId}/status/{statusId}
 
 export interface IqThirdPartyAPIServerPollingResult {
-  policyAction: string;
+  policyAction?: string;
   errorMessage?: string;
-  reportHtmlUrl: string;
+  reportHtmlUrl?: string;
   reportPdfUrl?: string;
   reportDataUrl?: string;
   embeddableReportHtmlUrl?: string;
