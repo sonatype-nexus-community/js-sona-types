@@ -6,7 +6,7 @@ export { IqRequestService } from './IqRequestService.js';
 export { IqApplicationResponse, Application } from './IqApplicationResponse.js';
 export { IqThirdPartyAPIServerPollingResult } from './IqThirdPartyAPIServerPollingResult.js';
 export { IqThirdPartyAPIStatusResponse } from './IqThirdPartyAPIStatusResponse.js';
-export { IqServerPolicyReportResult } from './IqServerPolicyReportResult.js';
+export { IqServerPolicyReportResult, PolicyComponent } from './IqServerPolicyReportResult.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';
