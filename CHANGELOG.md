@@ -1,3 +1,10 @@
+## [1.0.26](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.25...v1.0.26) (2021-07-15)
+
+
+### Bug Fixes
+
+* export PolicyComponent for use in IqServerPolicyReportResult ([de0f493](https://github.com/sonatype-nexus-community/js-sona-types/commit/de0f4934951d3a81b7e72c94ec80f3fbb5c8ce57))
+
 ## [1.0.25](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.24...v1.0.25) (2021-07-15)
 
 
