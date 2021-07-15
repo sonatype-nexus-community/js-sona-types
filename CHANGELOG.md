@@ -1,3 +1,10 @@
+## [1.0.27](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.26...v1.0.27) (2021-07-15)
+
+
+### Bug Fixes
+
+* really export PolicyComponent ([57870ee](https://github.com/sonatype-nexus-community/js-sona-types/commit/57870eed6dfd265b29ca91d230c7e6f6af541ca9))
+
 ## [1.0.26](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.25...v1.0.26) (2021-07-15)
 
 
