@@ -17,15 +17,15 @@
 
 export interface IqThirdPartyAPIServerPollingResult {
   policyAction: string;
-  errorMessage: string;
+  errorMessage?: string;
   reportHtmlUrl: string;
-  reportPdfUrl: string;
-  reportDataUrl: string;
-  embeddableReportHtmlUrl: string;
+  reportPdfUrl?: string;
+  reportDataUrl?: string;
+  embeddableReportHtmlUrl?: string;
   isError: boolean;
-  componentsAffected: ComponentsAffected;
-  openPolicyViolations: ComponentsAffected;
-  grandfatheredPolicyViolations: number;
+  componentsAffected?: ComponentsAffected;
+  openPolicyViolations?: ComponentsAffected;
+  grandfatheredPolicyViolations?: number;
 }
 
 export interface ComponentsAffected {
