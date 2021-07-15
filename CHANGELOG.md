@@ -1,3 +1,10 @@
+## [1.0.24](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.23...v1.0.24) (2021-07-15)
+
+
+### Bug Fixes
+
+* remove unused Coordinates ([034fc21](https://github.com/sonatype-nexus-community/js-sona-types/commit/034fc21230db143bed335755818790c7edc50c99))
+
 ## [1.0.23](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.22...v1.0.23) (2021-07-14)
 
 
