@@ -56,6 +56,7 @@ export interface SecurityIssue {
   source: string;
   reference: string;
   severity: number;
+  vector?: string;
   url: string;
   description: string | null | undefined;
 }

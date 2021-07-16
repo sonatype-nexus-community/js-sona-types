@@ -88,6 +88,7 @@ export class OSSIndexRequestService implements RequestService {
               reference: vuln.title,
               severity: vuln.cvssScore,
               url: vuln.reference,
+              vector: vuln.cvssVector,
               source: source,
               description: vuln.description,
             };
