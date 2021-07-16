@@ -1,3 +1,10 @@
+## [1.0.28](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.27...v1.0.28) (2021-07-16)
+
+
+### Bug Fixes
+
+* add in cvssVector ([6223188](https://github.com/sonatype-nexus-community/js-sona-types/commit/62231883c319f2ce42a732d84d33106708f79a7d))
+
 ## [1.0.27](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.26...v1.0.27) (2021-07-15)
 
 
