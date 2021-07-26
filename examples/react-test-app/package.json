@@ -31,7 +31,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      "^4.16.6",
       "not dead",
       "not op_mini all"
     ],
@@ -40,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "browserslist": "^4.16.6"
   }
 }
