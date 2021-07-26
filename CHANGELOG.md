@@ -1,3 +1,10 @@
+## [1.0.29](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.28...v1.0.29) (2021-07-26)
+
+
+### Bug Fixes
+
+* CVE-2021-23364 in pkg:npm/browserslist@4.14.2 ([35bdf14](https://github.com/sonatype-nexus-community/js-sona-types/commit/35bdf14103638869150d43a8fbd0d17e920ef397))
+
 ## [1.0.28](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.27...v1.0.28) (2021-07-16)
 
 
