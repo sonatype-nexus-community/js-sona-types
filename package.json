@@ -82,6 +82,9 @@
     "ssri": "^8.0.1",
     "xmlbuilder2": "^2.4.1"
   },
+  "resolutions": {
+    "path-parse": "^1.0.7"
+  },
   "publishConfig": {
     "access": "public"
   },
