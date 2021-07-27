@@ -1,3 +1,10 @@
+## [1.0.31](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.30...v1.0.31) (2021-07-27)
+
+
+### Bug Fixes
+
+* SONATYPE-2021-0176 in path-parse : 1.0.6 ([475d5f9](https://github.com/sonatype-nexus-community/js-sona-types/commit/475d5f981f49258d64481f04a9c51e0dcfd55fc8))
+
 ## [1.0.30](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.29...v1.0.30) (2021-07-27)
 
 
