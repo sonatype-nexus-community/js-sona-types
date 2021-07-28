@@ -1,3 +1,10 @@
+## [1.0.32](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.31...v1.0.32) (2021-07-28)
+
+
+### Bug Fixes
+
+* add in RequestService ([84204c3](https://github.com/sonatype-nexus-community/js-sona-types/commit/84204c37e4c2cfbd192057dbf425833214a9ea9c))
+
 ## [1.0.31](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.30...v1.0.31) (2021-07-27)
 
 
