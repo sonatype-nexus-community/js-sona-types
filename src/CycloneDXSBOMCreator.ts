@@ -19,7 +19,6 @@
 import { create } from 'xmlbuilder2';
 import readInstalled from 'read-installed';
 import * as ssri from 'ssri';
-import * as fs from 'fs';
 import { LicenseContent } from './CycloneDXSBOMTypes';
 import { CycloneDXComponent, GenericDescription } from './CycloneDXSBOMTypes';
 import { ExternalReference } from './CycloneDXSBOMTypes';
@@ -372,49 +371,9 @@ export class CycloneDXSBOMCreator {
           } else {
             licenseContent.name = l;
           }
-          if (this.options && this.options.includeLicenseText) {
-            licenseContent.text = this.addLicenseText(pkg, l);
-          }
           return licenseContent;
         })
         .map((l: any) => ({ license: l }));
-    }
-    return undefined;
-  }
-
-  /**
-   * Tries to find a file containing the license text based on commonly
-   * used naming and content types. If a candidate file is found, add
-   * the text to the license text object and stop.
-   */
-  private addLicenseText(pkg: any, licenseName: string): GenericDescription | undefined {
-    for (const licenseFilename of this.licenseFilenames) {
-      for (const { licenseContentType, fileExtension } of this.licenseContentTypes) {
-        let licenseFilepath = `${pkg.realPath}/${licenseFilename}${licenseName}${fileExtension}`;
-        if (fs.existsSync(licenseFilepath)) {
-          return this.readLicenseText(licenseFilepath, licenseContentType);
-        }
-
-        licenseFilepath = `${pkg.realPath}/${licenseFilename}${fileExtension}`;
-        if (fs.existsSync(licenseFilepath)) {
-          return this.readLicenseText(licenseFilepath, licenseContentType);
-        }
-      }
-    }
-  }
-
-  /**
-   * Read the file from the given path to the license text object and includes
-   * content-type attribute, if not default. Returns the license text object.
-   */
-  private readLicenseText(licenseFilepath: string, licenseContentType: string): GenericDescription | undefined {
-    const licenseText = fs.readFileSync(licenseFilepath, 'utf8');
-    if (licenseText) {
-      const licenseContentText: GenericDescription = { '#cdata': licenseText };
-      if (licenseContentType !== 'text/plain') {
-        licenseContentText['@content-type'] = licenseContentType;
-      }
-      return licenseContentText;
     }
     return undefined;
   }
@@ -445,7 +404,6 @@ export interface CycloneDXOptions {
   includeBomSerialNumber?: boolean;
   includeTimestamp?: boolean;
   includeLicenseData?: boolean;
-  includeLicenseText?: boolean;
   spartan?: boolean;
   logger: ILogger;
 }

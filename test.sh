@@ -6,12 +6,12 @@ yarn link
 
 echo ">> NODE EXAMPLE <<"
 
-cd examples/node && yarn link @sonatype/js-sona-types && yarn install --force && yarn start
+cd examples/node && yarn link @sonatype/js-sona-types && yarn install --force && yarn start && cd -
 
 echo ">> REACT EXAMPLE <<"
 
-cd ../react-test-app && yarn link @sonatype/js-sona-types && yarn install --force && yarn build
+cd examples/react-test-app && yarn link @sonatype/js-sona-types && yarn install --force && yarn build && cd -
 
 echo ">> NODE TS EXAMPLE <<"
 
-cd ../node-ts && yarn link @sonatype/js-sona-types && yarn install --force && yarn start
+cd examples/node-ts && yarn link @sonatype/js-sona-types && yarn install --force && yarn start && cd -
