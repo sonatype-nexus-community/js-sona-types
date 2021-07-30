@@ -15,6 +15,7 @@
  */
 import {CycloneDXSBOMCreator, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {join} from 'path';
+import readInstalled from 'read-installed';
 import {homedir} from 'os';
 import storage from 'node-persist';
 import {PackageURL} from 'packageurl-js';
@@ -45,13 +46,31 @@ const test = async () => {
 
   const sbom = new CycloneDXSBOMCreator(process.cwd(), {devDependencies: true, logger: logger});
 
-  const packages = await sbom.getPackageInfoFromReadInstalled();
+  const packages = await getPackageInfoFromReadInstalled(process.cwd());
 
   const bom = await sbom.getBom(packages);
 
   const xml = sbom.toXml(bom, true);
 
   console.log(xml);
+}
+
+const getPackageInfoFromReadInstalled = (path: string): Promise<any> =>  {
+  return new Promise((resolve, reject) => {
+    readInstalled(
+      path,
+      {
+        dev: true,
+      },
+      async (err: any, data: any) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(data);
+      },
+    );
+  });
 }
 
 test();

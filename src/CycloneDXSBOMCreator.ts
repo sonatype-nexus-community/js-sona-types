@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/// <reference types="./typings/read-installed" />
 /// <reference types="./typings/spdx-license-ids" />
 
 import { create } from 'xmlbuilder2';
-import readInstalled from 'read-installed';
 import * as ssri from 'ssri';
 import { LicenseContent } from './CycloneDXSBOMTypes';
 import { CycloneDXComponent, GenericDescription } from './CycloneDXSBOMTypes';
@@ -115,24 +113,6 @@ export class CycloneDXSBOMCreator {
     });
 
     return bomString;
-  }
-
-  public getPackageInfoFromReadInstalled(path: string = this.path): Promise<any> {
-    return new Promise((resolve, reject) => {
-      readInstalled(
-        path,
-        {
-          dev: this.options && this.options.devDependencies ? this.options.devDependencies : false,
-        },
-        async (err: any, data: any) => {
-          if (err) {
-            reject(err);
-          }
-
-          resolve(data);
-        },
-      );
-    });
   }
 
   private getMetadata(pkg: any): Metadata {

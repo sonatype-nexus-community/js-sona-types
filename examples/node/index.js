@@ -31,6 +31,8 @@ const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 const purl = require('packageurl-js');
 const {PackageURL} = purl;
 
+const readInstalled = require('read-installed');
+
 const test = async () => {
   await storage.init({dir: PATH, ttl: TWELVE_HOURS});
 
@@ -53,13 +55,31 @@ const test = async () => {
 
   const sbom = new CycloneDXSBOMCreator(process.cwd(), {logger: logger});
 
-  const packages = await sbom.getPackageInfoFromReadInstalled();
+  const packages = await getPackageInfoFromReadInstalled(process.cwd());
 
   const bom = await sbom.getBom(packages);
 
   const xml = sbom.toXml(bom, true);
 
   console.log(xml);
+}
+
+const getPackageInfoFromReadInstalled = (path) =>  {
+  return new Promise((resolve, reject) => {
+    readInstalled(
+      path,
+      {
+        dev: true,
+      },
+      async (err, data) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(data);
+      },
+    );
+  });
 }
 
 test();
