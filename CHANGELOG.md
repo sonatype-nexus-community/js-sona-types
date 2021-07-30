@@ -1,3 +1,10 @@
+## [1.0.34](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.33...v1.0.34) (2021-07-30)
+
+
+### Bug Fixes
+
+* remove read-installed, make the caller provide the packages ([1193f03](https://github.com/sonatype-nexus-community/js-sona-types/commit/1193f03be4eb868170ab1bcfbe98020e6dc61e90))
+
 ## [1.0.33](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.32...v1.0.33) (2021-07-30)
 
 
