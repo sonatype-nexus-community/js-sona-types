@@ -1,3 +1,10 @@
+## [1.0.33](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.32...v1.0.33) (2021-07-30)
+
+
+### Bug Fixes
+
+* remove fs dependency, fix to example react-test-app ([e53a4a7](https://github.com/sonatype-nexus-community/js-sona-types/commit/e53a4a723261e80c8b64ba286db4c9355ace1f17))
+
 ## [1.0.32](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.31...v1.0.32) (2021-07-28)
 
 
