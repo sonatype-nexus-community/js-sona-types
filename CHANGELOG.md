@@ -1,3 +1,10 @@
+## [1.0.35](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.34...v1.0.35) (2021-08-01)
+
+
+### Bug Fixes
+
+* bye bye axios, hello fetch ([6621dc0](https://github.com/sonatype-nexus-community/js-sona-types/commit/6621dc039a3cc6b807081ed86a8d54f75971c0af))
+
 ## [1.0.34](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.33...v1.0.34) (2021-07-30)
 
 
