@@ -28,7 +28,6 @@ const config = [
 
     external: [
       'cross-fetch',
-      'axios', 
       'packageurl-js', 
       'https-proxy-agent', 
       'dependency-graph', 
