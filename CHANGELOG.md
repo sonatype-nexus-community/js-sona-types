@@ -1,3 +1,10 @@
+## [1.0.36](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.35...v1.0.36) (2021-08-01)
+
+
+### Bug Fixes
+
+* no more need for rollup ([2c1da36](https://github.com/sonatype-nexus-community/js-sona-types/commit/2c1da36f4b588433e4539adf1f59160ca6dd33a3))
+
 ## [1.0.35](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.34...v1.0.35) (2021-08-01)
 
 
