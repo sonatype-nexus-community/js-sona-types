@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { RequestHelpers } from './RequestHelpers';
 import { URL } from 'url';
 import { IqServerPolicyReportResult } from './IqServerPolicyReportResult';
 import { ComponentDetails } from './ComponentDetails';
 import { IqApplicationResponse } from './IqApplicationResponse';
-import { IqThirdPartyAPIStatusResponse } from './IqThirdPartyAPIStatusResponse';
-import { IqThirdPartyAPIServerPollingResult } from './IqThirdPartyAPIServerPollingResult';
-import axios, { AxiosResponse } from 'axios';
 import { RequestService, RequestServiceOptions } from './RequestService';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
+import fetch from 'cross-fetch';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -32,7 +29,6 @@ export class IqRequestService implements RequestService {
   private internalId = '';
   private isInitialized = false;
   private timeoutAttempts = 0;
-  private userAgent: Record<string, unknown>;
 
   constructor(readonly options: RequestServiceOptions) {
     if (!this.options.application || !this.options.user || !this.options.host || !this.options.user) {
@@ -50,65 +46,52 @@ export class IqRequestService implements RequestService {
     if (!this.options.stage) {
       this.options.stage = 'develop';
     }
+  }
 
-    axios.interceptors.request.use((request: any) => {
-      if (options.user && options.token) {
-        request.auth = {
-          username: options.user,
-          password: options.token,
-        };
-      }
+  private async getHeaders(contentType?: string): Promise<string[][]> {
+    const userAgent = await UserAgentHelper.getUserAgent(
+      this.options.browser,
+      this.options.product,
+      this.options.version,
+    );
 
-      if (options.browser) {
-        request.mode = 'cors';
-      } else {
-        const agent = RequestHelpers.getAgent(options.insecure);
+    const headers = [
+      ['User-Agent', userAgent],
+      ['Authoriziation', this.getBasicAuth()],
+    ];
 
-        if (agent) {
-          request.httpsAgent = agent;
-        }
-      }
-
-      request.baseURL = options.host;
-
-      return request;
-    });
+    if (contentType) {
+      return [...headers, ['Content-Type', contentType]];
+    }
+    return headers;
   }
 
   private async init(): Promise<void> {
     try {
       this.internalId = await this.getApplicationInternalId();
       this.isInitialized = true;
-      this.userAgent = await UserAgentHelper.getUserAgent(
-        this.options.browser,
-        this.options.product,
-        this.options.version,
-      );
     } catch (e) {
       throw new Error(e);
     }
   }
 
   private async getApplicationInternalId(): Promise<string> {
-    const response: AxiosResponse<IqApplicationResponse> = await axios.get(
-      `${this.options.host}${APPLICATION_INTERNAL_ID_ENDPOINT}${this.options.application}`,
-    );
-    if (response.status == 200) {
-      try {
-        return response.data.applications[0].id;
-      } catch (e) {
+    try {
+      const headers = await this.getHeaders();
+      const res = await fetch(`${this.options.host}${APPLICATION_INTERNAL_ID_ENDPOINT}${this.options.application}`, {
+        headers: headers,
+      });
+
+      if (res.status == 200) {
+        const data: IqApplicationResponse = await res.json();
+        return data.applications[0].id;
+      } else {
         throw new Error(
           `No valid ID on response from Nexus IQ, potentially check the public application ID you are using`,
         );
       }
-    } else {
-      throw new Error(
-        'Unable to connect to IQ Server with http status ' +
-          response.status +
-          '. Check your credentials and network connectivity by hitting Nexus IQ at ' +
-          this.options.host +
-          ' in your browser.',
-      );
+    } catch (err) {
+      throw new Error(err);
     }
   }
 
@@ -121,32 +104,50 @@ export class IqRequestService implements RequestService {
       ],
     };
 
-    const response: AxiosResponse<ComponentDetails> = await axios.post(
-      `${this.options.host}/api/v2/components/details`,
-      data,
-    );
+    try {
+      const headers = await this.getHeaders('application/json');
 
-    if (response.status == 200) {
-      return response.data;
-    } else {
+      const res = await fetch(`${this.options.host}/api/v2/components/details`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: headers,
+      });
+
+      if (res.status == 200) {
+        const compDetails: ComponentDetails = await res.json();
+
+        return compDetails;
+      }
+    } catch (err) {
       throw new Error('Unable to get component details');
     }
   }
 
   public async getPolicyReportResults(reportUrl: string): Promise<IqServerPolicyReportResult> {
     this.options.logger.logMessage('Attempting to get policy report results', DEBUG, { reportUrl: reportUrl });
+
     if (reportUrl.endsWith('raw')) {
       reportUrl = reportUrl.substr(0, reportUrl.length - 3) + 'policy';
     }
 
-    const response: AxiosResponse<IqServerPolicyReportResult> = await axios.get(`${this.options.host}/${reportUrl}`, {
-      headers: { ...this.userAgent },
-    });
+    try {
+      const headers = await this.getHeaders();
+      const res = await fetch(`${this.options.host}/${reportUrl}`, {
+        method: 'GET',
+        headers: headers,
+      });
 
-    if (response.status == 200) {
-      return response.data;
-    } else {
-      this.options.logger.logMessage('Response from report API', ERROR, { response: response.data });
+      if (res.status == 200) {
+        const policyResults: IqServerPolicyReportResult = await res.json();
+
+        return policyResults;
+      } else {
+        const text = await res.text();
+        this.options.logger.logMessage('Response from report API', ERROR, { response: text });
+        throw new Error(`No valid response from Nexus IQ, look at logs for more info`);
+      }
+    } catch (err) {
+      this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
       throw new Error(`Unable to get results from Report API`);
     }
   }
@@ -158,17 +159,24 @@ export class IqRequestService implements RequestService {
 
     this.options.logger.logMessage('Internal ID', DEBUG, { internalId: this.internalId });
 
-    const response: AxiosResponse<IqThirdPartyAPIStatusResponse> = await axios.post(
-      `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
-      data,
-      {
-        headers: { 'Content-Type': 'application/xml', ...this.userAgent },
-      },
-    );
-    if (response.status == 202) {
-      return response.data.statusUrl as string;
-    } else {
-      this.options.logger.logMessage('Response from third party API', ERROR, { response: response.data });
+    try {
+      const headers = await this.getHeaders('application/xml');
+      const res = await fetch(
+        `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
+        { method: 'POST', body: data, headers: headers },
+      );
+
+      if (res.status == 202) {
+        const data = await res.json();
+
+        return data.statusUrl as string;
+      } else {
+        const text = await res.text();
+        this.options.logger.logMessage('Response from third party API', ERROR, { response: text });
+        throw new Error(`Unable to submit to Third Party API`);
+      }
+    } catch (err) {
+      this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
       throw new Error(`Unable to submit to Third Party API`);
     }
   }
@@ -183,13 +191,12 @@ export class IqRequestService implements RequestService {
     try {
       mergeUrl = this.getURLOrMerge(url);
 
-      const response: AxiosResponse<IqThirdPartyAPIServerPollingResult> = await axios.get(mergeUrl.href, {
-        validateStatus: (status) => status === 200 || status === 404,
-      });
+      const headers = await this.getHeaders();
 
-      const body = response.status == 200;
-      // TODO: right now I think we cover 500s and 400s the same and we'd continue polling as a result. We should likely switch
-      // to checking explicitly for a 404 and if we get a 500/401 or other throw an error
+      const res = await fetch(mergeUrl.href, { method: 'GET', headers: headers });
+
+      const body = res.status == 200;
+
       if (!body) {
         this.timeoutAttempts += 1;
         if (this.timeoutAttempts > this.options.timeout) {
@@ -200,7 +207,8 @@ export class IqRequestService implements RequestService {
         }
         setTimeout(() => this.asyncPollForResults(url, errorHandler, pollingFinished), 1000);
       } else {
-        pollingFinished(response.data);
+        const data = await res.json();
+        pollingFinished(data);
       }
     } catch (e) {
       errorHandler({ title: e.message });
@@ -218,5 +226,12 @@ export class IqRequestService implements RequestService {
       }
       return new URL(this.options.host.concat('/' + url));
     }
+  }
+
+  private getBasicAuth(): string {
+    if (this.options.browser) {
+      return `Basic ${btoa(this.options.user + `:` + this.options.token)}`;
+    }
+    return `Basic ${Buffer.from(this.options.user + `:` + this.options.token).toString()}`;
   }
 }

@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 import { OSSIndexCoordinates } from './OSSIndexCoordinates';
-import { OSSIndexServerResult } from './OSSIndexServerResult';
-import axios, { AxiosResponse } from 'axios';
 import { RequestService, RequestServiceOptions } from './RequestService';
 import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG } from './ILogger';
+import fetch from 'cross-fetch';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -31,52 +30,42 @@ const MAX_COORDINATES = 128;
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 export class OSSIndexRequestService implements RequestService {
-  constructor(readonly options: RequestServiceOptions, readonly store: Storage) {
-    axios.interceptors.request.use((request: any) => {
-      if (options.user && options.token) {
-        request.auth = {
-          username: options.user,
-          password: options.token,
-        };
-      }
+  constructor(readonly options: RequestServiceOptions, readonly store: Storage) {}
 
-      request.baseURL = options.host ? options.host : OSS_INDEX_BASE_URL;
+  private async getHeaders(): Promise<string[][]> {
+    const userAgent = await UserAgentHelper.getUserAgent(
+      this.options.browser,
+      this.options.product,
+      this.options.version,
+    );
 
-      request.headers = this.getHeaders();
-
-      return request;
-    });
-  }
-
-  private getHeaders(): Record<string, unknown> {
-    return { 'Content-Type': 'application/json' };
+    return [
+      ['Content-Type', 'application/json'],
+      ['User-Agent', userAgent],
+    ];
   }
 
   private async _getResultsFromOSSIndex(data: OSSIndexCoordinates): Promise<ComponentDetails> {
     try {
-      const userAgent = await UserAgentHelper.getUserAgent(
-        this.options.browser,
-        this.options.product,
-        this.options.version,
-      );
+      const headers = await this.getHeaders();
 
-      const response: AxiosResponse<Array<OSSIndexServerResult>> = await axios.post(
-        `${COMPONENT_REPORT_ENDPOINT}`,
-        data,
-        {
-          headers: [userAgent],
-        },
-      );
+      const res = await fetch(`${OSS_INDEX_BASE_URL}${COMPONENT_REPORT_ENDPOINT}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: headers,
+      });
 
-      if (response.status != 200) {
-        throw Error(response.statusText);
+      if (res.status != 200) {
+        throw Error(res.statusText);
       }
 
       const componentDetails: ComponentDetails = {} as ComponentDetails;
 
       const componentContainers: ComponentContainer[] = new Array<ComponentContainer>();
 
-      response.data.forEach((val) => {
+      const responseData = await res.json();
+
+      responseData.forEach((val) => {
         const purl = PackageURL.fromString(val.coordinates);
 
         const securityIssues: SecurityIssue[] = new Array<SecurityIssue>();

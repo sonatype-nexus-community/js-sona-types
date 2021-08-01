@@ -19,18 +19,23 @@ import storage from 'node-persist';
 import { join } from 'path';
 import { homedir } from 'os';
 import { PackageURL } from 'packageurl-js';
-import axios from 'axios';
-import { UserAgentHelper } from './UserAgentHelper';
 import { TestLogger } from './ILogger';
+import fetch from 'cross-fetch';
+import { mocked } from 'ts-jest/utils';
 
 const PATH = join(homedir(), '.ossindex', 'js-sona-types-test');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+jest.mock('cross-fetch', () => {
+  return jest.fn();
+});
 
 describe('OSS Index Request Service', () => {
   let service: OSSIndexRequestService;
+
+  beforeEach(() => {
+    mocked(fetch).mockClear();
+  });
 
   beforeAll(() => {
     const logger = new TestLogger();
@@ -54,29 +59,19 @@ describe('OSS Index Request Service', () => {
       },
     ];
 
-    const responseObj = {
-      data: expectedOutput,
-      status: 200,
-    };
-
-    mockedAxios.post.mockResolvedValue(responseObj);
+    mocked(fetch).mockImplementation((): Promise<any> => {
+      return Promise.resolve({
+        status: 200,
+        json() {
+          return Promise.resolve(expectedOutput);
+        },
+      });
+    });
 
     const coordinates = [];
     coordinates.push(new PackageURL('npm', undefined, 'jquery', '3.1.1', undefined, undefined));
 
     const res = await service.getComponentDetails(coordinates);
-
-    const userAgent = await UserAgentHelper.getUserAgent(false, 'test', '0.0.1');
-
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      `api/v3/component-report`,
-      {
-        coordinates: ['pkg:npm/jquery@3.1.1'],
-      },
-      {
-        headers: [userAgent],
-      },
-    );
 
     expect(res).toBeDefined();
     expect(res.componentDetails.length).toBe(1);
