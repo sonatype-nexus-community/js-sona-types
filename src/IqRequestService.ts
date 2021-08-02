@@ -26,10 +26,14 @@ import cookies from 'browser-cookies';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
+const X_CSRF_TOKEN = 'X-CSRF-TOKEN';
+const CSRF_COOKIE_NAME = 'CLM-CSRF-TOKEN';
+
 export class IqRequestService implements RequestService {
   private internalId = '';
   private isInitialized = false;
   private timeoutAttempts = 0;
+  private xcsrfToken: string | null;
 
   constructor(readonly options: RequestServiceOptions) {
     if (!this.options.application || !this.options.user || !this.options.host || !this.options.user) {
@@ -64,14 +68,15 @@ export class IqRequestService implements RequestService {
     if (contentType) {
       headers = [...headers, ['Content-Type', contentType]];
     }
-    if (this.options.browser) {
-      const xcsrfToken = cookies.get('CLM-CSRF-TOKEN');
-      if (xcsrfToken) {
-        headers = [...headers, ['X-CSRF-TOKEN', xcsrfToken]];
-      }
+    if (this.options.browser && this.xcsrfToken) {
+      headers = [...headers, [X_CSRF_TOKEN, this.xcsrfToken]];
     }
 
     return headers;
+  }
+
+  public setXCSRFToken(token: string) {
+    this.xcsrfToken = token;
   }
 
   private async init(): Promise<void> {
@@ -141,11 +146,11 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  private async loginViaRest(): Promise<boolean> {
+  public async loginViaRest(): Promise<boolean> {
     try {
       const headers = [
-        ['xsrfCookieName', 'CLM-CSRF-TOKEN'],
-        ['xsrfHeaderName', 'X-CSRF-TOKEN'],
+        ['xsrfCookieName', CSRF_COOKIE_NAME],
+        ['xsrfHeaderName', X_CSRF_TOKEN],
       ];
 
       const res = await fetch(`${this.options.host}/rest/user/session`, {
