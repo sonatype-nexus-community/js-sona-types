@@ -120,8 +120,12 @@ export class IqRequestService implements RequestService {
       ],
     };
 
+    this.options.logger.logMessage('Purls to check', DEBUG, { purls: purl });
+
     try {
       const headers = await this.getHeaders('application/json');
+
+      this.options.logger.logMessage('Got headers', DEBUG);
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
         method: 'POST',
@@ -129,13 +133,21 @@ export class IqRequestService implements RequestService {
         headers: headers,
       });
 
+      this.options.logger.logMessage('Response back', DEBUG, { response: res });
+
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
 
         return compDetails;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Response text recieved, error', ERROR, { text: text, statusCode: res.status });
+
+        throw new Error('Unable to get component details, non 200 response');
       }
     } catch (err) {
-      throw new Error('Unable to get component details');
+      throw new Error(err);
     }
   }
 
