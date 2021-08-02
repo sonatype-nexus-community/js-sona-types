@@ -1,3 +1,10 @@
+## [1.0.42](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.41...v1.0.42) (2021-08-02)
+
+
+### Bug Fixes
+
+* add ability to get vuln details ([2cc31c3](https://github.com/sonatype-nexus-community/js-sona-types/commit/2cc31c3397909c794cba932e0ab73a4f4f986eed))
+
 ## [1.0.41](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.40...v1.0.41) (2021-08-02)
 
 
