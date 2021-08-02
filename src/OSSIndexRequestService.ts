@@ -19,7 +19,7 @@ import { ComponentContainer, ComponentDetails, SecurityIssue } from './Component
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG } from './ILogger';
-import fetch from 'cross-fetch';
+import crossFetch from 'cross-fetch';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -28,6 +28,10 @@ const COMPONENT_REPORT_ENDPOINT = 'api/v3/component-report';
 const MAX_COORDINATES = 128;
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
+
+if (typeof window === 'undefined' && !globalThis.fetch) {
+  globalThis.fetch = crossFetch;
+}
 
 export class OSSIndexRequestService implements RequestService {
   constructor(readonly options: RequestServiceOptions, readonly store: Storage) {}

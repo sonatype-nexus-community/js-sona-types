@@ -21,13 +21,16 @@ import { RequestService, RequestServiceOptions } from './RequestService';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
-import fetch from 'cross-fetch';
-import cookies from 'browser-cookies';
+import crossFetch from 'cross-fetch';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
 const X_CSRF_TOKEN = 'X-CSRF-TOKEN';
 const CSRF_COOKIE_NAME = 'CLM-CSRF-TOKEN';
+
+if (typeof window === 'undefined' && !globalThis.fetch) {
+  globalThis.fetch = crossFetch;
+}
 
 export class IqRequestService implements RequestService {
   private internalId = '';
