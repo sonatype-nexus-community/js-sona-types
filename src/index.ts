@@ -7,6 +7,15 @@ export { IqApplicationResponse, Application } from './IqApplicationResponse.js';
 export { IqThirdPartyAPIServerPollingResult } from './IqThirdPartyAPIServerPollingResult.js';
 export { IqThirdPartyAPIStatusResponse } from './IqThirdPartyAPIStatusResponse.js';
 export { IqServerPolicyReportResult, PolicyComponent } from './IqServerPolicyReportResult.js';
+export {
+  IqServerVulnerabilityDetails,
+  Advisory,
+  MainSeverity,
+  SeverityScore,
+  Source,
+  Weakness,
+  CweID,
+} from './IqServerVulnerabilityDetails.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';

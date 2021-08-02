@@ -22,6 +22,7 @@ import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
+import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -145,6 +146,33 @@ export class IqRequestService implements RequestService {
         this.options.logger.logMessage('Response text recieved, error', ERROR, { text: text, statusCode: res.status });
 
         throw new Error('Unable to get component details, non 200 response');
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  public async getVulnerabilityDetails(vulnID: string): Promise<IqServerVulnerabilityDetails> {
+    const headers = await this.getHeaders();
+
+    this.options.logger.logMessage('Got headers', DEBUG);
+
+    try {
+      const res = await fetch(`${this.options.host}/api/v2/vulnerabilities/${vulnID}`, {
+        method: 'GET',
+        headers: headers,
+      });
+
+      if (res.status == 200) {
+        const vulnDetails: IqServerVulnerabilityDetails = await res.json();
+
+        return vulnDetails;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Response text recieved, error', ERROR, { text: text, statusCode: res.status });
+
+        throw new Error('Unable to get vulnerability details, non 200 response');
       }
     } catch (err) {
       throw new Error(err);
