@@ -118,16 +118,6 @@ export class IqRequestService implements RequestService {
     };
 
     try {
-      if (this.options.browser) {
-        const loggedIn = await this.loginViaRest();
-
-        if (loggedIn) {
-          this.options.logger.logMessage('Successfully logged in', DEBUG);
-        } else {
-          throw new Error('Unable to login to Nexus IQ');
-        }
-      }
-
       const headers = await this.getHeaders('application/json');
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
