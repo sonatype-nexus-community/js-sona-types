@@ -1,3 +1,10 @@
+## [1.0.38](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.37...v1.0.38) (2021-08-02)
+
+
+### Bug Fixes
+
+* externalize providing the cookie for xcsrf ([4c85746](https://github.com/sonatype-nexus-community/js-sona-types/commit/4c8574627a5595cb650a1f3c01b55188bf55b0f4))
+
 ## [1.0.37](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.36...v1.0.37) (2021-08-02)
 
 
