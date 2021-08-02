@@ -1,3 +1,10 @@
+## [1.0.40](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.39...v1.0.40) (2021-08-02)
+
+
+### Bug Fixes
+
+* only set fetch to crossfetch if no window, and if globalThis does not have it ([1eab40d](https://github.com/sonatype-nexus-community/js-sona-types/commit/1eab40da031ff22e1adf156d90723d6e9fd47f81))
+
 ## [1.0.39](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.38...v1.0.39) (2021-08-02)
 
 
