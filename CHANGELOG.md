@@ -1,3 +1,10 @@
+## [1.0.39](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.38...v1.0.39) (2021-08-02)
+
+
+### Bug Fixes
+
+* do not call this in the call, let the user call it ([dcb81c9](https://github.com/sonatype-nexus-community/js-sona-types/commit/dcb81c9794f99a11beb3ea54d9bcb591f96f4d5a))
+
 ## [1.0.38](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.37...v1.0.38) (2021-08-02)
 
 
