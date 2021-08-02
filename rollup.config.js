@@ -27,6 +27,7 @@ const config = [
     ],
 
     external: [
+      'browser-cookies',
       'cross-fetch',
       'packageurl-js', 
       'https-proxy-agent', 

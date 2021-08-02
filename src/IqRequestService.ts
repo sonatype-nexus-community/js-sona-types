@@ -22,6 +22,7 @@ import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import fetch from 'cross-fetch';
+import cookies from 'browser-cookies';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -55,14 +56,21 @@ export class IqRequestService implements RequestService {
       this.options.version,
     );
 
-    const headers = [
+    let headers = [
       ['User-Agent', userAgent],
       ['Authoriziation', this.getBasicAuth()],
     ];
 
     if (contentType) {
-      return [...headers, ['Content-Type', contentType]];
+      headers = [...headers, ['Content-Type', contentType]];
     }
+    if (this.options.browser) {
+      const xcsrfToken = cookies.get('CLM-CSRF-TOKEN');
+      if (xcsrfToken) {
+        headers = [...headers, ['X-CSRF-TOKEN', xcsrfToken]];
+      }
+    }
+
     return headers;
   }
 
@@ -105,6 +113,16 @@ export class IqRequestService implements RequestService {
     };
 
     try {
+      if (this.options.browser) {
+        const loggedIn = await this.loginViaRest();
+
+        if (loggedIn) {
+          this.options.logger.logMessage('Successfully logged in', DEBUG);
+        } else {
+          throw new Error('Unable to login to Nexus IQ');
+        }
+      }
+
       const headers = await this.getHeaders('application/json');
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
@@ -120,6 +138,33 @@ export class IqRequestService implements RequestService {
       }
     } catch (err) {
       throw new Error('Unable to get component details');
+    }
+  }
+
+  private async loginViaRest(): Promise<boolean> {
+    try {
+      const headers = [
+        ['xsrfCookieName', 'CLM-CSRF-TOKEN'],
+        ['xsrfHeaderName', 'X-CSRF-TOKEN'],
+      ];
+
+      const res = await fetch(`${this.options.host}/rest/user/session`, {
+        method: 'GET',
+        headers: [...headers, ['Authorization', this.getBasicAuth()]],
+      });
+
+      const resData = await res.text();
+
+      this.options.logger.logMessage('Response from login call', DEBUG, {
+        response: resData,
+        status: res.status,
+        statusText: res.statusText,
+      });
+
+      return true;
+    } catch (err) {
+      this.options.logger.logMessage('Unable to login', ERROR, { error: err });
+      return false;
     }
   }
 
