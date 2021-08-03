@@ -1,3 +1,10 @@
+## [1.0.44](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.43...v1.0.44) (2021-08-03)
+
+
+### Bug Fixes
+
+* no need to supply internal ID, we handle that ([f0007e7](https://github.com/sonatype-nexus-community/js-sona-types/commit/f0007e7a697783f630955ddbd578fee9b042ad10))
+
 ## [1.0.43](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.42...v1.0.43) (2021-08-03)
 
 
