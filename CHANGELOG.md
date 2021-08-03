@@ -1,3 +1,10 @@
+## [1.0.46](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.45...v1.0.46) (2021-08-03)
+
+
+### Bug Fixes
+
+* one too many slashes ([5fed8d9](https://github.com/sonatype-nexus-community/js-sona-types/commit/5fed8d994f7faa190ee065d6322e9aaa5fd2e1e6))
+
 ## [1.0.45](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.44...v1.0.45) (2021-08-03)
 
 
