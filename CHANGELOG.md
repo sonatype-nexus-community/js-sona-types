@@ -1,3 +1,10 @@
+## [1.0.43](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.42...v1.0.43) (2021-08-03)
+
+
+### Bug Fixes
+
+* add in some light logging ([50af37f](https://github.com/sonatype-nexus-community/js-sona-types/commit/50af37f7b7f9d888a278113e9844b62b668d5aa1))
+
 ## [1.0.42](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.41...v1.0.42) (2021-08-02)
 
 
