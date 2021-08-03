@@ -265,9 +265,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getComponentEvaluatedAgainstPolicy(
-    purls: PackageURL[],
-  ): Promise<IqServerComponentPolicyEvaluationResult> {
+  public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -293,18 +291,7 @@ export class IqRequestService implements RequestService {
       if (res.status == 200) {
         const status: ComponentPolicyEvaluationStatusResult = await res.json();
 
-        let results: IqServerComponentPolicyEvaluationResult;
-        await this.asyncPollForResults(
-          `/${status.resultsUrl}`,
-          (e) => {
-            throw new Error(e);
-          },
-          (policyResults: IqServerComponentPolicyEvaluationResult) => {
-            results = policyResults;
-          },
-        );
-
-        return results;
+        return status;
       } else {
         const text = await res.text();
 
