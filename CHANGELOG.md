@@ -1,3 +1,10 @@
+## [1.0.45](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.44...v1.0.45) (2021-08-03)
+
+
+### Bug Fixes
+
+* odd url case, handle it ([2b30370](https://github.com/sonatype-nexus-community/js-sona-types/commit/2b303705cbedcc8c817580236cbea9be6afc6f2d))
+
 ## [1.0.44](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.43...v1.0.44) (2021-08-03)
 
 
