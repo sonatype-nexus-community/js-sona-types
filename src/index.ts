@@ -16,6 +16,14 @@ export {
   Weakness,
   CweID,
 } from './IqServerVulnerabilityDetails.js';
+export {
+  IqServerComponentPolicyEvaluationResult,
+  Result,
+  PolicyData,
+  PolicyViolation,
+  ConstraintViolation,
+  Reason,
+} from './IqServerComponentPolicyEvaluationResult.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';

@@ -23,6 +23,7 @@ import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
+import { IqServerComponentPolicyEvaluationResult } from './IqServerComponentPolicyEvaluationResult';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -245,7 +246,7 @@ export class IqRequestService implements RequestService {
     try {
       const headers = await this.getHeaders('application/xml');
       const res = await fetch(
-        `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/auditjs?stageId=${this.options.stage}`,
+        `${this.options.host}/api/v2/scan/applications/${this.internalId}/sources/${this.options.product}}?stageId=${this.options.stage}`,
         { method: 'POST', body: data, headers: headers },
       );
 
@@ -261,6 +262,51 @@ export class IqRequestService implements RequestService {
     } catch (err) {
       this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
       throw new Error(`Unable to submit to Third Party API`);
+    }
+  }
+
+  public async getComponentEvaluatedAgainstPolicy(
+    purls: PackageURL[],
+    applicationInternalID: string,
+  ): Promise<IqServerComponentPolicyEvaluationResult> {
+    const headers = await this.getHeaders('application/json');
+
+    const purlsStrings = purls.map((purl) => {
+      return {
+        packageUrl: purl.toString().replace('%2B', '+'),
+      };
+    });
+    const data = {
+      components: purlsStrings,
+    };
+
+    try {
+      const res = await fetch(`${this.options.host}/api/v2/evaluation/applications/${applicationInternalID}`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: headers,
+      });
+
+      if (res.status == 200) {
+        const status: ComponentPolicyEvaluationStatusResult = await res.json();
+
+        let results: IqServerComponentPolicyEvaluationResult;
+        await this.asyncPollForResults(
+          `${status.resultsUrl}`,
+          (e) => {
+            throw new Error(e);
+          },
+          (policyResults: IqServerComponentPolicyEvaluationResult) => {
+            results = policyResults;
+          },
+        );
+
+        return results;
+      } else {
+        throw new Error('Something went wrong with policy');
+      }
+    } catch (err) {
+      throw new Error(err);
     }
   }
 
@@ -317,4 +363,11 @@ export class IqRequestService implements RequestService {
     }
     return `Basic ${Buffer.from(this.options.user + `:` + this.options.token).toString()}`;
   }
+}
+
+interface ComponentPolicyEvaluationStatusResult {
+  resultId: string;
+  submittedDate: Date;
+  applicationId: string;
+  resultsUrl: string;
 }
