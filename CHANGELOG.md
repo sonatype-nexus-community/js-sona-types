@@ -1,3 +1,10 @@
+## [1.0.48](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.47...v1.0.48) (2021-08-03)
+
+
+### Bug Fixes
+
+* more logging ([8ea2ea1](https://github.com/sonatype-nexus-community/js-sona-types/commit/8ea2ea11dda233fa7992f59d22d6b5855e12fe1c))
+
 ## [1.0.47](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.46...v1.0.47) (2021-08-03)
 
 
