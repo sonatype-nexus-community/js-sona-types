@@ -332,25 +332,34 @@ export class IqRequestService implements RequestService {
 
       const headers = await this.getHeaders();
 
+      this.options.logger.logMessage('Merge URL obtained', DEBUG, { url: mergeUrl });
+
       const res = await fetch(mergeUrl, { method: 'GET', headers: headers });
 
       const body = res.ok;
 
+      this.options.logger.logMessage('Status checked on polling URL', DEBUG, { status: res.status });
+
       if (!body) {
         this.timeoutAttempts += 1;
+        this.options.logger.logMessage('Polled, no valid response', DEBUG, { timeoutAttempts: this.timeoutAttempts });
         if (this.timeoutAttempts > this.options.timeout) {
           errorHandler({
             message:
               'Polling attempts exceeded, please either provide a higher limit via the command line using the timeout flag, or re-examine your project and logs to see if another error happened',
           });
         }
+        this.options.logger.logMessage('Trying polling again', DEBUG);
         setTimeout(() => this.asyncPollForResults(url, errorHandler, pollingFinished), 1000);
       } else {
+        this.options.logger.logMessage('Data recieved from polling', DEBUG);
         const data = await res.json();
+        this.options.logger.logMessage('Data retrieved from polling', DEBUG, { data: data });
         pollingFinished(data);
       }
     } catch (e) {
-      errorHandler({ title: e.message });
+      this.options.logger.logMessage('Error in polling', ERROR);
+      errorHandler(e);
     }
   }
 
