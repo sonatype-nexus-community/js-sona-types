@@ -295,7 +295,7 @@ export class IqRequestService implements RequestService {
 
         let results: IqServerComponentPolicyEvaluationResult;
         await this.asyncPollForResults(
-          `${status.resultsUrl}`,
+          `/${status.resultsUrl}`,
           (e) => {
             throw new Error(e);
           },
@@ -322,13 +322,17 @@ export class IqRequestService implements RequestService {
     pollingFinished: (body: any) => any,
   ): Promise<void> {
     this.options.logger.logMessage(`Polling ${url}`, DEBUG);
-    let mergeUrl: URL;
+    let mergeUrl: string;
     try {
-      mergeUrl = this.getURLOrMerge(url);
+      try {
+        mergeUrl = this.getURLOrMerge(url).href;
+      } catch (err) {
+        mergeUrl = `${this.options.host}/${url}`;
+      }
 
       const headers = await this.getHeaders();
 
-      const res = await fetch(mergeUrl.href, { method: 'GET', headers: headers });
+      const res = await fetch(mergeUrl, { method: 'GET', headers: headers });
 
       const body = res.status == 200;
 
@@ -351,9 +355,11 @@ export class IqRequestService implements RequestService {
   }
 
   private getURLOrMerge(url: string): URL {
+    this.options.logger.logMessage('Attempting to merge url', DEBUG, url);
     try {
       return new URL(url);
     } catch (e) {
+      this.options.logger.logMessage('URL not valid as it sits, try to merge it', DEBUG);
       this.options.logger.logMessage(e.title, DEBUG, { message: e.message });
 
       if (this.options.host.endsWith('/')) {
