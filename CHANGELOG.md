@@ -1,3 +1,10 @@
+## [1.0.47](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.46...v1.0.47) (2021-08-03)
+
+
+### Bug Fixes
+
+* use ok instead of 200 ([34c3490](https://github.com/sonatype-nexus-community/js-sona-types/commit/34c34901d3d9a01a9b78aab0ecdce7531a446bcb))
+
 ## [1.0.46](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.45...v1.0.46) (2021-08-03)
 
 
