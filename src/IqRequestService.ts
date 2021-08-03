@@ -327,7 +327,7 @@ export class IqRequestService implements RequestService {
       try {
         mergeUrl = this.getURLOrMerge(url).href;
       } catch (err) {
-        mergeUrl = `${this.options.host}/${url}`;
+        mergeUrl = `${this.options.host}${url}`;
       }
 
       const headers = await this.getHeaders();
