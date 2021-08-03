@@ -334,7 +334,7 @@ export class IqRequestService implements RequestService {
 
       const res = await fetch(mergeUrl, { method: 'GET', headers: headers });
 
-      const body = res.status == 200;
+      const body = res.ok;
 
       if (!body) {
         this.timeoutAttempts += 1;
