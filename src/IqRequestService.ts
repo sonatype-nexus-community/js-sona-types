@@ -267,8 +267,11 @@ export class IqRequestService implements RequestService {
 
   public async getComponentEvaluatedAgainstPolicy(
     purls: PackageURL[],
-    applicationInternalID: string,
   ): Promise<IqServerComponentPolicyEvaluationResult> {
+    if (!this.isInitialized) {
+      await this.init();
+    }
+
     const headers = await this.getHeaders('application/json');
 
     const purlsStrings = purls.map((purl) => {
@@ -281,7 +284,7 @@ export class IqRequestService implements RequestService {
     };
 
     try {
-      const res = await fetch(`${this.options.host}/api/v2/evaluation/applications/${applicationInternalID}`, {
+      const res = await fetch(`${this.options.host}/api/v2/evaluation/applications/${this.internalId}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: headers,
