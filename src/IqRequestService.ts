@@ -303,7 +303,10 @@ export class IqRequestService implements RequestService {
 
         return results;
       } else {
-        throw new Error('Something went wrong with policy');
+        const text = await res.text();
+
+        this.options.logger.logMessage('Unable to get component evaluated against Policy API', ERROR, { error: text });
+        throw new Error(text);
       }
     } catch (err) {
       throw new Error(err);
