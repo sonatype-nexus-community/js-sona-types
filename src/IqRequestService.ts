@@ -23,7 +23,6 @@ import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
-import { IqServerComponentPolicyEvaluationResult } from './IqServerComponentPolicyEvaluationResult';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -80,7 +79,7 @@ export class IqRequestService implements RequestService {
     return headers;
   }
 
-  public setXCSRFToken(token: string) {
+  public setXCSRFToken(token: string): void {
     this.xcsrfToken = token;
   }
 
