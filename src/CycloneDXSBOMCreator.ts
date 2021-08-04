@@ -243,7 +243,7 @@ export class CycloneDXSBOMCreator {
   }
 
   /**
-   * If the author has described the module as a 'framework', the take their
+   * If the author has described the module as a 'framework', then take their
    * word for it, otherwise, identify the module as a 'library'.
    */
   private determinePackageType(pkg: any): string {
