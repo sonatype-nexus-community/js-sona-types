@@ -277,7 +277,7 @@ export class IqRequestService implements RequestService {
       const res = await fetch(
         `${this.options.host}/api/v2/licenseLegalMetadata/application/${
           this.options.application
-        }/component?=packageUrl=${purl.toString()}`,
+        }/component?packageUrl=${purl.toString()}`,
         {
           method: 'GET',
           headers: headers,
