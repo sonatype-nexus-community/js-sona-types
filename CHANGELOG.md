@@ -1,3 +1,11 @@
+## [1.0.50](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.49...v1.0.50) (2021-08-07)
+
+
+### Bug Fixes
+
+* add type to endpoint, implement type, etc... ([413f349](https://github.com/sonatype-nexus-community/js-sona-types/commit/413f349a372fad4e33c858b98a6696927612866a))
+* never forget the linty boi ([74d826d](https://github.com/sonatype-nexus-community/js-sona-types/commit/74d826d100fb6d0a10bbe8e9d85f9b2976bf27c1))
+
 ## [1.0.49](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.48...v1.0.49) (2021-08-03)
 
 
