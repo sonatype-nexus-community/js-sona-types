@@ -265,6 +265,41 @@ export class IqRequestService implements RequestService {
     }
   }
 
+  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<any> {
+    if (!this.isInitialized) {
+      await this.init();
+    }
+
+    const headers = await this.getHeaders();
+
+    try {
+      const res = await fetch(
+        `${this.options.host}/api/v2/licenseLegalMetadata/application/${
+          this.options.application
+        }/component?=packageUrl=${purl.toString()}`,
+        {
+          method: 'GET',
+          headers: headers,
+        },
+      );
+
+      if (res.status == 200) {
+        const data = await res.json();
+
+        return data;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Unable to get component evaluated against License Legal Metadata API', ERROR, {
+          error: text,
+        });
+        throw new Error(text);
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> {
     if (!this.isInitialized) {
       await this.init();
