@@ -27,12 +27,12 @@ export {
 export {
   IqServerLicenseLegalMetadataResult,
   LegalComponent,
-  LicenseLegalData, 
+  LicenseLegalData,
   LicenseLegalDataObligation,
   Copyright,
   LicenseLegalMetadatum,
   LicenseLegalMetadatumObligation,
-  ThreatGroup
+  ThreatGroup,
 } from './IqServerLicenseLegalMetadataResult.js';
 
 // CycloneDX
