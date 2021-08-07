@@ -1,3 +1,10 @@
+## [1.0.49](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.48...v1.0.49) (2021-08-03)
+
+
+### Bug Fixes
+
+* just call async externally ([f08e229](https://github.com/sonatype-nexus-community/js-sona-types/commit/f08e229d649001edfa99786373aebd69419ce9e9))
+
 ## [1.0.48](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.47...v1.0.48) (2021-08-03)
 
 
