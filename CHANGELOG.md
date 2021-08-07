@@ -1,3 +1,10 @@
+## [1.0.51](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.50...v1.0.51) (2021-08-07)
+
+
+### Bug Fixes
+
+* errant equals sign ([9b2ab71](https://github.com/sonatype-nexus-community/js-sona-types/commit/9b2ab7153f573d64492fa48c676312693d5ee106))
+
 ## [1.0.50](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.49...v1.0.50) (2021-08-07)
 
 
