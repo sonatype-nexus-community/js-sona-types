@@ -24,6 +24,7 @@ import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
 import { IqServerComponentPolicyEvaluationResult } from './IqServerComponentPolicyEvaluationResult';
+import { IqServerLicenseLegalMetadataResult } from './IqServerLicenseLegalMetadataResult';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -265,7 +266,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<any> {
+  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -284,7 +285,7 @@ export class IqRequestService implements RequestService {
       );
 
       if (res.status == 200) {
-        const data = await res.json();
+        const data: IqServerLicenseLegalMetadataResult = await res.json();
 
         return data;
       } else {

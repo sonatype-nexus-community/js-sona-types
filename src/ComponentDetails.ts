@@ -40,10 +40,10 @@ export interface ComponentIdentifier {
 }
 
 export interface Coordinates {
-  artifactId: string;
-  classifier: string;
-  extension: string;
-  groupId: string;
+  artifactId?: string;
+  classifier?: string;
+  extension?: string;
+  groupId?: string;
   version: string;
 }
 
