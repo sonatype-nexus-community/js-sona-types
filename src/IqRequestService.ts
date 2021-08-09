@@ -23,6 +23,8 @@ import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
+import { IqServerComponentPolicyEvaluationResult } from './IqServerComponentPolicyEvaluationResult';
+import { IqServerLicenseLegalMetadataResult } from './IqServerLicenseLegalMetadataResult';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -261,6 +263,41 @@ export class IqRequestService implements RequestService {
     } catch (err) {
       this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
       throw new Error(`Unable to submit to Third Party API`);
+    }
+  }
+
+  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult> {
+    if (!this.isInitialized) {
+      await this.init();
+    }
+
+    const headers = await this.getHeaders();
+
+    try {
+      const res = await fetch(
+        `${this.options.host}/api/v2/licenseLegalMetadata/application/${
+          this.options.application
+        }/component?packageUrl=${purl.toString()}`,
+        {
+          method: 'GET',
+          headers: headers,
+        },
+      );
+
+      if (res.status == 200) {
+        const data: IqServerLicenseLegalMetadataResult = await res.json();
+
+        return data;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Unable to get component evaluated against License Legal Metadata API', ERROR, {
+          error: text,
+        });
+        throw new Error(text);
+      }
+    } catch (err) {
+      throw new Error(err);
     }
   }
 

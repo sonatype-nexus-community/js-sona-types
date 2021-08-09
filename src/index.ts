@@ -24,6 +24,16 @@ export {
   ConstraintViolation,
   Reason,
 } from './IqServerComponentPolicyEvaluationResult.js';
+export {
+  IqServerLicenseLegalMetadataResult,
+  LegalComponent,
+  LicenseLegalData,
+  LicenseLegalDataObligation,
+  Copyright,
+  LicenseLegalMetadatum,
+  LicenseLegalMetadatumObligation,
+  ThreatGroup,
+} from './IqServerLicenseLegalMetadataResult.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';
