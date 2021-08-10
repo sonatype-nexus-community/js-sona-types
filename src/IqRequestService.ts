@@ -312,7 +312,7 @@ export class IqRequestService implements RequestService {
     this.options.logger.logMessage('Using purl to query for versions', DEBUG, { purl: purl.toString() });
 
     const data = {
-      packageUrl: purl[0].toString().replace('%2B', '+'),
+      packageUrl: purl.toString().replace('%2B', '+'),
     };
 
     try {
@@ -347,7 +347,7 @@ export class IqRequestService implements RequestService {
     const headers = await this.getHeaders('application/json');
 
     const data = {
-      packageUrl: purl[0].toString().replace('%2B', '+'),
+      packageUrl: purl.toString().replace('%2B', '+'),
     };
 
     try {
