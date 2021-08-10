@@ -23,8 +23,8 @@ import { UserAgentHelper } from './UserAgentHelper';
 import { DEBUG, ERROR } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
-import { IqServerComponentPolicyEvaluationResult } from './IqServerComponentPolicyEvaluationResult';
 import { IqServerLicenseLegalMetadataResult } from './IqServerLicenseLegalMetadataResult';
+import { IqServerComponentRemediationResult } from './IqServerComponentRemediationResult';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -301,7 +301,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getComponentRemediation(purl: PackageURL): Promise<any> {
+  public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -323,7 +323,7 @@ export class IqRequestService implements RequestService {
       );
 
       if (res.status == 200) {
-        const result = await res.json();
+        const result: IqServerComponentRemediationResult = await res.json();
 
         return result;
       } else {
