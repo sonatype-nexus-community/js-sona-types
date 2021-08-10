@@ -1,3 +1,10 @@
+## [1.0.53](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.52...v1.0.53) (2021-08-10)
+
+
+### Bug Fixes
+
+* data type for component remediation, and implement all versions endpoint ([bf54608](https://github.com/sonatype-nexus-community/js-sona-types/commit/bf54608289031e6962dcfed55c3fa348bf6ff955))
+
 ## [1.0.52](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.51...v1.0.52) (2021-08-10)
 
 
