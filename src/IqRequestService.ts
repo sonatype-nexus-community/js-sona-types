@@ -301,6 +301,44 @@ export class IqRequestService implements RequestService {
     }
   }
 
+  public async getVersionsForComponent(purl: PackageURL): Promise<any> {
+    const headers = await this.getHeaders('application/json');
+
+    // Query without version, qualifiers, subpath in case we got them
+    purl.version = undefined;
+    purl.qualifiers = undefined;
+    purl.subpath = undefined;
+
+    this.options.logger.logMessage('Using purl to query for versions', DEBUG, { purl: purl.toString() });
+
+    const data = {
+      packageUrl: purl[0].toString().replace('%2B', '+'),
+    };
+
+    try {
+      const res = await fetch(`${this.options.host}/api/v2/components/versions`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
+      });
+
+      if (res.status == 200) {
+        const results = await res.json();
+
+        return results;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Unable to get component versions from Component Versions API', ERROR, {
+          error: text,
+        });
+        throw new Error(text);
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> {
     if (!this.isInitialized) {
       await this.init();
@@ -309,11 +347,7 @@ export class IqRequestService implements RequestService {
     const headers = await this.getHeaders('application/json');
 
     const data = {
-      components: [
-        {
-          packageUrl: purl[0].toString().replace('%2B', '+'),
-        },
-      ],
+      packageUrl: purl[0].toString().replace('%2B', '+'),
     };
 
     try {
