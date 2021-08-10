@@ -301,6 +301,44 @@ export class IqRequestService implements RequestService {
     }
   }
 
+  public async getComponentRemediation(purl: PackageURL): Promise<any> {
+    if (!this.isInitialized) {
+      await this.init();
+    }
+
+    const headers = await this.getHeaders('application/json');
+
+    const data = {
+      components: [
+        {
+          packageUrl: purl[0].toString().replace('%2B', '+'),
+        },
+      ],
+    };
+
+    try {
+      const res = await fetch(
+        `${this.options.host}/api/v2/components/remediation/application/${this.internalId}?stageId=${this.options.stage}`,
+        { method: 'POST', headers: headers, body: JSON.stringify(data) },
+      );
+
+      if (res.status == 200) {
+        const result = await res.json();
+
+        return result;
+      } else {
+        const text = await res.text();
+
+        this.options.logger.logMessage('Unable to get component remediations from Component Remediation API', ERROR, {
+          error: text,
+        });
+        throw new Error(text);
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> {
     if (!this.isInitialized) {
       await this.init();

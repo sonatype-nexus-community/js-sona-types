@@ -34,6 +34,13 @@ export {
   LicenseLegalMetadatumObligation,
   ThreatGroup,
 } from './IqServerLicenseLegalMetadataResult.js';
+export {
+  IqServerComponentRemediationResult,
+  Remediation,
+  VersionChange,
+  Data,
+  RemediationComponent,
+} from './IqServerComponentRemediationResult.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';
