@@ -1,3 +1,10 @@
+## [1.0.54](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.53...v1.0.54) (2021-08-10)
+
+
+### Bug Fixes
+
+* no array here woopsie ([4d57a7f](https://github.com/sonatype-nexus-community/js-sona-types/commit/4d57a7fc7925847a97acb87785f95a932ed9a221))
+
 ## [1.0.53](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.52...v1.0.53) (2021-08-10)
 
 
