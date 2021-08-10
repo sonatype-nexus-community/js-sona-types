@@ -1,3 +1,10 @@
+## [1.0.52](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.51...v1.0.52) (2021-08-10)
+
+
+### Bug Fixes
+
+* type method to IqServerComponentRemediationResult ([8140716](https://github.com/sonatype-nexus-community/js-sona-types/commit/814071698e2835cb73f8df585bb03ecd3e277959))
+
 ## [1.0.51](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.50...v1.0.51) (2021-08-07)
 
 
