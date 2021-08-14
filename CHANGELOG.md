@@ -1,3 +1,10 @@
+## [1.0.55](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.54...v1.0.55) (2021-08-14)
+
+
+### Bug Fixes
+
+* trim logging down to trace, it's super noisy, and a few extra logging calls for license legal ([07180c4](https://github.com/sonatype-nexus-community/js-sona-types/commit/07180c4a81cb2db1342d5d131c81dd92b5236077))
+
 ## [1.0.54](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.53...v1.0.54) (2021-08-10)
 
 
