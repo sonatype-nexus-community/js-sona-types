@@ -26,3 +26,4 @@ export class TestLogger implements ILogger {
 
 export const DEBUG = 'debug';
 export const ERROR = 'error';
+export const TRACE = 'trace';

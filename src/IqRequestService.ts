@@ -20,7 +20,7 @@ import { IqApplicationResponse } from './IqApplicationResponse';
 import { RequestService, RequestServiceOptions } from './RequestService';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
-import { DEBUG, ERROR } from './ILogger';
+import { ERROR, TRACE } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
 import { IqServerLicenseLegalMetadataResult } from './IqServerLicenseLegalMetadataResult';
@@ -123,12 +123,12 @@ export class IqRequestService implements RequestService {
       ],
     };
 
-    this.options.logger.logMessage('Purls to check', DEBUG, { purls: purl });
+    this.options.logger.logMessage('Purls to check', TRACE, { purls: purl });
 
     try {
       const headers = await this.getHeaders('application/json');
 
-      this.options.logger.logMessage('Got headers', DEBUG);
+      this.options.logger.logMessage('Got headers', TRACE);
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
         method: 'POST',
@@ -136,7 +136,7 @@ export class IqRequestService implements RequestService {
         headers: headers,
       });
 
-      this.options.logger.logMessage('Response back', DEBUG, { response: res });
+      this.options.logger.logMessage('Response back', TRACE, { response: res });
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
@@ -157,7 +157,7 @@ export class IqRequestService implements RequestService {
   public async getVulnerabilityDetails(vulnID: string): Promise<IqServerVulnerabilityDetails> {
     const headers = await this.getHeaders();
 
-    this.options.logger.logMessage('Got headers', DEBUG);
+    this.options.logger.logMessage('Got headers', TRACE);
 
     try {
       const res = await fetch(`${this.options.host}/api/v2/vulnerabilities/${vulnID}`, {
@@ -195,7 +195,7 @@ export class IqRequestService implements RequestService {
 
       const resData = await res.text();
 
-      this.options.logger.logMessage('Response from login call', DEBUG, {
+      this.options.logger.logMessage('Response from login call', TRACE, {
         response: resData,
         status: res.status,
         statusText: res.statusText,
@@ -209,7 +209,7 @@ export class IqRequestService implements RequestService {
   }
 
   public async getPolicyReportResults(reportUrl: string): Promise<IqServerPolicyReportResult> {
-    this.options.logger.logMessage('Attempting to get policy report results', DEBUG, { reportUrl: reportUrl });
+    this.options.logger.logMessage('Attempting to get policy report results', TRACE, { reportUrl: reportUrl });
 
     if (reportUrl.endsWith('raw')) {
       reportUrl = reportUrl.substr(0, reportUrl.length - 3) + 'policy';
@@ -242,7 +242,7 @@ export class IqRequestService implements RequestService {
       await this.init();
     }
 
-    this.options.logger.logMessage('Internal ID', DEBUG, { internalId: this.internalId });
+    this.options.logger.logMessage('Internal ID', TRACE, { internalId: this.internalId });
 
     try {
       const headers = await this.getHeaders('application/xml');
@@ -270,6 +270,10 @@ export class IqRequestService implements RequestService {
     if (!this.isInitialized) {
       await this.init();
     }
+
+    this.options.logger.logMessage('Nexus IQ Server Internal ID', TRACE, { internalId: this.internalId });
+
+    this.options.logger.logMessage('Attempting to get license legal data for purl', TRACE, { purl: purl });
 
     const headers = await this.getHeaders();
 
@@ -309,7 +313,7 @@ export class IqRequestService implements RequestService {
     purl.qualifiers = undefined;
     purl.subpath = undefined;
 
-    this.options.logger.logMessage('Using purl to query for versions', DEBUG, { purl: purl.toString() });
+    this.options.logger.logMessage('Using purl to query for versions', TRACE, { purl: purl.toString() });
 
     const data = {
       packageUrl: purl.toString().replace('%2B', '+'),
@@ -416,7 +420,7 @@ export class IqRequestService implements RequestService {
     errorHandler: (error: any) => any,
     pollingFinished: (body: any) => any,
   ): Promise<void> {
-    this.options.logger.logMessage(`Polling ${url}`, DEBUG);
+    this.options.logger.logMessage(`Polling ${url}`, TRACE);
     let mergeUrl: string;
     try {
       try {
@@ -427,29 +431,29 @@ export class IqRequestService implements RequestService {
 
       const headers = await this.getHeaders();
 
-      this.options.logger.logMessage('Merge URL obtained', DEBUG, { url: mergeUrl });
+      this.options.logger.logMessage('Merge URL obtained', TRACE, { url: mergeUrl });
 
       const res = await fetch(mergeUrl, { method: 'GET', headers: headers });
 
       const body = res.ok;
 
-      this.options.logger.logMessage('Status checked on polling URL', DEBUG, { status: res.status });
+      this.options.logger.logMessage('Status checked on polling URL', TRACE, { status: res.status });
 
       if (!body) {
         this.timeoutAttempts += 1;
-        this.options.logger.logMessage('Polled, no valid response', DEBUG, { timeoutAttempts: this.timeoutAttempts });
+        this.options.logger.logMessage('Polled, no valid response', TRACE, { timeoutAttempts: this.timeoutAttempts });
         if (this.timeoutAttempts > this.options.timeout) {
           errorHandler({
             message:
               'Polling attempts exceeded, please either provide a higher limit via the command line using the timeout flag, or re-examine your project and logs to see if another error happened',
           });
         }
-        this.options.logger.logMessage('Trying polling again', DEBUG);
+        this.options.logger.logMessage('Trying polling again', TRACE);
         setTimeout(() => this.asyncPollForResults(url, errorHandler, pollingFinished), 1000);
       } else {
-        this.options.logger.logMessage('Data recieved from polling', DEBUG);
+        this.options.logger.logMessage('Data recieved from polling', TRACE);
         const data = await res.json();
-        this.options.logger.logMessage('Data retrieved from polling', DEBUG, { data: data });
+        this.options.logger.logMessage('Data retrieved from polling', TRACE, { data: data });
         pollingFinished(data);
       }
     } catch (e) {
@@ -459,12 +463,12 @@ export class IqRequestService implements RequestService {
   }
 
   private getURLOrMerge(url: string): URL {
-    this.options.logger.logMessage('Attempting to merge url', DEBUG, url);
+    this.options.logger.logMessage('Attempting to merge url', TRACE, url);
     try {
       return new URL(url);
     } catch (e) {
-      this.options.logger.logMessage('URL not valid as it sits, try to merge it', DEBUG);
-      this.options.logger.logMessage(e.title, DEBUG, { message: e.message });
+      this.options.logger.logMessage('URL not valid as it sits, try to merge it', TRACE);
+      this.options.logger.logMessage(e.title, TRACE, { message: e.message });
 
       if (this.options.host.endsWith('/')) {
         return new URL(this.options.host.concat(url));
