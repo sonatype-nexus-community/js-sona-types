@@ -35,11 +35,17 @@ export interface LicenseLegalData {
   declaredLicenses: string[];
   observedLicenses: string[];
   effectiveLicenses: string[];
-  highestEffectiveLicenseThreatGroup: string;
+  highestEffectiveLicenseThreatGroup: HighestEffectiveLicenseThreatGroup;
   copyrights: Copyright[];
   licenseFiles: Copyright[];
   noticeFiles: Copyright[];
   obligations: LicenseLegalDataObligation[];
+}
+
+export interface HighestEffectiveLicenseThreatGroup {
+  licenseThreatGroupCategory: string;
+  licenseThreatGroupLevel: number;
+  licenseThreatGroupName: string;
 }
 
 export interface Copyright {

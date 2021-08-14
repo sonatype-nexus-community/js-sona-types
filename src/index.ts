@@ -29,6 +29,7 @@ export {
   LegalComponent,
   LicenseLegalData,
   LicenseLegalDataObligation,
+  HighestEffectiveLicenseThreatGroup,
   Copyright,
   LicenseLegalMetadatum,
   LicenseLegalMetadatumObligation,
