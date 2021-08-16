@@ -15,7 +15,7 @@
  */
 
 import { CycloneDXOptions, CycloneDXSBOMCreator } from './CycloneDXSBOMCreator';
-import { Bom, CycloneDXComponent, Dependency, Metadata } from './CycloneDXSBOMTypes';
+import { Bom, CycloneDXComponent, Dependency } from './CycloneDXSBOMTypes';
 import { TestLogger } from './ILogger';
 
 // Test object with circular dependency, scoped dependency, dependency with dependency
@@ -109,7 +109,7 @@ describe('CycloneDXSbomCreator', () => {
     const expectedBom: Bom = {
       '@serial-number': bom['@serial-number'].toString(), // force serial number
       '@version': 1,
-      '@xmlns': 'http://cyclonedx.org/schema/bom/1.3',
+      '@xmlns': 'https://cyclonedx.org/schema/bom/1.3',
       metadata: {
         timestamp: bom.metadata.timestamp.toString(), // force timestamp
         component: expectedComponent,
@@ -152,7 +152,7 @@ describe('CycloneDXSbomCreator', () => {
     }
   });
 
-  it('should process license data', async () => {
+  it('should process license data with unknown license', async () => {
     const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
       logger: new TestLogger(),
       includeLicenseData: true,
@@ -168,12 +168,31 @@ describe('CycloneDXSbomCreator', () => {
         },
       },
     };
-    // @TODO why is license code giving error:
-    // object is not iterable (cannot read property Symbol(Symbol.iterator))
-    // TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
-    //     at CycloneDXSBOMCreator.getLicenses (.../js-sona-types/src/CycloneDXSBOMCreator.ts:335:26)
-    //
-    // const bom: Bom = await sbomCreator.getBom(littleObject);
-    // expect(bom).toStrictEqual({} as Bom);
+
+    const bom: Bom = await sbomCreator.getBom(littleObject);
+    expect(bom.components[0].licenses[0].license.name).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.metadata.component.version).toBe(littleObject.version);
+  });
+
+  it('should process license data with known license', async () => {
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      logger: new TestLogger(),
+      includeLicenseData: true,
+    } as CycloneDXOptions);
+
+    const littleObject = {
+      name: '@jsonScope/jsonProjectName.jsonModuleName',
+      version: '-1',
+      dependencies: {
+        childDependency: {
+          name: 'childDepName',
+          license: 'AGPL-1.0',
+        },
+      },
+    };
+
+    const bom: Bom = await sbomCreator.getBom(littleObject);
+    expect(bom.components[0].licenses[0].license.id).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.metadata.component.version).toBe(littleObject.version);
   });
 });
