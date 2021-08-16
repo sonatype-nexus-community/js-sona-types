@@ -13,17 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface ILogger {
-  logMessage(message: string, level: string, ...meta: any): void;
+
+import { ComponentIdentifier } from './ComponentDetails';
+
+export interface IqServerComponentRemediationResult {
+  remediation: Remediation;
 }
 
-export class TestLogger implements ILogger {
-  public logMessage = (message: string, level: string, ...meta: any): void => {
-    console.log('You are using the test logger, and test logging is good');
-    console.log(message, level, meta);
-  };
+export interface Remediation {
+  versionChanges: VersionChange[];
 }
 
-export const DEBUG = 'debug';
-export const ERROR = 'error';
-export const TRACE = 'trace';
+export interface VersionChange {
+  type: string;
+  data: Data;
+}
+
+export interface Data {
+  component: RemediationComponent;
+}
+
+export interface RemediationComponent {
+  packageUrl: string;
+  hash?: string;
+  componentIdentifier: ComponentIdentifier;
+}

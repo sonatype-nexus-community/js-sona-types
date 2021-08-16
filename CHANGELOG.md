@@ -1,3 +1,31 @@
+## [1.0.55](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.54...v1.0.55) (2021-08-14)
+
+
+### Bug Fixes
+
+* trim logging down to trace, it's super noisy, and a few extra logging calls for license legal ([07180c4](https://github.com/sonatype-nexus-community/js-sona-types/commit/07180c4a81cb2db1342d5d131c81dd92b5236077))
+
+## [1.0.54](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.53...v1.0.54) (2021-08-10)
+
+
+### Bug Fixes
+
+* no array here woopsie ([4d57a7f](https://github.com/sonatype-nexus-community/js-sona-types/commit/4d57a7fc7925847a97acb87785f95a932ed9a221))
+
+## [1.0.53](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.52...v1.0.53) (2021-08-10)
+
+
+### Bug Fixes
+
+* data type for component remediation, and implement all versions endpoint ([bf54608](https://github.com/sonatype-nexus-community/js-sona-types/commit/bf54608289031e6962dcfed55c3fa348bf6ff955))
+
+## [1.0.52](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.51...v1.0.52) (2021-08-10)
+
+
+### Bug Fixes
+
+* type method to IqServerComponentRemediationResult ([8140716](https://github.com/sonatype-nexus-community/js-sona-types/commit/814071698e2835cb73f8df585bb03ecd3e277959))
+
 ## [1.0.51](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.50...v1.0.51) (2021-08-07)
 
 

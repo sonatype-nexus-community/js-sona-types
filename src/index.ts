@@ -29,11 +29,19 @@ export {
   LegalComponent,
   LicenseLegalData,
   LicenseLegalDataObligation,
+  HighestEffectiveLicenseThreatGroup,
   Copyright,
   LicenseLegalMetadatum,
   LicenseLegalMetadatumObligation,
   ThreatGroup,
 } from './IqServerLicenseLegalMetadataResult.js';
+export {
+  IqServerComponentRemediationResult,
+  Remediation,
+  VersionChange,
+  Data,
+  RemediationComponent,
+} from './IqServerComponentRemediationResult.js';
 
 // CycloneDX
 export { CycloneDXSBOMCreator, CycloneDXOptions } from './CycloneDXSBOMCreator.js';
@@ -62,5 +70,5 @@ export {
   LicenseData,
   LicenseDetail,
 } from './ComponentDetails.js';
-export { ILogger, TestLogger, DEBUG, ERROR } from './ILogger.js';
+export { ILogger, TestLogger, DEBUG, ERROR, TRACE } from './ILogger.js';
 export { RequestServiceOptions, RequestService } from './RequestService';
