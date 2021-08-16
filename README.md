@@ -54,6 +54,6 @@ To avoid performing a release after a commit to the `main` branch, be sure your 
 
 ## Need Help?
 
-Internal folks, reach out to the Developer Experience team. Filing an issue here is good too!
+Internal folks, reach out to the Developer Experience team. Filing an [issue here](https://github.com/sonatype-nexus-community/js-sona-types/issues) is good too!
 
-External folks, file an issue here!
+External folks, file an [issue here](https://github.com/sonatype-nexus-community/js-sona-types/issues)!
