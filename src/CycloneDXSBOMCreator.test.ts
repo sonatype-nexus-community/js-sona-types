@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { CycloneDXSBOMCreator } from './CycloneDXSBOMCreator';
-import { Bom } from './CycloneDXSBOMTypes';
+import { CycloneDXOptions, CycloneDXSBOMCreator } from './CycloneDXSBOMCreator';
+import { Bom, CycloneDXComponent, Dependency } from './CycloneDXSBOMTypes';
 import { TestLogger } from './ILogger';
 
 // Test object with circular dependency, scoped dependency, dependency with dependency
@@ -80,5 +80,119 @@ describe('CycloneDXSbomCreator', () => {
     const sbomString = sbomCreator.toXml(bom, false);
 
     expect(sbomString).toBe(expectedSpartanResponse);
+  });
+
+  it('should return the supplied type "framework", component values, xml SerialNumber and Timestamp', async () => {
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      spartan: true,
+      logger: new TestLogger(),
+      includeBomSerialNumber: true,
+      includeTimestamp: true,
+    } as CycloneDXOptions);
+
+    const littleObject = {
+      name: '@jsonScope/jsonProjectName.jsonModuleName',
+      version: '-1',
+      keywords: ['FrameWorK', 'Yadda'],
+    };
+    const bom: Bom = await sbomCreator.getBom(littleObject);
+
+    const expectedComponent: CycloneDXComponent = {
+      '@bom-ref': 'pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1',
+      '@type': 'framework',
+      group: '@jsonScope',
+      name: 'jsonProjectName.jsonModuleName',
+      purl: 'pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1',
+      version: '-1',
+    } as CycloneDXComponent;
+
+    const expectedBom: Bom = {
+      '@serial-number': bom['@serial-number'].toString(), // force serial number
+      '@version': 1,
+      '@xmlns': 'https://cyclonedx.org/schema/bom/1.3',
+      metadata: {
+        timestamp: bom.metadata.timestamp.toString(), // force timestamp
+        component: expectedComponent,
+      },
+      components: [],
+      dependencies: [
+        {
+          '@ref': 'pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1',
+          dependencies: [],
+        } as Dependency,
+      ],
+    };
+    expect(bom).toStrictEqual(expectedBom);
+
+    const sbomString = sbomCreator.toXml(bom, false);
+
+    const expectedXml =
+      '<?xml version="1.0"?><bom encoding="utf-8" serialNumber="holderSerialNumber" version="1"><metadata><timestamp>holderTimeStamp</timestamp><component type="framework" bom-ref="pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1"><group>@jsonScope</group><name>jsonProjectName.jsonModuleName</name><version>-1</version><purl>pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1</purl></component></metadata><components/><dependencies><dependency ref="pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1"/></dependencies></bom>'
+        .replace('holderSerialNumber', bom['@serial-number'])
+        .replace('holderTimeStamp', bom.metadata.timestamp);
+    expect(sbomString).toBe(expectedXml);
+  });
+
+  it('should ignore extraneous package', async () => {
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      spartan: true,
+      logger: new TestLogger(),
+    } as CycloneDXOptions);
+
+    const littleObject = {
+      name: '@jsonScope/jsonProjectName.jsonModuleName',
+      version: '-1',
+      extraneous: true,
+    };
+    try {
+      await sbomCreator.getBom(littleObject);
+      expect('error should have been thrown').toBe('error was not thrown');
+    } catch (e) {
+      expect(e.toString()).toBe('Error: Node does not exist: pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1');
+    }
+  });
+
+  it('should process license data with unknown license', async () => {
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      logger: new TestLogger(),
+      includeLicenseData: true,
+    } as CycloneDXOptions);
+
+    const littleObject = {
+      name: '@jsonScope/jsonProjectName.jsonModuleName',
+      version: '-1',
+      dependencies: {
+        childDependency: {
+          name: 'childDepName',
+          license: 'someLicense',
+        },
+      },
+    };
+
+    const bom: Bom = await sbomCreator.getBom(littleObject);
+    expect(bom.components[0].licenses[0].license.name).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.metadata.component.version).toBe(littleObject.version);
+  });
+
+  it('should process license data with known license', async () => {
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      logger: new TestLogger(),
+      includeLicenseData: true,
+    } as CycloneDXOptions);
+
+    const littleObject = {
+      name: '@jsonScope/jsonProjectName.jsonModuleName',
+      version: '-1',
+      dependencies: {
+        childDependency: {
+          name: 'childDepName',
+          license: 'AGPL-1.0',
+        },
+      },
+    };
+
+    const bom: Bom = await sbomCreator.getBom(littleObject);
+    expect(bom.components[0].licenses[0].license.id).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.metadata.component.version).toBe(littleObject.version);
   });
 });

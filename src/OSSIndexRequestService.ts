@@ -29,8 +29,8 @@ const MAX_COORDINATES = 128;
 
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
-if (typeof window === 'undefined' && !globalThis.fetch) {
-  globalThis.fetch = crossFetch;
+if (typeof global.fetch === 'undefined' && typeof process !== 'undefined' && process.release.name === 'node') {
+  global.fetch = crossFetch;
 }
 
 export class OSSIndexRequestService implements RequestService {

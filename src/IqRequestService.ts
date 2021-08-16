@@ -81,7 +81,7 @@ export class IqRequestService implements RequestService {
     return headers;
   }
 
-  public setXCSRFToken(token: string) {
+  public setXCSRFToken(token: string): void {
     this.xcsrfToken = token;
   }
 

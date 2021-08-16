@@ -17,16 +17,18 @@
 
 import { create } from 'xmlbuilder2';
 import * as ssri from 'ssri';
-import { LicenseContent } from './CycloneDXSBOMTypes';
-import { CycloneDXComponent, GenericDescription } from './CycloneDXSBOMTypes';
-import { ExternalReference } from './CycloneDXSBOMTypes';
-import { Hash } from './CycloneDXSBOMTypes';
-import * as spdxLicensesNonDeprecated from 'spdx-license-ids';
-import * as spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
+import {
+  Bom,
+  CycloneDXComponent,
+  Dependency,
+  ExternalReference,
+  Hash,
+  LicenseContent,
+  Metadata,
+} from './CycloneDXSBOMTypes';
+import spdxLicensesNonDeprecated from 'spdx-license-ids';
+import spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
 import { DepGraph } from 'dependency-graph';
-import { Dependency } from './CycloneDXSBOMTypes';
-import { Metadata } from './CycloneDXSBOMTypes';
-import { Bom } from './CycloneDXSBOMTypes';
 import { DEBUG, ILogger } from './ILogger';
 import { PackageURL } from 'packageurl-js';
 import { randomBytes } from 'crypto';
@@ -54,7 +56,7 @@ export class CycloneDXSBOMCreator {
     { licenseContentType: 'text/xml', fileExtension: '.xml' },
   ];
 
-  readonly SBOMSCHEMA: string = 'http://cyclonedx.org/schema/bom/1.3';
+  readonly SBOMSCHEMA: string = 'https://cyclonedx.org/schema/bom/1.3';
 
   constructor(readonly path: string, readonly options?: CycloneDXOptions) {
     this.graph = new DepGraph();
@@ -64,11 +66,11 @@ export class CycloneDXSBOMCreator {
   public async getBom(pkgInfo: any): Promise<Bom> {
     const components = Array.from(this.listComponents(pkgInfo).values());
 
-    const dependencies: Array<Dependency> = new Array();
+    const dependencies: Array<Dependency> = [];
 
     this.listDependencies(this.getPurlFromPkgInfo(pkgInfo).toString(), dependencies);
 
-    const bom: Bom = {
+    return {
       '@serial-number': 'urn:uuid:' + randomBytes(16).toString('hex'),
       '@version': 1,
       '@xmlns': this.SBOMSCHEMA,
@@ -76,8 +78,6 @@ export class CycloneDXSBOMCreator {
       components: components,
       dependencies: dependencies,
     };
-
-    return bom;
   }
 
   public toXml(bom: Bom, prettyPrint: boolean): string {
@@ -108,11 +108,9 @@ export class CycloneDXSBOMCreator {
       });
     });
 
-    const bomString = sbom.end({
+    return sbom.end({
       prettyPrint: prettyPrint,
     });
-
-    return bomString;
   }
 
   private getMetadata(pkg: any): Metadata {
@@ -152,9 +150,7 @@ export class CycloneDXSBOMCreator {
     const name: string = pkgIdentifier.fullName as string;
     const version: string = pkgInfo.version as string;
 
-    const purl = new PackageURL('npm', group, name, version, undefined, undefined);
-
-    return purl;
+    return new PackageURL('npm', group, name, version, undefined, undefined);
   }
 
   private getComponent(pkg: any): CycloneDXComponent {
@@ -163,7 +159,7 @@ export class CycloneDXSBOMCreator {
     const name: string = pkgIdentifier.fullName as string;
     const version: string = pkg.version as string;
 
-    const component: CycloneDXComponent = {
+    return {
       '@type': this.determinePackageType(pkg),
       '@bom-ref': this.getPurlFromPkgInfo(pkg).toString(),
       group: group,
@@ -171,8 +167,6 @@ export class CycloneDXSBOMCreator {
       version: version,
       purl: this.getPurlFromPkgInfo(pkg).toString(),
     };
-
-    return component;
   }
 
   private listComponents(pkg: any): Map<string, CycloneDXComponent> {
@@ -211,9 +205,7 @@ export class CycloneDXSBOMCreator {
       }
 
       if (!spartan) {
-        const description: GenericDescription = { '#cdata': pkg.description };
-
-        component.description = description;
+        component.description = { '#cdata': pkg.description };
         component.hashes = [];
         component.licenses = [];
         component.externalReferences = this.addExternalReferences(pkg);
@@ -333,6 +325,7 @@ export class CycloneDXSBOMCreator {
    */
   private getLicenses(pkg: any): any {
     const spdxLicenses = [...spdxLicensesNonDeprecated, ...spdxLicensesDeprecated];
+
     let license = pkg.license && (pkg.license.type || pkg.license);
     if (license) {
       if (!Array.isArray(license)) {
