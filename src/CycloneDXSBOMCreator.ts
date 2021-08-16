@@ -324,9 +324,7 @@ export class CycloneDXSBOMCreator {
    * object.
    */
   private getLicenses(pkg: any): any {
-    console.log(spdxLicensesDeprecated);
-    console.log(spdxLicensesNonDeprecated);
-    const spdxLicensesObj = [...spdxLicensesNonDeprecated, ...spdxLicensesDeprecated];
+    const spdxLicenses = [...spdxLicensesNonDeprecated, ...spdxLicensesDeprecated];
 
     let license = pkg.license && (pkg.license.type || pkg.license);
     if (license) {
@@ -338,7 +336,7 @@ export class CycloneDXSBOMCreator {
           const licenseContent: LicenseContent = {};
 
           if (
-            spdxLicensesObj.some((v: string) => {
+            spdxLicenses.some((v: string) => {
               return l === v;
             })
           ) {
