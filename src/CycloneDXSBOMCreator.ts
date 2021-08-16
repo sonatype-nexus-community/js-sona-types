@@ -26,8 +26,8 @@ import {
   LicenseContent,
   Metadata,
 } from './CycloneDXSBOMTypes';
-import * as spdxLicensesNonDeprecated from 'spdx-license-ids';
-import * as spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
+import spdxLicensesNonDeprecated from 'spdx-license-ids';
+import spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
 import { DepGraph } from 'dependency-graph';
 import { DEBUG, ILogger } from './ILogger';
 import { PackageURL } from 'packageurl-js';
@@ -324,10 +324,10 @@ export class CycloneDXSBOMCreator {
    * object.
    */
   private getLicenses(pkg: any): any {
-    const spdxLicensesObj = { ...spdxLicensesNonDeprecated, ...spdxLicensesDeprecated };
-    const spdxLicenses = Object.keys(spdxLicensesObj).map(function (licenseIndex) {
-      return spdxLicensesObj[licenseIndex];
-    });
+    console.log(spdxLicensesDeprecated);
+    console.log(spdxLicensesNonDeprecated);
+    const spdxLicensesObj = [...spdxLicensesNonDeprecated, ...spdxLicensesDeprecated];
+
     let license = pkg.license && (pkg.license.type || pkg.license);
     if (license) {
       if (!Array.isArray(license)) {
@@ -338,7 +338,7 @@ export class CycloneDXSBOMCreator {
           const licenseContent: LicenseContent = {};
 
           if (
-            spdxLicenses.some((v: string) => {
+            spdxLicensesObj.some((v: string) => {
               return l === v;
             })
           ) {
