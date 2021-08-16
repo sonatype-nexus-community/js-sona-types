@@ -160,7 +160,7 @@ export class CycloneDXSBOMCreator {
     const version: string = pkg.version as string;
 
     return {
-      '@type': CycloneDXSBOMCreator.determinePackageType(pkg),
+      '@type': this.determinePackageType(pkg),
       '@bom-ref': this.getPurlFromPkgInfo(pkg).toString(),
       group: group,
       name: name,
@@ -220,7 +220,7 @@ export class CycloneDXSBOMCreator {
           delete component.externalReferences;
         }
 
-        CycloneDXSBOMCreator.processHashes(pkg, component);
+        this.processHashes(pkg, component);
       }
 
       if (map.get(component.purl)) return; //remove cycles
@@ -238,7 +238,7 @@ export class CycloneDXSBOMCreator {
    * If the author has described the module as a 'framework', then take their
    * word for it, otherwise, identify the module as a 'library'.
    */
-  private static determinePackageType(pkg: any): string {
+  private determinePackageType(pkg: any): string {
     if (pkg.hasOwnProperty('keywords')) {
       for (const keyword of pkg.keywords) {
         if (keyword.toLowerCase() === 'framework') {
@@ -253,7 +253,7 @@ export class CycloneDXSBOMCreator {
    * Uses the SHA1 shasum (if Present) otherwise utilizes Subresource Integrity
    * of the package with support for multiple hashing algorithms.
    */
-  private static processHashes(pkg: any, component: CycloneDXComponent): void {
+  private processHashes(pkg: any, component: CycloneDXComponent): void {
     component.hashes = new Array<Hash>();
     if (pkg._shasum) {
       component.hashes.push({ hash: { '@alg': 'SHA-1', '#text': pkg._shasum } });
@@ -262,16 +262,16 @@ export class CycloneDXSBOMCreator {
       // Components may have multiple hashes with various lengths. Check each one
       // that is supported by the CycloneDX specification.
       if (integrity.hasOwnProperty('sha512')) {
-        component.hashes.push(CycloneDXSBOMCreator.addComponentHash('SHA-512', integrity.sha512[0].digest));
+        component.hashes.push(this.addComponentHash('SHA-512', integrity.sha512[0].digest));
       }
       if (integrity.hasOwnProperty('sha384')) {
-        component.hashes.push(CycloneDXSBOMCreator.addComponentHash('SHA-384', integrity.sha384[0].digest));
+        component.hashes.push(this.addComponentHash('SHA-384', integrity.sha384[0].digest));
       }
       if (integrity.hasOwnProperty('sha256')) {
-        component.hashes.push(CycloneDXSBOMCreator.addComponentHash('SHA-256', integrity.sha256[0].digest));
+        component.hashes.push(this.addComponentHash('SHA-256', integrity.sha256[0].digest));
       }
       if (integrity.hasOwnProperty('sha1')) {
-        component.hashes.push(CycloneDXSBOMCreator.addComponentHash('SHA-1', integrity.sha1[0].digest));
+        component.hashes.push(this.addComponentHash('SHA-1', integrity.sha1[0].digest));
       }
     }
     if (component.hashes.length === 0) {
@@ -282,7 +282,7 @@ export class CycloneDXSBOMCreator {
   /**
    * Adds a hash to component.
    */
-  private static addComponentHash(alg: string, digest: string): Hash {
+  private addComponentHash(alg: string, digest: string): Hash {
     const hash = Buffer.from(digest, 'base64').toString('hex');
     return { hash: { '@alg': alg, '#text': hash } };
   }
