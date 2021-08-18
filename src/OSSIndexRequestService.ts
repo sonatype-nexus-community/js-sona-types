@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { OSSIndexCoordinates } from './OSSIndexCoordinates';
-import { RequestService, RequestServiceOptions } from './RequestService';
-import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
-import { PackageURL } from 'packageurl-js';
-import { UserAgentHelper } from './UserAgentHelper';
-import { DEBUG } from './ILogger';
+import {OSSIndexCoordinates} from './OSSIndexCoordinates';
+import {RequestService, RequestServiceOptions} from './RequestService';
+import {ComponentContainer, ComponentDetails, SecurityIssue} from './ComponentDetails';
+import {PackageURL} from 'packageurl-js';
+import {UserAgentHelper} from './UserAgentHelper';
+import {DEBUG} from './ILogger';
 import crossFetch from 'cross-fetch';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
@@ -69,7 +69,8 @@ export class OSSIndexRequestService implements RequestService {
 
       const responseData = await res.json();
 
-      responseData.forEach((val) => {
+      //responseData.forEach((val) => {
+      responseData.map((val) => {
         const purl = PackageURL.fromString(val.coordinates);
 
         const securityIssues: SecurityIssue[] = new Array<SecurityIssue>();
@@ -132,6 +133,17 @@ export class OSSIndexRequestService implements RequestService {
       return { componentDetails: compDetails.componentDetails };
     }
   }
+  // private async combineResponseChunks(data: ComponentDetails[]): Promise<ComponentDetails> {
+  //   return new Promise((resolve, reject) => {
+  //     const [compDetails] = data;
+  //     if (compDetails && compDetails.componentDetails) {
+  //       resolve({ componentDetails: compDetails.componentDetails });
+  //     } else {
+  //       console.debug("empty data: %o", data)
+  //       resolve({componentDetails: []});
+  //     }
+  //   });
+  // }
 
   private combineCacheAndResponses(combinedChunks: ComponentDetails, dataInCache: ComponentDetails): ComponentDetails {
     if (dataInCache && dataInCache.componentDetails) {

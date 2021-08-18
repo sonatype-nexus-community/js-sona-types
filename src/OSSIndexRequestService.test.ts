@@ -85,4 +85,36 @@ describe('OSS Index Request Service', () => {
   it('can handle an invalid request to the service, and to return an empty array', async () => {
     expect(await service.getComponentDetails([])).toStrictEqual({ componentDetails: [] });
   });
+
+  it('can handle a multi-chunk request to the service, and to return a reliably sized array', async () => {
+
+    // 3 x 128 + 60
+    const bigPurls : PackageURL[] = []
+    for(var i=0;i<444;i++){
+      bigPurls.push(new PackageURL("npm", ""+i, "jquery", "3.1.1", undefined, undefined));
+    }
+
+    const expectedOutput = []
+    for(var i=0;i<bigPurls.length;i++) {
+      expectedOutput.push(
+          {
+            coordinates: 'pkg:npm/jquery@3.1.1-' + i,
+            reference: 'https://ossindex.sonatype.org/blahblahblah',
+            vulnerabilities: [],
+          });
+    }
+
+    mocked(fetch).mockImplementation((): Promise<any> => {
+      return Promise.resolve({
+        status: 200,
+        json() {
+          return Promise.resolve(expectedOutput);
+        },
+      });
+    });
+
+    const res = await service.getComponentDetails(bigPurls);
+    expect(res).toBeDefined();
+    expect(res.componentDetails.length).toBe(bigPurls.length);
+  });
 });
