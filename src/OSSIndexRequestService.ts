@@ -18,7 +18,7 @@ import { RequestService, RequestServiceOptions } from './RequestService';
 import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
-import { INFO, TRACE } from './ILogger';
+import { INFO } from './ILogger';
 import crossFetch from 'cross-fetch';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
@@ -128,22 +128,14 @@ export class OSSIndexRequestService implements RequestService {
   }
 
   private combineResponseChunks(data: ComponentDetails[]): ComponentDetails {
-    const [compDetails] = data;
-    if (compDetails && compDetails.componentDetails) {
-      return { componentDetails: compDetails.componentDetails };
-    }
+    const response = {componentDetails: []};
+    data.map((compDetails) => {
+      compDetails.componentDetails.map((compDetail) => {
+        response.componentDetails.push(compDetail);
+      })
+    });
+    return response;
   }
-  // private async combineResponseChunks(data: ComponentDetails[]): Promise<ComponentDetails> {
-  //   return new Promise((resolve, reject) => {
-  //     const [compDetails] = data;
-  //     if (compDetails && compDetails.componentDetails) {
-  //       resolve({ componentDetails: compDetails.componentDetails });
-  //     } else {
-  //       console.debug("empty data: %o", data)
-  //       resolve({componentDetails: []});
-  //     }
-  //   });
-  // }
 
   private combineCacheAndResponses(combinedChunks: ComponentDetails, dataInCache: ComponentDetails): ComponentDetails {
     if (dataInCache && dataInCache.componentDetails) {
@@ -212,14 +204,14 @@ export class OSSIndexRequestService implements RequestService {
    */
   public async getComponentDetails(data: PackageURL[]): Promise<ComponentDetails> {
     this.options.logger.logMessage(`Starting request to OSS Index`, INFO);
-    const responses = new Array<Promise<ComponentDetails>>();
+    const responses = new Array<ComponentDetails>();
     const results = await this.checkIfResultsAreInCache(data);
     const chunkedPurls = this.chunkData(results.notInCache);
 
     for (const chunk of chunkedPurls) {
       this.options.logger.logMessage(`Checking chunk against OSS Index`, INFO);
       try {
-        const res = this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((purl) => purl.toString())));
+        const res = await this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((purl) => purl.toString())));
 
         responses.push(res);
       } catch (err) {
@@ -227,13 +219,9 @@ export class OSSIndexRequestService implements RequestService {
       }
     }
 
-    return Promise.all(responses)
-      .then((resolvedResponses) => this.combineResponseChunks(resolvedResponses))
-      .then((combinedResponses) => this.insertResponsesIntoCache(combinedResponses))
-      .then((combinedResponses) => this.combineCacheAndResponses(combinedResponses, results.inCache))
-      .catch((err) => {
-        throw Error(err);
-      });
+    const componentDetails = this.combineResponseChunks(responses);
+    await this.insertResponsesIntoCache(componentDetails);
+    return this.combineCacheAndResponses(componentDetails, results.inCache);
   }
 }
 
