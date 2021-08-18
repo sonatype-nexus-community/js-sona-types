@@ -70,5 +70,5 @@ export {
   LicenseData,
   LicenseDetail,
 } from './ComponentDetails.js';
-export { ILogger, TestLogger, DEBUG, ERROR, TRACE } from './ILogger.js';
+export { ILogger, TestLogger, DEBUG, ERROR, TRACE, INFO } from './ILogger.js';
 export { RequestServiceOptions, RequestService } from './RequestService';

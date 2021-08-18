@@ -19,11 +19,27 @@ export interface ILogger {
 
 export class TestLogger implements ILogger {
   public logMessage = (message: string, level: string, ...meta: any): void => {
-    console.log('You are using the test logger, and test logging is good');
-    console.log(message, level, meta);
+    switch (level) {
+      case DEBUG:
+        console.debug(message, level, meta);
+        break;
+      case ERROR:
+        console.error(message, level, meta);
+        break;
+      case INFO:
+        console.info(message, level, meta);
+        break;
+      case TRACE:
+        console.trace(message, level, meta);
+        break;
+      default:
+        console.warn(message, level, meta);
+        break;
+    }
   };
 }
 
 export const DEBUG = 'debug';
 export const ERROR = 'error';
 export const TRACE = 'trace';
+export const INFO = 'info';
