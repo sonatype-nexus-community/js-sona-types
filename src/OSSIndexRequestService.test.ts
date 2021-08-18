@@ -87,21 +87,19 @@ describe('OSS Index Request Service', () => {
   });
 
   it('can handle a multi-chunk request to the service, and to return a reliably sized array', async () => {
-
     // 3 x 128 + 60
-    const bigPurls : PackageURL[] = []
-    for(var i=0;i<444;i++){
-      bigPurls.push(new PackageURL("npm", ""+i, "jquery", "3.1.1", undefined, undefined));
+    const bigPurls: PackageURL[] = [];
+    for (var i = 0; i < 444; i++) {
+      bigPurls.push(new PackageURL('npm', '' + i, 'jquery', '3.1.1', undefined, undefined));
     }
 
-    const expectedOutput = []
-    for(var i=0;i<bigPurls.length;i++) {
-      expectedOutput.push(
-          {
-            coordinates: 'pkg:npm/jquery@3.1.1-' + i,
-            reference: 'https://ossindex.sonatype.org/blahblahblah',
-            vulnerabilities: [],
-          });
+    const expectedOutput = [];
+    for (var i = 0; i < bigPurls.length; i++) {
+      expectedOutput.push({
+        coordinates: 'pkg:npm/jquery@3.1.1-' + i,
+        reference: 'https://ossindex.sonatype.org/blahblahblah',
+        vulnerabilities: [],
+      });
     }
 
     mocked(fetch).mockImplementation((): Promise<any> => {

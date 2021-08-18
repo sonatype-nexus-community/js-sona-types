@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OSSIndexCoordinates} from './OSSIndexCoordinates';
-import {RequestService, RequestServiceOptions} from './RequestService';
-import {ComponentContainer, ComponentDetails, SecurityIssue} from './ComponentDetails';
-import {PackageURL} from 'packageurl-js';
-import {UserAgentHelper} from './UserAgentHelper';
-import {DEBUG} from './ILogger';
+import { OSSIndexCoordinates } from './OSSIndexCoordinates';
+import { RequestService, RequestServiceOptions } from './RequestService';
+import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
+import { PackageURL } from 'packageurl-js';
+import { UserAgentHelper } from './UserAgentHelper';
+import { DEBUG } from './ILogger';
 import crossFetch from 'cross-fetch';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
