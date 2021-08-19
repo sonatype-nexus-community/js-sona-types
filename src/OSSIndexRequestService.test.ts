@@ -50,9 +50,7 @@ describe('OSS Index Request Service', () => {
       },
     ];
 
-    const fetchMock = jest
-      .spyOn(global, 'fetch')
-      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(expectedOutput))));
+    jest.spyOn(global, 'fetch').mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(expectedOutput))));
 
     const coordinates = [];
     coordinates.push(new PackageURL('npm', undefined, 'jquery', '3.1.1', undefined, undefined));
@@ -92,7 +90,7 @@ describe('OSS Index Request Service', () => {
       responseChunks.push(expectedOutput.splice(0, 128));
     }
 
-    const fetchMock = jest
+    jest
       .spyOn(global, 'fetch')
       .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[0]))))
       .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[1]))))
