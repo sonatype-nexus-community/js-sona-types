@@ -128,11 +128,11 @@ export class OSSIndexRequestService implements RequestService {
   }
 
   private combineResponseChunks(data: ComponentDetails[]): ComponentDetails {
-    const response = {componentDetails: []};
+    const response = { componentDetails: [] };
     data.map((compDetails) => {
       compDetails.componentDetails.map((compDetail) => {
         response.componentDetails.push(compDetail);
-      })
+      });
     });
     return response;
   }
