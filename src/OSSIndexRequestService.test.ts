@@ -20,21 +20,17 @@ import { join } from 'path';
 import { homedir } from 'os';
 import { PackageURL } from 'packageurl-js';
 import { TestLogger } from './ILogger';
-import fetch from 'cross-fetch';
-import { mocked } from 'ts-jest/utils';
+import { Response } from 'cross-fetch';
 
 const PATH = join(homedir(), '.ossindex', 'js-sona-types-test');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
-jest.mock('cross-fetch', () => {
-  return jest.fn();
-});
-
 describe('OSS Index Request Service', () => {
   let service: OSSIndexRequestService;
 
-  beforeEach(() => {
-    mocked(fetch).mockClear();
+  beforeEach(async () => {
+    rimraf.sync(PATH);
+    await storage.init({ dir: PATH, ttl: TWELVE_HOURS });
   });
 
   beforeAll(() => {
@@ -43,11 +39,6 @@ describe('OSS Index Request Service', () => {
       { browser: false, product: 'test', version: '0.0.1', logger: logger },
       storage as any,
     );
-  });
-
-  beforeEach(async () => {
-    rimraf.sync(PATH);
-    await storage.init({ dir: PATH, ttl: TWELVE_HOURS });
   });
 
   it('can handle valid request to the service, and will give valid response', async () => {
@@ -59,14 +50,7 @@ describe('OSS Index Request Service', () => {
       },
     ];
 
-    mocked(fetch).mockImplementation((): Promise<any> => {
-      return Promise.resolve({
-        status: 200,
-        json() {
-          return Promise.resolve(expectedOutput);
-        },
-      });
-    });
+    jest.spyOn(global, 'fetch').mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(expectedOutput))));
 
     const coordinates = [];
     coordinates.push(new PackageURL('npm', undefined, 'jquery', '3.1.1', undefined, undefined));
@@ -84,5 +68,37 @@ describe('OSS Index Request Service', () => {
 
   it('can handle an invalid request to the service, and to return an empty array', async () => {
     expect(await service.getComponentDetails([])).toStrictEqual({ componentDetails: [] });
+  });
+
+  it('can handle a multi-chunk request to the service, and to return a reliably sized array', async () => {
+    // Create 444 purls, which is 4 seperate requests, 128, 128, 128, and then an odd request of 60
+    const length = 3 * 128 + 60;
+    const bigPurls: PackageURL[] = [];
+    const expectedOutput = [];
+    for (let i = 0; i < length; i++) {
+      const purl = new PackageURL('npm', '' + i, 'jquery', `3.1.${i}`, undefined, undefined);
+      bigPurls.push(purl);
+      expectedOutput.push({
+        coordinates: purl.toString(),
+        reference: 'https://ossindex.sonatype.org/blahblahblah',
+        vulnerabilities: [],
+      });
+    }
+
+    const responseChunks = [];
+    while (expectedOutput.length > 0) {
+      responseChunks.push(expectedOutput.splice(0, 128));
+    }
+
+    jest
+      .spyOn(global, 'fetch')
+      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[0]))))
+      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[1]))))
+      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[2]))))
+      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(responseChunks[3]))));
+
+    const res = await service.getComponentDetails(bigPurls);
+    expect(res).toBeDefined();
+    expect(res.componentDetails.length).toBe(bigPurls.length);
   });
 });
