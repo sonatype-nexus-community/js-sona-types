@@ -1,3 +1,10 @@
+## [1.0.57](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.56...v1.0.57) (2021-08-19)
+
+
+### Bug Fixes
+
+* release chunk patch, revert slack orb experiments ([b727c5a](https://github.com/sonatype-nexus-community/js-sona-types/commit/b727c5a834d776aaa115c9292eacfb57725bdbbc))
+
 ## [1.0.56](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.55...v1.0.56) (2021-08-16)
 
 
