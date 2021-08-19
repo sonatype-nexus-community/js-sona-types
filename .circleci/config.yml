@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  slack: circleci/slack@4.4.3
+
 jobs:
   build:
     working_directory: ~/js-sona-types
@@ -42,6 +46,13 @@ jobs:
           command: |
             cd examples/node-ts
             npx auditjs@latest ossi -q
+      - run:
+          name: forced failure
+          command: |
+            exit 1
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   release:
     working_directory: ~/js-sona-types
@@ -75,7 +86,8 @@ workflows:
   version: 2.1
   build_and_release:
     jobs:
-      - build
+      - build:
+          context: dan-test-ctx
       - release:
           filters:
             branches:
