@@ -1,3 +1,11 @@
+## [1.0.58](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.57...v1.0.58) (2021-08-23)
+
+
+### Bug Fixes
+
+* ensure to return string as base64 ([da0647b](https://github.com/sonatype-nexus-community/js-sona-types/commit/da0647bb830a7e341845cb48c9344a441023724a))
+* try to switch up to node 14 for release ([e672b54](https://github.com/sonatype-nexus-community/js-sona-types/commit/e672b54269346c41f9bfa9abe49729f17273c22a))
+
 ## [1.0.57](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.56...v1.0.57) (2021-08-19)
 
 
