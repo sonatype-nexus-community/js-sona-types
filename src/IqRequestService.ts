@@ -481,7 +481,7 @@ export class IqRequestService implements RequestService {
     if (this.options.browser) {
       return `Basic ${btoa(this.options.user + `:` + this.options.token)}`;
     }
-    return `Basic ${Buffer.from(this.options.user + `:` + this.options.token).toString()}`;
+    return `Basic ${Buffer.from(this.options.user + `:` + this.options.token).toString('base64')}`;
   }
 }
 
