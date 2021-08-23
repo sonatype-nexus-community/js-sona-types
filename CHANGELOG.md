@@ -1,3 +1,10 @@
+## [1.0.59](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.58...v1.0.59) (2021-08-23)
+
+
+### Bug Fixes
+
+* typo in auth ([04766ce](https://github.com/sonatype-nexus-community/js-sona-types/commit/04766cea7d48ea479a742605df5d4774ea070121))
+
 ## [1.0.58](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.57...v1.0.58) (2021-08-23)
 
 
