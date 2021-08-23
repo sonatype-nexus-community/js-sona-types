@@ -68,7 +68,7 @@ export class IqRequestService implements RequestService {
 
     let headers = [
       ['User-Agent', userAgent],
-      ['Authoriziation', this.getBasicAuth()],
+      ['Authorization', this.getBasicAuth()],
     ];
 
     if (contentType) {
