@@ -54,10 +54,10 @@ export class TestLogger implements ILogger {
 }
 
 export enum LogLevel {
-  LOG = 1,
-  ERROR = 2,
-  WARN = 3,
-  INFO = 4,
-  DEBUG = 5,
-  TRACE = 6,
+  LOG = 0,
+  ERROR = 1,
+  WARN = 2,
+  INFO = 3,
+  DEBUG = 4,
+  TRACE = 5,
 }
