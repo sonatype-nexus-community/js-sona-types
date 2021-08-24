@@ -1,3 +1,10 @@
+## [1.0.61](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.60...v1.0.61) (2021-08-24)
+
+
+### Bug Fixes
+
+* zero index ([6b16f02](https://github.com/sonatype-nexus-community/js-sona-types/commit/6b16f0227db961e70ce061f4cba237bfd385ef9d))
+
 ## [1.0.60](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.59...v1.0.60) (2021-08-24)
 
 
