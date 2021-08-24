@@ -19,7 +19,7 @@ import storage from 'node-persist';
 import { join } from 'path';
 import { homedir } from 'os';
 import { PackageURL } from 'packageurl-js';
-import { TestLogger } from './ILogger';
+import { LogLevel, TestLogger } from './ILogger';
 import { Response } from 'cross-fetch';
 
 const PATH = join(homedir(), '.ossindex', 'js-sona-types-test');
@@ -34,7 +34,7 @@ describe('OSS Index Request Service', () => {
   });
 
   beforeAll(() => {
-    const logger = new TestLogger();
+    const logger = new TestLogger(LogLevel.WARN);
     service = new OSSIndexRequestService(
       { browser: false, product: 'test', version: '0.0.1', logger: logger },
       storage as any,

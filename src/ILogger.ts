@@ -14,32 +14,50 @@
  * limitations under the License.
  */
 export interface ILogger {
-  logMessage(message: string, level: string, ...meta: any): void;
+  logMessage(message: string, level: LogLevel, ...meta: any): void;
 }
 
 export class TestLogger implements ILogger {
-  public logMessage = (message: string, level: string, ...meta: any): void => {
-    switch (level) {
-      case DEBUG:
-        console.debug(message, level, meta);
-        break;
-      case ERROR:
-        console.error(message, level, meta);
-        break;
-      case INFO:
-        console.info(message, level, meta);
-        break;
-      case TRACE:
-        console.trace(message, level, meta);
-        break;
-      default:
-        console.warn(message, level, meta);
-        break;
+  constructor(private _level: LogLevel) {}
+
+  public setLevel(level: LogLevel) {
+    this._level = level;
+  }
+
+  public logMessage = (message: string, level: LogLevel, ...meta: any): void => {
+    if (this._level >= level) {
+      switch (level) {
+        case LogLevel.DEBUG:
+          console.debug(message, LogLevel[level].toString(), meta);
+          break;
+        case LogLevel.ERROR:
+          console.error(message, LogLevel[level].toString(), meta);
+          break;
+        case LogLevel.INFO:
+          console.info(message, LogLevel[level].toString(), meta);
+          break;
+        case LogLevel.TRACE:
+          console.trace(message, LogLevel[level].toString(), meta);
+          break;
+        case LogLevel.WARN:
+          console.warn(message, LogLevel[level].toString(), meta);
+          break;
+        case LogLevel.LOG:
+          console.log(message, LogLevel[level].toString(), meta);
+          break;
+        default:
+          console.log(message, meta);
+          break;
+      }
     }
   };
 }
 
-export const DEBUG = 'debug';
-export const ERROR = 'error';
-export const TRACE = 'trace';
-export const INFO = 'info';
+export enum LogLevel {
+  LOG = 1,
+  ERROR = 2,
+  WARN = 3,
+  INFO = 4,
+  DEBUG = 5,
+  TRACE = 6,
+}

@@ -18,8 +18,8 @@ import { RequestService, RequestServiceOptions } from './RequestService';
 import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
-import { INFO } from './ILogger';
 import crossFetch from 'cross-fetch';
+import { LogLevel } from './ILogger';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -163,7 +163,7 @@ export class OSSIndexRequestService implements RequestService {
   }
 
   private async checkIfResultsAreInCache(data: PackageURL[]): Promise<PurlContainer> {
-    this.options.logger.logMessage(`Checking if results are in cache`, INFO);
+    this.options.logger.logMessage(`Checking if results are in cache`, LogLevel.INFO);
     const inCache: ComponentDetails = { componentDetails: new Array<ComponentContainer>() } as any;
     const notInCache = new Array<PackageURL>();
 
@@ -173,12 +173,12 @@ export class OSSIndexRequestService implements RequestService {
 
       if (dataInCache) {
         if (this.options.browser) {
-          this.options.logger.logMessage('Browser based cache', INFO);
+          this.options.logger.logMessage('Browser based cache', LogLevel.INFO);
 
           const value: Item = JSON.parse(dataInCache);
 
           if (new Date().getTime() > value.expiry) {
-            this.options.logger.logMessage('Cache item expired', INFO);
+            this.options.logger.logMessage('Cache item expired', LogLevel.INFO);
 
             await this.store.removeItem(coord.toString());
             notInCache.push(coord);
@@ -203,13 +203,13 @@ export class OSSIndexRequestService implements RequestService {
    * @returns a {@link Promise} of all Responses
    */
   public async getComponentDetails(data: PackageURL[]): Promise<ComponentDetails> {
-    this.options.logger.logMessage(`Starting request to OSS Index`, INFO);
+    this.options.logger.logMessage(`Starting request to OSS Index`, LogLevel.INFO);
     const responses = new Array<ComponentDetails>();
     const results = await this.checkIfResultsAreInCache(data);
     const chunkedPurls = this.chunkData(results.notInCache);
 
     for (const chunk of chunkedPurls) {
-      this.options.logger.logMessage(`Checking chunk against OSS Index`, INFO);
+      this.options.logger.logMessage(`Checking chunk against OSS Index`, LogLevel.INFO);
       try {
         const res = await this._getResultsFromOSSIndex(new OSSIndexCoordinates(chunk.map((purl) => purl.toString())));
 

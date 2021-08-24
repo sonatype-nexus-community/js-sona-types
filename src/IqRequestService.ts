@@ -20,11 +20,11 @@ import { IqApplicationResponse } from './IqApplicationResponse';
 import { RequestService, RequestServiceOptions } from './RequestService';
 import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
-import { ERROR, TRACE } from './ILogger';
 import crossFetch from 'cross-fetch';
 import { IqServerVulnerabilityDetails } from './IqServerVulnerabilityDetails';
 import { IqServerLicenseLegalMetadataResult } from './IqServerLicenseLegalMetadataResult';
 import { IqServerComponentRemediationResult } from './IqServerComponentRemediationResult';
+import { LogLevel } from './ILogger';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
 
@@ -123,12 +123,12 @@ export class IqRequestService implements RequestService {
       ],
     };
 
-    this.options.logger.logMessage('Purls to check', TRACE, { purls: purl });
+    this.options.logger.logMessage('Purls to check', LogLevel.TRACE, { purls: purl });
 
     try {
       const headers = await this.getHeaders('application/json');
 
-      this.options.logger.logMessage('Got headers', TRACE);
+      this.options.logger.logMessage('Got headers', LogLevel.TRACE);
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
         method: 'POST',
@@ -136,7 +136,7 @@ export class IqRequestService implements RequestService {
         headers: headers,
       });
 
-      this.options.logger.logMessage('Response back', TRACE, { response: res });
+      this.options.logger.logMessage('Response back', LogLevel.TRACE, { response: res });
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
@@ -145,7 +145,10 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Response text recieved, error', ERROR, { text: text, statusCode: res.status });
+        this.options.logger.logMessage('Response text recieved, error', LogLevel.ERROR, {
+          text: text,
+          statusCode: res.status,
+        });
 
         throw new Error('Unable to get component details, non 200 response');
       }
@@ -157,7 +160,7 @@ export class IqRequestService implements RequestService {
   public async getVulnerabilityDetails(vulnID: string): Promise<IqServerVulnerabilityDetails> {
     const headers = await this.getHeaders();
 
-    this.options.logger.logMessage('Got headers', TRACE);
+    this.options.logger.logMessage('Got headers', LogLevel.TRACE);
 
     try {
       const res = await fetch(`${this.options.host}/api/v2/vulnerabilities/${vulnID}`, {
@@ -172,7 +175,10 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Response text recieved, error', ERROR, { text: text, statusCode: res.status });
+        this.options.logger.logMessage('Response text recieved, error', LogLevel.TRACE, {
+          text: text,
+          statusCode: res.status,
+        });
 
         throw new Error('Unable to get vulnerability details, non 200 response');
       }
@@ -195,7 +201,7 @@ export class IqRequestService implements RequestService {
 
       const resData = await res.text();
 
-      this.options.logger.logMessage('Response from login call', TRACE, {
+      this.options.logger.logMessage('Response from login call', LogLevel.TRACE, {
         response: resData,
         status: res.status,
         statusText: res.statusText,
@@ -203,13 +209,13 @@ export class IqRequestService implements RequestService {
 
       return true;
     } catch (err) {
-      this.options.logger.logMessage('Unable to login', ERROR, { error: err });
+      this.options.logger.logMessage('Unable to login', LogLevel.TRACE, { error: err });
       return false;
     }
   }
 
   public async getPolicyReportResults(reportUrl: string): Promise<IqServerPolicyReportResult> {
-    this.options.logger.logMessage('Attempting to get policy report results', TRACE, { reportUrl: reportUrl });
+    this.options.logger.logMessage('Attempting to get policy report results', LogLevel.TRACE, { reportUrl: reportUrl });
 
     if (reportUrl.endsWith('raw')) {
       reportUrl = reportUrl.substr(0, reportUrl.length - 3) + 'policy';
@@ -228,11 +234,11 @@ export class IqRequestService implements RequestService {
         return policyResults;
       } else {
         const text = await res.text();
-        this.options.logger.logMessage('Response from report API', ERROR, { response: text });
+        this.options.logger.logMessage('Response from report API', LogLevel.ERROR, { response: text });
         throw new Error(`No valid response from Nexus IQ, look at logs for more info`);
       }
     } catch (err) {
-      this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
+      this.options.logger.logMessage('Unable to get results from Report API', LogLevel.ERROR, { error: err });
       throw new Error(`Unable to get results from Report API`);
     }
   }
@@ -242,7 +248,7 @@ export class IqRequestService implements RequestService {
       await this.init();
     }
 
-    this.options.logger.logMessage('Internal ID', TRACE, { internalId: this.internalId });
+    this.options.logger.logMessage('Internal ID', LogLevel.TRACE, { internalId: this.internalId });
 
     try {
       const headers = await this.getHeaders('application/xml');
@@ -257,11 +263,11 @@ export class IqRequestService implements RequestService {
         return data.statusUrl as string;
       } else {
         const text = await res.text();
-        this.options.logger.logMessage('Response from third party API', ERROR, { response: text });
+        this.options.logger.logMessage('Response from third party API', LogLevel.ERROR, { response: text });
         throw new Error(`Unable to submit to Third Party API`);
       }
     } catch (err) {
-      this.options.logger.logMessage('Unable to get results from Report API', ERROR, { error: err });
+      this.options.logger.logMessage('Unable to get results from Report API', LogLevel.ERROR, { error: err });
       throw new Error(`Unable to submit to Third Party API`);
     }
   }
@@ -271,9 +277,9 @@ export class IqRequestService implements RequestService {
       await this.init();
     }
 
-    this.options.logger.logMessage('Nexus IQ Server Internal ID', TRACE, { internalId: this.internalId });
+    this.options.logger.logMessage('Nexus IQ Server Internal ID', LogLevel.TRACE, { internalId: this.internalId });
 
-    this.options.logger.logMessage('Attempting to get license legal data for purl', TRACE, { purl: purl });
+    this.options.logger.logMessage('Attempting to get license legal data for purl', LogLevel.TRACE, { purl: purl });
 
     const headers = await this.getHeaders();
 
@@ -295,9 +301,13 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Unable to get component evaluated against License Legal Metadata API', ERROR, {
-          error: text,
-        });
+        this.options.logger.logMessage(
+          'Unable to get component evaluated against License Legal Metadata API',
+          LogLevel.ERROR,
+          {
+            error: text,
+          },
+        );
         throw new Error(text);
       }
     } catch (err) {
@@ -313,7 +323,7 @@ export class IqRequestService implements RequestService {
     purl.qualifiers = undefined;
     purl.subpath = undefined;
 
-    this.options.logger.logMessage('Using purl to query for versions', TRACE, { purl: purl.toString() });
+    this.options.logger.logMessage('Using purl to query for versions', LogLevel.TRACE, { purl: purl.toString() });
 
     const data = {
       packageUrl: purl.toString().replace('%2B', '+'),
@@ -333,7 +343,7 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Unable to get component versions from Component Versions API', ERROR, {
+        this.options.logger.logMessage('Unable to get component versions from Component Versions API', LogLevel.ERROR, {
           error: text,
         });
         throw new Error(text);
@@ -367,9 +377,13 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Unable to get component remediations from Component Remediation API', ERROR, {
-          error: text,
-        });
+        this.options.logger.logMessage(
+          'Unable to get component remediations from Component Remediation API',
+          LogLevel.ERROR,
+          {
+            error: text,
+          },
+        );
         throw new Error(text);
       }
     } catch (err) {
@@ -407,7 +421,9 @@ export class IqRequestService implements RequestService {
       } else {
         const text = await res.text();
 
-        this.options.logger.logMessage('Unable to get component evaluated against Policy API', ERROR, { error: text });
+        this.options.logger.logMessage('Unable to get component evaluated against Policy API', LogLevel.ERROR, {
+          error: text,
+        });
         throw new Error(text);
       }
     } catch (err) {
@@ -420,7 +436,7 @@ export class IqRequestService implements RequestService {
     errorHandler: (error: any) => any,
     pollingFinished: (body: any) => any,
   ): Promise<void> {
-    this.options.logger.logMessage(`Polling ${url}`, TRACE);
+    this.options.logger.logMessage(`Polling ${url}`, LogLevel.TRACE);
     let mergeUrl: string;
     try {
       try {
@@ -431,44 +447,46 @@ export class IqRequestService implements RequestService {
 
       const headers = await this.getHeaders();
 
-      this.options.logger.logMessage('Merge URL obtained', TRACE, { url: mergeUrl });
+      this.options.logger.logMessage('Merge URL obtained', LogLevel.TRACE, { url: mergeUrl });
 
       const res = await fetch(mergeUrl, { method: 'GET', headers: headers });
 
       const body = res.ok;
 
-      this.options.logger.logMessage('Status checked on polling URL', TRACE, { status: res.status });
+      this.options.logger.logMessage('Status checked on polling URL', LogLevel.TRACE, { status: res.status });
 
       if (!body) {
         this.timeoutAttempts += 1;
-        this.options.logger.logMessage('Polled, no valid response', TRACE, { timeoutAttempts: this.timeoutAttempts });
+        this.options.logger.logMessage('Polled, no valid response', LogLevel.TRACE, {
+          timeoutAttempts: this.timeoutAttempts,
+        });
         if (this.timeoutAttempts > this.options.timeout) {
           errorHandler({
             message:
               'Polling attempts exceeded, please either provide a higher limit via the command line using the timeout flag, or re-examine your project and logs to see if another error happened',
           });
         }
-        this.options.logger.logMessage('Trying polling again', TRACE);
+        this.options.logger.logMessage('Trying polling again', LogLevel.TRACE);
         setTimeout(() => this.asyncPollForResults(url, errorHandler, pollingFinished), 1000);
       } else {
-        this.options.logger.logMessage('Data recieved from polling', TRACE);
+        this.options.logger.logMessage('Data recieved from polling', LogLevel.TRACE);
         const data = await res.json();
-        this.options.logger.logMessage('Data retrieved from polling', TRACE, { data: data });
+        this.options.logger.logMessage('Data retrieved from polling', LogLevel.TRACE, { data: data });
         pollingFinished(data);
       }
     } catch (e) {
-      this.options.logger.logMessage('Error in polling', ERROR);
+      this.options.logger.logMessage('Error in polling', LogLevel.ERROR);
       errorHandler(e);
     }
   }
 
   private getURLOrMerge(url: string): URL {
-    this.options.logger.logMessage('Attempting to merge url', TRACE, url);
+    this.options.logger.logMessage('Attempting to merge url', LogLevel.TRACE, url);
     try {
       return new URL(url);
     } catch (e) {
-      this.options.logger.logMessage('URL not valid as it sits, try to merge it', TRACE);
-      this.options.logger.logMessage(e.title, TRACE, { message: e.message });
+      this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
+      this.options.logger.logMessage(e.title, LogLevel.TRACE, { message: e.message });
 
       if (this.options.host.endsWith('/')) {
         return new URL(this.options.host.concat(url));

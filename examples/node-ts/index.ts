@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {CycloneDXSBOMCreator, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
+import {CycloneDXSBOMCreator, LogLevel, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {join} from 'path';
 import readInstalled from 'read-installed';
 import {homedir} from 'os';
@@ -27,7 +27,7 @@ const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 const test = async () => {
   await storage.init({dir: PATH, ttl: TWELVE_HOURS});
 
-  const logger = new TestLogger();
+  const logger = new TestLogger(LogLevel.WARN);
   
   const ossIndexRequestService = new OSSIndexRequestService(
     {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React, {useState} from 'react';
-import {OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
+import {LogLevel, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {PackageURL} from 'packageurl-js';
 import packageJson from '../package.json';
 
@@ -22,7 +22,7 @@ const App = (): JSX.Element => {
   const [error, setError] = useState("");
 
   const callOSSIndex = () => {
-    const logger = new TestLogger();
+    const logger = new TestLogger(LogLevel.WARN);
     const service = new OSSIndexRequestService({browser: true, product: packageJson.name, version: packageJson.version, logger: logger}, localStorage);
 
     const coordinates = [];

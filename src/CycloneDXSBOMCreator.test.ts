@@ -16,7 +16,7 @@
 
 import { CycloneDXOptions, CycloneDXSBOMCreator } from './CycloneDXSBOMCreator';
 import { Bom, CycloneDXComponent, Dependency } from './CycloneDXSBOMTypes';
-import { TestLogger } from './ILogger';
+import { LogLevel, TestLogger } from './ILogger';
 
 // Test object with circular dependency, scoped dependency, dependency with dependency
 const object = {
@@ -63,7 +63,7 @@ const expectedSpartanResponse = `<?xml version=\"1.0\"?><bom encoding=\"utf-8\" 
 
 describe('CycloneDXSbomCreator', () => {
   it('should create an sbom string given a minimal valid object', async () => {
-    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), { logger: new TestLogger() });
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), { logger: new TestLogger(LogLevel.WARN) });
 
     const bom: Bom = await sbomCreator.getBom(object);
 
@@ -73,7 +73,10 @@ describe('CycloneDXSbomCreator', () => {
   });
 
   it('should create a spartan sbom string given a minimal valid object', async () => {
-    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), { spartan: true, logger: new TestLogger() });
+    const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
+      spartan: true,
+      logger: new TestLogger(LogLevel.WARN),
+    });
 
     const bom: Bom = await sbomCreator.getBom(object);
 
@@ -85,7 +88,7 @@ describe('CycloneDXSbomCreator', () => {
   it('should return the supplied type "framework", component values, xml SerialNumber and Timestamp', async () => {
     const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
       spartan: true,
-      logger: new TestLogger(),
+      logger: new TestLogger(LogLevel.DEBUG),
       includeBomSerialNumber: true,
       includeTimestamp: true,
     } as CycloneDXOptions);
@@ -136,7 +139,7 @@ describe('CycloneDXSbomCreator', () => {
   it('should ignore extraneous package', async () => {
     const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
       spartan: true,
-      logger: new TestLogger(),
+      logger: new TestLogger(LogLevel.DEBUG),
     } as CycloneDXOptions);
 
     const littleObject = {
@@ -154,7 +157,7 @@ describe('CycloneDXSbomCreator', () => {
 
   it('should process license data with unknown license', async () => {
     const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
-      logger: new TestLogger(),
+      logger: new TestLogger(LogLevel.DEBUG),
       includeLicenseData: true,
     } as CycloneDXOptions);
 
@@ -176,7 +179,7 @@ describe('CycloneDXSbomCreator', () => {
 
   it('should process license data with known license', async () => {
     const sbomCreator = new CycloneDXSBOMCreator(process.cwd(), {
-      logger: new TestLogger(),
+      logger: new TestLogger(LogLevel.DEBUG),
       includeLicenseData: true,
     } as CycloneDXOptions);
 

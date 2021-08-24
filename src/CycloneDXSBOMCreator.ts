@@ -29,7 +29,7 @@ import {
 import spdxLicensesNonDeprecated from 'spdx-license-ids';
 import spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
 import { DepGraph } from 'dependency-graph';
-import { DEBUG, ILogger } from './ILogger';
+import { ILogger, LogLevel } from './ILogger';
 import { PackageURL } from 'packageurl-js';
 import { randomBytes } from 'crypto';
 
@@ -313,7 +313,10 @@ export class CycloneDXSBOMCreator {
       const uri = new URL(url);
       externalReferences.push({ reference: { '@type': typeOfURL, url: uri.toString() } });
     } catch (e) {
-      this.options?.logger.logMessage('Encountered an invalid URL', DEBUG, { title: e.message, stack: e.stack });
+      this.options?.logger.logMessage('Encountered an invalid URL', LogLevel.INFO, {
+        title: e.message,
+        stack: e.stack,
+      });
     }
   }
 
