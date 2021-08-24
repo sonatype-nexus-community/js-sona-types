@@ -1,3 +1,10 @@
+## [1.0.60](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.59...v1.0.60) (2021-08-24)
+
+
+### Bug Fixes
+
+* make the logger a bit more friendly ([ee2f626](https://github.com/sonatype-nexus-community/js-sona-types/commit/ee2f62617067c11bbbf28808b82272b9b38e8900))
+
 ## [1.0.59](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.58...v1.0.59) (2021-08-23)
 
 
