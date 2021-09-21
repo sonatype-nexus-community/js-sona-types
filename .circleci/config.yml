@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.4.4
+
 jobs:
   build:
     working_directory: ~/js-sona-types
@@ -43,6 +46,10 @@ jobs:
           command: |
             cd examples/node-ts
             npx auditjs@latest ossi -q
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          branch_pattern: main
 
   release:
     working_directory: ~/js-sona-types
@@ -71,17 +78,21 @@ jobs:
       - run:
           name: Publish
           command: yarn exec semantic-release
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
 workflows:
   version: 2.1
   build_and_release:
     jobs:
-      - build
+      - build:
+          context: slack_community_oss_fun
       - release:
           filters:
             branches:
               only: main
-          context: auditjs
+          context: auditjs, slack_community_oss_fun
           requires:
             - build
 
@@ -93,4 +104,5 @@ workflows:
             branches:
               only: main
     jobs:
-      - build
+      - build:
+          context: slack_community_oss_fun

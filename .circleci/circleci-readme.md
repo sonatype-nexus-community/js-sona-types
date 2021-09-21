@@ -26,3 +26,24 @@ The local build runs in a docker container.
       However, the build will proceed and can complete “successfully”, which allows you to verify scripts in your config, etc.
       
       If the build does complete successfully, you should see a happy yellow `Success!` message.
+
+Misc
+====
+
+* Slack notification setup notes.
+
+    1. Add slack orb to CI config. see: https://circleci.com/developer/orbs/orb/circleci/slack
+    2. Create new Slack app ("From Scratch") with Permissions: `chat:write` scope access. 
+       
+       see: https://github.com/CircleCI-Public/slack-orb/wiki/Setup
+
+       ![appScope](images/slack-app-scope.png)
+       
+       Install the app to your desired workspace.
+       
+       Create a context (`slack_community_oss_fun`, with/or Environment Variables: `SLACK_ACCESS_TOKEN`, `SLACK_DEFAULT_CHANNEL`) 
+       on CircleCI with the slack token and channelId.
+    3. [Install the app](https://slack.com/help/articles/202035138-Add-apps-to-your-Slack-workspace)
+    4. [Invite this new Slack app bot user to the channel](https://www.ibm.com/docs/en/SS3GDX_1.1.0/chatops_prerequisite_invite_app_to_channel.html)
+       that will receive notifications. e.g. In the channel, post the message: `@CircleCI-cmnty-js-sona-types`, follow
+       the prompts to invite the bot user to the channel.
