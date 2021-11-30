@@ -3,6 +3,10 @@
     { 
       "id": "e3f310ed-219c-4087-aa58-8425b13c3ec5", 
       "reason": "postcss @ 7.x all have this vulnerability, and many dependencies require v7.x, so ignoring for now." 
+    },
+    {
+      "id": "849e9fed-44e8-4593-a4ca-61026c4b454f",
+      "reason": "ignore CVE-2021-23424 because ansi-html@0.0.7 is only used by webpack, which is only used during development."
     }
   ]
 }
