@@ -43,6 +43,7 @@
   },
   "resolutions": {
     "browserslist": "^4.16.6",
-    "glob-parent": "^5.1.2"
+    "glob-parent": "^5.1.2",
+    "url-parse": "^1.5.3"
   }
 }
