@@ -1,3 +1,10 @@
+## [1.0.62](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.61...v1.0.62) (2021-12-01)
+
+
+### Bug Fixes
+
+* CI config format for multiple contexts. oh yaml, fooled me again. ([00427e5](https://github.com/sonatype-nexus-community/js-sona-types/commit/00427e55cc2a2f838812218ee0b4d508347df7cb))
+
 ## [1.0.61](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.60...v1.0.61) (2021-08-24)
 
 
