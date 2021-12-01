@@ -92,7 +92,9 @@ workflows:
           filters:
             branches:
               only: main
-          context: auditjs, slack_community_oss_fun
+          context:
+            - auditjs
+            - slack_community_oss_fun
           requires:
             - build
 
