@@ -1,3 +1,10 @@
+## [1.0.63](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.62...v1.0.63) (2022-02-14)
+
+
+### Bug Fixes
+
+* CVE-2022-0235 in node-fetch : 2.6.1 ([75fce83](https://github.com/sonatype-nexus-community/js-sona-types/commit/75fce83dece2cff0e3694f34a094c2aac17a7911))
+
 ## [1.0.62](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.61...v1.0.62) (2021-12-01)
 
 
