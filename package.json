@@ -79,7 +79,8 @@
     "xmlbuilder2": "^2.4.1"
   },
   "resolutions": {
-    "path-parse": "^1.0.7"
+    "path-parse": "^1.0.7",
+    "node-fetch": "^2.6.7"
   },
   "publishConfig": {
     "access": "public"
