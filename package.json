@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "browser-cookies": "^1.2.0",
-    "cross-fetch": "^3.1.4",
+    "cross-fetch": "3.1.5",
     "dependency-graph": "^0.11.0",
     "https-proxy-agent": "^5.0.0",
     "node-get-random-values": "^1.1.0",
