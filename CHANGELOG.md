@@ -1,3 +1,10 @@
+## [1.0.64](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.63...v1.0.64) (2022-04-19)
+
+
+### Bug Fixes
+
+* CVE-2022-1365 in cross-fetch : 3.1.4 ([ba58a68](https://github.com/sonatype-nexus-community/js-sona-types/commit/ba58a68667f0fac70697a9c41c2feeee636a4277))
+
 ## [1.0.63](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.62...v1.0.63) (2022-02-14)
 
 
