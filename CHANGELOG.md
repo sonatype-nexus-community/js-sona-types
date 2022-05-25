@@ -1,3 +1,12 @@
+## [1.0.65](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.64...v1.0.65) (2022-05-25)
+
+
+### Bug Fixes
+
+* vulnerabilities in transitive dependencies for node-tx example ([a585bf1](https://github.com/sonatype-nexus-community/js-sona-types/commit/a585bf19625a0d9eafd6b6b2d10bc2d71a50b399))
+* vulnerabilities in transitive dependencies for react example ([b6942e4](https://github.com/sonatype-nexus-community/js-sona-types/commit/b6942e42435b478bd581aafc05c321b6d0b2884f))
+* vulnerabilities in transitive dependencies: hosted-git-info, minimatch ([4d77362](https://github.com/sonatype-nexus-community/js-sona-types/commit/4d77362f5793c5058df46dd9b43ced88d55df702))
+
 ## [1.0.64](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.63...v1.0.64) (2022-04-19)
 
 
