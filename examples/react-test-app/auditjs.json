@@ -7,6 +7,26 @@
     {
       "id": "849e9fed-44e8-4593-a4ca-61026c4b454f",
       "reason": "ignore CVE-2021-23424 because ansi-html@0.0.7 is only used by webpack, which is only used during development."
+    },
+    {
+      "id": "sonatype-2012-0022",
+      "reason": "ignore sonatype-2012-0022 because no non-vulnerable version of express right now."
+    },
+    {
+      "id": "CVE-2022-21944",
+      "reason": "ignore CVE-2022-21944 because no non-vulnerable version of fb-watchman right now."
+    },
+    {
+      "id": "sonatype-2021-0253",
+      "reason": "ignore sonatype-2021-0253 because no non-vulnerable version of jake right now."
+    },
+    {
+      "id": "CVE-2021-23337",
+      "reason": "ignore CVE-2021-23337 because no non-vulnerable version of lodash.template right now."
+    },
+    {
+      "id": "sonatype-2017-0717",
+      "reason": "ignore sonatype-2017-0717 because no non-vulnerable version of react right now."
     }
   ]
 }
