@@ -27,6 +27,10 @@
     {
       "id": "sonatype-2017-0717",
       "reason": "ignore sonatype-2017-0717 because no non-vulnerable version of react right now."
+    },
+    {
+      "id": "sonatype-2022-3565",
+      "reason": "ignore sonatype-2022-3565 because no non-vulnerable version of nwsapi available right now."
     }
   ]
 }
