@@ -1,3 +1,10 @@
+## [1.0.66](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.65...v1.0.66) (2022-07-11)
+
+
+### Bug Fixes
+
+* Use non-deprecated CI image, ([dccec42](https://github.com/sonatype-nexus-community/js-sona-types/commit/dccec4273fe504ad236d5a6c8df0d8f79295dea8))
+
 ## [1.0.65](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.64...v1.0.65) (2022-05-25)
 
 
