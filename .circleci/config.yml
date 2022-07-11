@@ -15,7 +15,7 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.4.4
+  slack: circleci/slack@4.10.1
 
 executors:
   node_executor:
