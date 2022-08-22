@@ -1,3 +1,10 @@
+## [1.0.67](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.66...v1.0.67) (2022-08-22)
+
+
+### Bug Fixes
+
+* vulns in react example: CVE-2022-25858 in pkg:npm/terser@4.8.0, ignore sonatype-2022-2248 in pkg:npm/es5-ext@0.10.62 ([95bcdcc](https://github.com/sonatype-nexus-community/js-sona-types/commit/95bcdcc655140d46278fa4eb484992edda342ae3))
+
 ## [1.0.66](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.65...v1.0.66) (2022-07-11)
 
 
