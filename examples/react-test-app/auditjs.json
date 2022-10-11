@@ -35,6 +35,10 @@
     {
       "id": "sonatype-2022-2248",
       "reason": "ignore sonatype-2022-2248 because no non-vulnerable version of es5-ext available right now."
+    },
+    {
+      "id": "CVE-2022-37599",
+      "reason": "ignore CVE-2022-37599 because no non-vulnerable version of loader-utils available right now."
     }
   ]
 }
