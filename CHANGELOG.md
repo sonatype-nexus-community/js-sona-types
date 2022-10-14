@@ -1,3 +1,10 @@
+## [1.0.68](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.67...v1.0.68) (2022-10-14)
+
+
+### Bug Fixes
+
+* ignore CVE-2022-37601, CVE-2022-37603 in loader-utils in react example ([c685458](https://github.com/sonatype-nexus-community/js-sona-types/commit/c6854585f41b297467c18747c72c07dc99244d62))
+
 ## [1.0.67](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.66...v1.0.67) (2022-08-22)
 
 
