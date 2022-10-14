@@ -39,6 +39,14 @@
     {
       "id": "CVE-2022-37599",
       "reason": "ignore CVE-2022-37599 because no non-vulnerable version of loader-utils available right now."
+    },
+    {
+      "id": "CVE-2022-37601",
+      "reason": "ignore CVE-2022-37601 because no non-vulnerable version of loader-utils available right now."
+    },
+    {
+      "id": "CVE-2022-37603",
+      "reason": "ignore CVE-2022-37603 because no non-vulnerable version of loader-utils available right now."
     }
   ]
 }
