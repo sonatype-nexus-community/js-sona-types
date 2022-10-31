@@ -1,3 +1,10 @@
+## [1.0.69](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.68...v1.0.69) (2022-10-31)
+
+
+### Bug Fixes
+
+* CVE-2022-21222 in css-what@^5.0.0 in react example ([4292f73](https://github.com/sonatype-nexus-community/js-sona-types/commit/4292f734f0664a5a0742ee79b75c78cd7ed18209))
+
 ## [1.0.68](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.67...v1.0.68) (2022-10-14)
 
 
