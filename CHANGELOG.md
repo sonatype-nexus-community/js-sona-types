@@ -1,3 +1,15 @@
+## [1.0.70](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.69...v1.0.70) (2022-11-28)
+
+
+### Bug Fixes
+
+* bump CI node version ([d39fe15](https://github.com/sonatype-nexus-community/js-sona-types/commit/d39fe1507b56226cd9eae7fefa5397914ae2947f))
+* bump CI node version to 16.18 ([7e3dbae](https://github.com/sonatype-nexus-community/js-sona-types/commit/7e3dbae64466de3970fe7e4fb7ae5dddd9655c9d))
+* bump CI node version to 18.12 ([0d40879](https://github.com/sonatype-nexus-community/js-sona-types/commit/0d408790384ae538a66edf158eb7f2fb263aa05c))
+* CVE-2022-24999 in qs before 6.10.3 in react example ([961d0e4](https://github.com/sonatype-nexus-community/js-sona-types/commit/961d0e402faa40b8a26e1a99b85bf97bc690266f))
+* CVE-2022-24999 in qs before 6.10.3 in react example, bump css-what ([1312e46](https://github.com/sonatype-nexus-community/js-sona-types/commit/1312e46255306dc8fe8dc2cf534aa1661fefd03f))
+* drop CI node version to 16.18, use latest (not beta) version of semantic-release ([902ad10](https://github.com/sonatype-nexus-community/js-sona-types/commit/902ad1033e42527b52e0ae86d6403dfa7ce3da2f))
+
 ## [1.0.69](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.68...v1.0.69) (2022-10-31)
 
 
