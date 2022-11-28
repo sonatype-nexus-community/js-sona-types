@@ -20,7 +20,7 @@ orbs:
 executors:
   node_executor:
     docker:
-      - image: cimg/node:18.12
+      - image: cimg/node:16.18
 
 jobs:
   build:
@@ -91,7 +91,7 @@ jobs:
           command: yarn build
       - run:
           name: Install globals
-          command: yarn global add semantic-release@beta @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@beta
+          command: yarn global add semantic-release@latest @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@beta
       - run:
           name: Publish
           command: yarn exec semantic-release
