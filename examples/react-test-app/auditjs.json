@@ -47,6 +47,10 @@
     {
       "id": "CVE-2022-37603",
       "reason": "ignore CVE-2022-37603 because no non-vulnerable version of loader-utils available right now."
+    },
+    {
+      "id": "CVE-2022-38900",
+      "reason": "ignore CVE-2022-38900 because no non-vulnerable version of decode-uri-component available right now."
     }
   ]
 }
