@@ -1,3 +1,10 @@
+## [1.0.71](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.70...v1.0.71) (2022-11-30)
+
+
+### Bug Fixes
+
+* ignore CVE-2022-38900 in decode-uri-component in react example ([f72eb17](https://github.com/sonatype-nexus-community/js-sona-types/commit/f72eb17ec5b238a1053db37f0ffc04033567cf8c))
+
 ## [1.0.70](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.69...v1.0.70) (2022-11-28)
 
 
