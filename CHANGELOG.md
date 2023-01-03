@@ -1,3 +1,10 @@
+## [1.0.72](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.71...v1.0.72) (2023-01-03)
+
+
+### Bug Fixes
+
+* CVE-2022-46175 in json5 in react example ([05f0d99](https://github.com/sonatype-nexus-community/js-sona-types/commit/05f0d99c9a02c4cd12d17123cbbd5a4eefc0d248))
+
 ## [1.0.71](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.70...v1.0.71) (2022-11-30)
 
 
