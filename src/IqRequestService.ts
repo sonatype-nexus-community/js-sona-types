@@ -59,26 +59,30 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  private async getHeaders(contentType?: string): Promise<string[][]> {
+  private async getHeaders(contentType?: string): Promise<HeadersInit> {
     const userAgent = await UserAgentHelper.getUserAgent(
       this.options.browser,
       this.options.product,
       this.options.version,
     );
 
-    let headers = [
-      ['User-Agent', userAgent],
-      ['Authorization', this.getBasicAuth()],
-    ];
+    const requestHeaders: HeadersInit = new Headers();
+    requestHeaders.set('User-Agent', userAgent);
+    requestHeaders.set('Authorization', this.getBasicAuth());
+
+    // let headers = [
+    //   ['User-Agent', userAgent],
+    //   ['Authorization', this.getBasicAuth()],
+    // ];
 
     if (contentType) {
-      headers = [...headers, ['Content-Type', contentType]];
+      requestHeaders.set('Content-Type', contentType);
     }
     if (this.options.browser && this.xcsrfToken) {
-      headers = [...headers, [X_CSRF_TOKEN, this.xcsrfToken]];
+      requestHeaders.set(X_CSRF_TOKEN, this.xcsrfToken);
     }
 
-    return headers;
+    return requestHeaders;
   }
 
   public setXCSRFToken(token: string): void {
