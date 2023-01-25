@@ -70,11 +70,6 @@ export class IqRequestService implements RequestService {
     requestHeaders.set('User-Agent', userAgent);
     requestHeaders.set('Authorization', this.getBasicAuth());
 
-    // let headers = [
-    //   ['User-Agent', userAgent],
-    //   ['Authorization', this.getBasicAuth()],
-    // ];
-
     if (contentType) {
       requestHeaders.set('Content-Type', contentType);
     }
@@ -193,14 +188,14 @@ export class IqRequestService implements RequestService {
 
   public async loginViaRest(): Promise<boolean> {
     try {
-      const headers = [
-        ['xsrfCookieName', CSRF_COOKIE_NAME],
-        ['xsrfHeaderName', X_CSRF_TOKEN],
-      ];
+      const requestHeaders: HeadersInit = new Headers();
+      requestHeaders.set('xsrfCookieName', CSRF_COOKIE_NAME);
+      requestHeaders.set('xsrfHeaderName', X_CSRF_TOKEN);
+      requestHeaders.set('Authorization', this.getBasicAuth());
 
       const res = await fetch(`${this.options.host}/rest/user/session`, {
         method: 'GET',
-        headers: [...headers, ['Authorization', this.getBasicAuth()]],
+        headers: requestHeaders,
       });
 
       const resData = await res.text();
