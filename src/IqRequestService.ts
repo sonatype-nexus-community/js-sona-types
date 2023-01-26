@@ -113,16 +113,13 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getComponentDetails(purl: PackageURL[]): Promise<ComponentDetails> {
-    const data = {
-      components: [
-        {
-          packageUrl: purl[0].toString().replace('%2B', '+'),
-        },
-      ],
-    };
+  public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
+    const request = { components: [] };
+    purls.forEach((purl) => {
+      request.components.push({ packageUrl: purl.toString().replace('%2F', '/') });
+    });
 
-    this.options.logger.logMessage('Purls to check', LogLevel.TRACE, { purls: purl });
+    this.options.logger.logMessage('Purls to check', LogLevel.TRACE, { purls: request });
 
     try {
       const headers = await this.getHeaders('application/json');
@@ -131,7 +128,7 @@ export class IqRequestService implements RequestService {
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(request),
         headers: headers,
       });
 
