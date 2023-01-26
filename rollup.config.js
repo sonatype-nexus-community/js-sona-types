@@ -59,6 +59,7 @@ const config = [
 
     plugins: [
       dts(),
+      babel({ babelHelpers: 'bundled' })
     ],
   },
 ];
