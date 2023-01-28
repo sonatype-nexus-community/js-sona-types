@@ -24,6 +24,9 @@ export interface ComponentContainer {
   relativePopularity: string | null | undefined;
   securityData: SecurityData | null | undefined;
   licenseData: LicenseData | null | undefined;
+  projectData?: ProjectData | null | undefined;
+  integrityRating?: string | null | undefined;
+  hygieneRating?: string | null | undefined;
 }
 
 export interface SonatypeComponent {
@@ -32,6 +35,7 @@ export interface SonatypeComponent {
   hash: string | null | undefined;
   description?: string;
   componentIdentifier?: ComponentIdentifier;
+  displayName?: string;
 }
 
 export interface ComponentIdentifier {
@@ -70,4 +74,20 @@ export interface LicenseData {
 export interface LicenseDetail {
   licenseId: string;
   licenseName: string;
+}
+
+export interface ProjectData {
+  firstReleaseDate: string;
+  lastReleaseDate: string;
+  projectMetadata: ProjectMetadata;
+  sourceControlManagement: SourceControlManagement;
+}
+
+export interface ProjectMetadata {
+  description: string;
+  organization: string;
+}
+
+export interface SourceControlManagement {
+  scmUrl: string;
 }

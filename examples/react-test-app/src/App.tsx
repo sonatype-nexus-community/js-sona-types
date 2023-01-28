@@ -30,10 +30,10 @@ const App = (): JSX.Element => {
     coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
 
     service.getComponentDetails(coordinates)
-      .then((res) => {
+      .then((res: any) => {
         console.log(res);
       })
-      .catch((err) => {
+      .catch((err: { toString: () => React.SetStateAction<string>; }) => {
         setError(err.toString());
         console.error(err);
       });

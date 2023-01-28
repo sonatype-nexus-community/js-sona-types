@@ -119,7 +119,7 @@ export class IqRequestService implements RequestService {
       request.components.push({ packageUrl: purl.toString().replace('%2F', '/') });
     });
 
-    this.options.logger.logMessage('Purls to check', LogLevel.TRACE, { purls: request });
+    this.options.logger.logMessage('Purls to check', LogLevel.INFO, { purls: request });
 
     try {
       const headers = await this.getHeaders('application/json');
@@ -132,7 +132,7 @@ export class IqRequestService implements RequestService {
         headers: headers,
       });
 
-      this.options.logger.logMessage('Response back', LogLevel.TRACE, { response: res });
+      this.options.logger.logMessage('Response back', LogLevel.INFO, { response: res });
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
