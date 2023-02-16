@@ -20,7 +20,7 @@ orbs:
 executors:
   node_executor:
     docker:
-      - image: cimg/node:16.18
+      - image: cimg/node:18.14
 
 jobs:
   build:
