@@ -91,7 +91,7 @@ jobs:
           command: yarn build
       - run:
           name: Install globals
-          command: yarn global add semantic-release@19.0.2 @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@beta
+          command: yarn global add semantic-release@19.0.2 @semantic-release/changelog @semantic-release/git@beta @semantic-release/npm@9.0.2
       - run:
           name: Publish
           command: yarn exec semantic-release
