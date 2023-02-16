@@ -51,10 +51,6 @@
     {
       "id": "CVE-2022-38900",
       "reason": "ignore CVE-2022-38900 because no non-vulnerable version of decode-uri-component available right now."
-    },
-    {
-      "id": "sonatype-2022-3677",
-      "reason": "ignore sonatype-2022-3677 in core-js in react example."
     }
   ]
 }
