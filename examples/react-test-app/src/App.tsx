@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 import React, {useState} from 'react';
-import {LogLevel, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
 import {PackageURL} from 'packageurl-js';
 import packageJson from '../package.json';
+const thing = require('@sonatype/js-sona-types');
+const {LogLevel, OSSIndexRequestService, TestLogger}  = thing;
 
 const App = (): JSX.Element => {
   const [error, setError] = useState("");
@@ -29,10 +30,10 @@ const App = (): JSX.Element => {
     coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
 
     service.getComponentDetails(coordinates)
-      .then((res) => {
+      .then((res: any) => {
         console.log(res);
       })
-      .catch((err) => {
+      .catch((err: { toString: () => React.SetStateAction<string>; }) => {
         setError(err.toString());
         console.error(err);
       });

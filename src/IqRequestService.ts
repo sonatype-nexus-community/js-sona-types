@@ -59,26 +59,25 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  private async getHeaders(contentType?: string): Promise<string[][]> {
+  private async getHeaders(contentType?: string): Promise<HeadersInit> {
     const userAgent = await UserAgentHelper.getUserAgent(
       this.options.browser,
       this.options.product,
       this.options.version,
     );
 
-    let headers = [
-      ['User-Agent', userAgent],
-      ['Authorization', this.getBasicAuth()],
-    ];
+    const requestHeaders: HeadersInit = new Headers();
+    requestHeaders.set('User-Agent', userAgent);
+    requestHeaders.set('Authorization', this.getBasicAuth());
 
     if (contentType) {
-      headers = [...headers, ['Content-Type', contentType]];
+      requestHeaders.set('Content-Type', contentType);
     }
     if (this.options.browser && this.xcsrfToken) {
-      headers = [...headers, [X_CSRF_TOKEN, this.xcsrfToken]];
+      requestHeaders.set(X_CSRF_TOKEN, this.xcsrfToken);
     }
 
-    return headers;
+    return requestHeaders;
   }
 
   public setXCSRFToken(token: string): void {
@@ -114,16 +113,13 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getComponentDetails(purl: PackageURL[]): Promise<ComponentDetails> {
-    const data = {
-      components: [
-        {
-          packageUrl: purl[0].toString().replace('%2B', '+'),
-        },
-      ],
-    };
+  public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
+    const request = { components: [] };
+    purls.forEach((purl) => {
+      request.components.push({ packageUrl: purl.toString().replace('%2F', '/') });
+    });
 
-    this.options.logger.logMessage('Purls to check', LogLevel.TRACE, { purls: purl });
+    this.options.logger.logMessage('Purls to check', LogLevel.INFO, { purls: request });
 
     try {
       const headers = await this.getHeaders('application/json');
@@ -132,11 +128,11 @@ export class IqRequestService implements RequestService {
 
       const res = await fetch(`${this.options.host}/api/v2/components/details`, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify(request),
         headers: headers,
       });
 
-      this.options.logger.logMessage('Response back', LogLevel.TRACE, { response: res });
+      this.options.logger.logMessage('Response back', LogLevel.INFO, { response: res });
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
@@ -189,14 +185,14 @@ export class IqRequestService implements RequestService {
 
   public async loginViaRest(): Promise<boolean> {
     try {
-      const headers = [
-        ['xsrfCookieName', CSRF_COOKIE_NAME],
-        ['xsrfHeaderName', X_CSRF_TOKEN],
-      ];
+      const requestHeaders: HeadersInit = new Headers();
+      requestHeaders.set('xsrfCookieName', CSRF_COOKIE_NAME);
+      requestHeaders.set('xsrfHeaderName', X_CSRF_TOKEN);
+      requestHeaders.set('Authorization', this.getBasicAuth());
 
       const res = await fetch(`${this.options.host}/rest/user/session`, {
         method: 'GET',
-        headers: [...headers, ['Authorization', this.getBasicAuth()]],
+        headers: requestHeaders,
       });
 
       const resData = await res.text();

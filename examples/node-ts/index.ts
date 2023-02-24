@@ -13,38 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {CycloneDXSBOMCreator, LogLevel, OSSIndexRequestService, TestLogger} from '@sonatype/js-sona-types';
-import {join} from 'path';
+
+const thing = require('@sonatype/js-sona-types');
+const { CycloneDXSBOMCreator, LogLevel, OSSIndexRequestService, TestLogger } = thing;
+import { join } from 'path';
 import readInstalled from 'read-installed';
-import {homedir} from 'os';
+import { homedir } from 'os';
 import storage from 'node-persist';
-import {PackageURL} from 'packageurl-js';
+import { PackageURL } from 'packageurl-js';
 import packageJson from './package.json';
 
 const PATH = join(homedir(), '.ossindex', 'example');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
 const test = async () => {
-  await storage.init({dir: PATH, ttl: TWELVE_HOURS});
+  await storage.init({ dir: PATH, ttl: TWELVE_HOURS });
 
   const logger = new TestLogger(LogLevel.WARN);
-  
+
   const ossIndexRequestService = new OSSIndexRequestService(
     {
-      browser: false, 
-      product: packageJson.name, 
-      version: packageJson.version, 
-      logger: logger
-    }, storage as any);
-  
+      browser: false,
+      product: packageJson.name,
+      version: packageJson.version,
+      logger: logger,
+    },
+    storage as any,
+  );
+
   const coordinates = [];
-  coordinates.push(new PackageURL("npm", undefined, "jquery", "3.1.1", undefined, undefined));
-  
+  coordinates.push(new PackageURL('npm', undefined, 'jquery', '3.1.1', undefined, undefined));
+
   const res = await ossIndexRequestService.getComponentDetails(coordinates);
 
   console.log(res);
 
-  const sbom = new CycloneDXSBOMCreator(process.cwd(), {devDependencies: true, logger: logger});
+  const sbom = new CycloneDXSBOMCreator(process.cwd(), { devDependencies: true, logger: logger });
 
   const packages = await getPackageInfoFromReadInstalled(process.cwd());
 
@@ -53,9 +57,9 @@ const test = async () => {
   const xml = sbom.toXml(bom, true);
 
   console.log(xml);
-}
+};
 
-const getPackageInfoFromReadInstalled = (path: string): Promise<any> =>  {
+const getPackageInfoFromReadInstalled = (path: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     readInstalled(
       path,
@@ -71,7 +75,6 @@ const getPackageInfoFromReadInstalled = (path: string): Promise<any> =>  {
       },
     );
   });
-}
+};
 
 test();
-
