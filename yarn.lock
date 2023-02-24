@@ -5916,7 +5916,6 @@ rollup-plugin-tsc@^1.1.16:
     tslib "^2.0.1"
     typescript "^3.9.7"
 
-<<<<<<< HEAD
 rollup-plugin-typescript2@^0.34.1:
   version "0.34.1"
   resolved "https://registry.yarnpkg.com/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.34.1.tgz#c457f155a71d133c142689213fce78694e30d0be"
@@ -5927,19 +5926,6 @@ rollup-plugin-typescript2@^0.34.1:
     fs-extra "^10.0.0"
     semver "^7.3.7"
     tslib "^2.4.0"
-=======
-rollup-plugin-typescript2@^0.31.0:
-  version "0.31.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.31.2.tgz#463aa713a7e2bf85b92860094b9f7fb274c5a4d8"
-  integrity sha512-hRwEYR1C8xDGVVMFJQdEVnNAeWRvpaY97g5mp3IeLnzhNXzSVq78Ye/BJ9PAaUfN4DXa/uDnqerifMOaMFY54Q==
-  dependencies:
-    "@rollup/pluginutils" "^4.1.2"
-    "@yarn-tool/resolve-package" "^1.0.40"
-    find-cache-dir "^3.3.2"
-    fs-extra "^10.0.0"
-    resolve "^1.20.0"
-    tslib "^2.3.1"
->>>>>>> main
 
 rollup-plugin-workbox@^5.2.1:
   version "5.2.1"
