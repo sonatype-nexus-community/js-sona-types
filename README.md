@@ -4,7 +4,7 @@
 
 Hi, hello! This library is mostly for consumption by Sonatype projects that need a common way to talk to OSS Index, Nexus IQ, and etc...
 
-## Goals
+## Goals 
 
 `js-sona-types` is just a library, meant to be used by our JavaScript/TypeScript projects so that we can share some common code around communicating with OSS Index, Nexus IQ Server, etc...
 
