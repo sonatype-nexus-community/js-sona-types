@@ -1,3 +1,17 @@
+## [1.0.73](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.72...v1.0.73) (2023-02-16)
+
+
+### Bug Fixes
+
+* ignore sonatype-2022-3677 in core-js in react example ([044be4d](https://github.com/sonatype-nexus-community/js-sona-types/commit/044be4d44f06a84a6531c5c958c591d50844858a))
+* revert node version, use older (non-latest) semantic-release version ([541b0be](https://github.com/sonatype-nexus-community/js-sona-types/commit/541b0beb41aed602173dc59bcaae34fe11f82d63))
+* sonatype-2022-3677 in core-js in react example ([d0a4ab0](https://github.com/sonatype-nexus-community/js-sona-types/commit/d0a4ab044d38c96574e407631d30c1a2a06d48f6))
+* sonatype-2022-3677 in core-js in react example, fix bogus yarn.lock entries (caused by invalid .npmrc) ([1bc00ac](https://github.com/sonatype-nexus-community/js-sona-types/commit/1bc00ac55819fc188daa4d5731c705d9c0f079e6))
+* sonatype-2022-3677 in core-js in react example, fix bogus yarn.lock entries (caused by invalid .npmrc) ([3861c5b](https://github.com/sonatype-nexus-community/js-sona-types/commit/3861c5bff2d41183cefe33ed3d34138987598327))
+* upgrade node version to satisfy sematic-release ([4a3fb03](https://github.com/sonatype-nexus-community/js-sona-types/commit/4a3fb03d560ac8fd5bb58b5de56253a645869b9d))
+* use semantic-release 19.0.2 ([7a672b8](https://github.com/sonatype-nexus-community/js-sona-types/commit/7a672b89bfa0eaa499a2d76d6463577deda0475f))
+* use semantic-release/npm@9.0.2 (not beta) ([901b221](https://github.com/sonatype-nexus-community/js-sona-types/commit/901b2210fc7e21951a1276901d01b9a2df9328d2))
+
 ## [1.0.72](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.71...v1.0.72) (2023-01-03)
 
 
