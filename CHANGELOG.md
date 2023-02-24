@@ -1,3 +1,10 @@
+## [1.0.74](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.73...v1.0.74) (2023-02-24)
+
+
+### Bug Fixes
+
+* Update interfaces to include project data results from api ([e7b3718](https://github.com/sonatype-nexus-community/js-sona-types/commit/e7b371809bfa821d4228a29fb7dd5645f70414b0))
+
 ## [1.0.73](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.72...v1.0.73) (2023-02-16)
 
 
