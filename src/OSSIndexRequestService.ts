@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import crossFetch from 'cross-fetch';
+import { PackageURL } from 'packageurl-js';
+import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
+import { LogLevel } from './ILogger';
 import { OSSIndexCoordinates } from './OSSIndexCoordinates';
 import { RequestService, RequestServiceOptions } from './RequestService';
-import { ComponentContainer, ComponentDetails, SecurityIssue } from './ComponentDetails';
-import { PackageURL } from 'packageurl-js';
 import { UserAgentHelper } from './UserAgentHelper';
-import crossFetch from 'cross-fetch';
-import { LogLevel } from './ILogger';
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -34,9 +34,9 @@ if (typeof global.fetch === 'undefined' && typeof process !== 'undefined' && pro
 }
 
 export class OSSIndexRequestService implements RequestService {
-  constructor(readonly options: RequestServiceOptions, readonly store: Storage) {}
+  constructor(readonly options: RequestServiceOptions, readonly store: Storage) { }
 
-  private async getHeaders(): Promise<string[][]> {
+  private async getHeaders(): Promise<[string, string][]> {
     const userAgent = await UserAgentHelper.getUserAgent(
       this.options.browser,
       this.options.product,
@@ -226,7 +226,7 @@ export class OSSIndexRequestService implements RequestService {
 }
 
 class PurlContainer {
-  constructor(readonly inCache: ComponentDetails, readonly notInCache: PackageURL[]) {}
+  constructor(readonly inCache: ComponentDetails, readonly notInCache: PackageURL[]) { }
 }
 
 interface Item {

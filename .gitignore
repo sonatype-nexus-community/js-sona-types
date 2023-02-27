@@ -10,3 +10,4 @@ out-tsc
 
 # yarn stuff
 .yarnclean
+yarn-error.log
