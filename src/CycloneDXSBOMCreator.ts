@@ -363,6 +363,7 @@ export class CycloneDXSBOMCreator {
       moduleName: '',
     };
 
+    /* eslint-disable-next-line no-useless-escape */
     const regexp = new RegExp(/^(?:@([^/]+)\/)?(([^\.]+)(?:\.(.*))?)$/);
 
     const matches = name.match(regexp);
