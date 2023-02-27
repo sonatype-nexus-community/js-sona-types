@@ -69,7 +69,6 @@
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-ts": "^3.2.0",
     "rollup-plugin-tsc": "^1.1.16",
-    "shx": "^0.3.3",
     "ts-jest": "^27.0.1",
     "ts-loader": "^9.4.2",
     "ts-node": "^9.1.1",
