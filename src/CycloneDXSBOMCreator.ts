@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /*
  * Copyright (c) 2020-Present Erlend Oftedal, Steve Springett, Sonatype, Inc.
  *
@@ -15,8 +16,13 @@
  */
 /// <reference types="./typings/spdx-license-ids" />
 
-import { create } from 'xmlbuilder2';
+import { randomBytes } from 'crypto';
+import { DepGraph } from 'dependency-graph';
+import { PackageURL } from 'packageurl-js';
+import spdxLicensesNonDeprecated from 'spdx-license-ids';
+import spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
 import * as ssri from 'ssri';
+import { create } from 'xmlbuilder2';
 import {
   Bom,
   CycloneDXComponent,
@@ -24,14 +30,9 @@ import {
   ExternalReference,
   Hash,
   LicenseContent,
-  Metadata,
+  Metadata
 } from './CycloneDXSBOMTypes';
-import spdxLicensesNonDeprecated from 'spdx-license-ids';
-import spdxLicensesDeprecated from 'spdx-license-ids/deprecated';
-import { DepGraph } from 'dependency-graph';
 import { ILogger, LogLevel } from './ILogger';
-import { PackageURL } from 'packageurl-js';
-import { randomBytes } from 'crypto';
 
 export class CycloneDXSBOMCreator {
   public graph: DepGraph<CycloneDXComponent>;
@@ -63,7 +64,7 @@ export class CycloneDXSBOMCreator {
     this.inverseGraph = new DepGraph();
   }
 
-  public async getBom(pkgInfo: any): Promise<Bom> {
+  public async getBom(pkgInfo: object): Promise<Bom> {
     const components = Array.from(this.listComponents(pkgInfo).values());
 
     const dependencies: Array<Dependency> = [];
@@ -83,12 +84,12 @@ export class CycloneDXSBOMCreator {
   public toXml(bom: Bom, prettyPrint: boolean): string {
     const sbom = create().ele('bom', { encoding: 'utf-8' });
 
-    if (this.options.includeBomSerialNumber) {
+    if (this.options?.includeBomSerialNumber) {
       sbom.att('serialNumber', bom['@serial-number']);
     }
     sbom.att('version', bom['@version'].toString());
     const metadataNode = sbom.ele('metadata');
-    if (this.options.includeTimestamp) {
+    if (this.options?.includeTimestamp) {
       metadataNode.ele('timestamp').txt(bom.metadata.timestamp);
     }
     metadataNode.ele({ component: bom.metadata.component });
@@ -312,7 +313,7 @@ export class CycloneDXSBOMCreator {
     try {
       const uri = new URL(url);
       externalReferences.push({ reference: { '@type': typeOfURL, url: uri.toString() } });
-    } catch (e) {
+    } catch (e: any) {
       this.options?.logger.logMessage('Encountered an invalid URL', LogLevel.INFO, {
         title: e.message,
         stack: e.stack,

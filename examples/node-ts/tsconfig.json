@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "target": "es6",
     "rootDir": "./",

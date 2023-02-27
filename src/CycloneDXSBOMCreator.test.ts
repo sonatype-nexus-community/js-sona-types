@@ -150,7 +150,7 @@ describe('CycloneDXSbomCreator', () => {
     try {
       await sbomCreator.getBom(littleObject);
       expect('error should have been thrown').toBe('error was not thrown');
-    } catch (e) {
+    } catch (e: any) {
       expect(e.toString()).toBe('Error: Node does not exist: pkg:npm/%40jsonScope/jsonProjectName.jsonModuleName@-1');
     }
   });
@@ -173,7 +173,7 @@ describe('CycloneDXSbomCreator', () => {
     };
 
     const bom: Bom = await sbomCreator.getBom(littleObject);
-    expect(bom.components[0].licenses[0].license.name).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.components![0].licenses![0].license.name).toBe(littleObject.dependencies.childDependency.license);
     expect(bom.metadata.component.version).toBe(littleObject.version);
   });
 
@@ -195,7 +195,7 @@ describe('CycloneDXSbomCreator', () => {
     };
 
     const bom: Bom = await sbomCreator.getBom(littleObject);
-    expect(bom.components[0].licenses[0].license.id).toBe(littleObject.dependencies.childDependency.license);
+    expect(bom.components![0].licenses![0].license.id).toBe(littleObject.dependencies.childDependency.license);
     expect(bom.metadata.component.version).toBe(littleObject.version);
   });
 });
