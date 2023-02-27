@@ -11,3 +11,9 @@ out-tsc
 # yarn stuff
 .yarnclean
 yarn-error.log
+
+# Sonatype
+.sonatype-config
+
+# Editor / IDES
+.vscode/settings.json
