@@ -1,6 +1,6 @@
 {
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-    "lib": ["ES2019", "DOM"],
     "module": "ESNext",
     "esModuleInterop": true,
     "sourceMap": true,

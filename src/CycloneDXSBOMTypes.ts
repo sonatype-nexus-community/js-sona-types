@@ -26,7 +26,7 @@ export interface Bom {
 export interface CycloneDXComponent {
   '@type': string;
   '@bom-ref': string;
-  group: string;
+  group?: string;
   name: string;
   version: string;
   description?: GenericDescription;

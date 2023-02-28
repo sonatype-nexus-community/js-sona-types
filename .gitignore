@@ -7,3 +7,13 @@ out-tsc
 
 # ci config for local ci build
 .circleci/local-config.yml
+
+# yarn stuff
+.yarnclean
+yarn-error.log
+
+# Sonatype
+.sonatype-config
+
+# Editor / IDES
+.vscode/settings.json
