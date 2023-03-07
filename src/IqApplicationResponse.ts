@@ -19,10 +19,17 @@ export interface IqApplicationResponse {
   applications: Application[];
 }
 
+export interface ApplicationTag {
+  id: string,
+  tagId: string,
+  applicationId: string
+}
+
 export interface Application {
   id: string;
   publicId: string;
   name: string;
   organizationId: string;
   contactUserName: string;
+  applicationTags: ApplicationTag[];
 }
