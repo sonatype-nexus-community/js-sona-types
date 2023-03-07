@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.74...v1.1.0) (2023-02-28)
+
+
+### Features
+
+* bump to require node > 18 ([cbf6983](https://github.com/sonatype-nexus-community/js-sona-types/commit/cbf6983e14a234041dcf948f51c158c8ebaff8f1))
+
 ## [1.0.74](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.73...v1.0.74) (2023-02-24)
 
 

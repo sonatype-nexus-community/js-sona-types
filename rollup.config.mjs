@@ -1,13 +1,13 @@
 // rollup.config.js
 
 import { babel } from '@rollup/plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
-import sourcemaps from 'rollup-plugin-sourcemaps';
-import pkg from './package.json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
-import typescript from 'rollup-plugin-typescript2';
+import sourcemaps from 'rollup-plugin-sourcemaps';
+// import typescript from 'rollup-plugin-typescript2';
+import pkg from './package.json' assert { type: 'json' };
 
-const extensions = ['.js', '.ts'];
 
 const config = [
   {
@@ -40,7 +40,14 @@ const config = [
       'node-get-random-values',
     ],
 
-    plugins: [resolve({ extensions }), typescript({ sourceMap: true }), sourcemaps(), babel({ inputSourceMap: false })],
+    plugins: [
+      nodeResolve({
+        extensions: [".js", ".jsx"],
+      }),
+      typescript(),
+      sourcemaps(),
+      babel({ inputSourceMap: false })
+    ],
   },
   {
     input: './dist/types/index.d.ts',
@@ -52,7 +59,10 @@ const config = [
       },
     ],
 
-    plugins: [dts(), babel({ babelHelpers: 'bundled' })],
+    plugins: [
+      dts(),
+      babel({ babelHelpers: 'bundled' })
+    ],
   },
 ];
 

@@ -20,7 +20,7 @@ orbs:
 executors:
   node_executor:
     docker:
-      - image: cimg/node:16.18
+      - image: cimg/node:18.14
 
 jobs:
   build:
@@ -100,7 +100,7 @@ jobs:
           template: basic_fail_1
 
 workflows:
-  version: 2.1
+  version: 2
   build_and_release:
     jobs:
       - build:
