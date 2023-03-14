@@ -88,8 +88,10 @@ export class IqRequestService implements RequestService {
     try {
       this.internalId = await this.getApplicationInternalId();
       this.isInitialized = true;
-    } catch (e) {
-      throw new Error(e);
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
@@ -109,12 +111,15 @@ export class IqRequestService implements RequestService {
         );
       }
     } catch (err) {
-      throw new Error(err);
+        if (err instanceof Error) {
+          throw new Error(err.message);
+        }
     }
   }
 
   public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
-    const request = { components: [] };
+    const components: any[] = [];
+    const request = { components: components };
     purls.forEach((purl) => {
       request.components.push({ packageUrl: purl.toString().replace('%2F', '/') });
     });
@@ -149,7 +154,9 @@ export class IqRequestService implements RequestService {
         throw new Error('Unable to get component details, non 200 response');
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
@@ -179,7 +186,9 @@ export class IqRequestService implements RequestService {
         throw new Error('Unable to get vulnerability details, non 200 response');
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
@@ -268,7 +277,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult> {
+  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult | undefined> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -307,7 +316,9 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
@@ -345,11 +356,13 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
-  public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> {
+  public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> | undefined {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -383,11 +396,13 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
-  public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> {
+  public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> | undefined {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -423,8 +438,11 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
+    return undefined;
   }
 
   public async asyncPollForResults(
@@ -480,10 +498,11 @@ export class IqRequestService implements RequestService {
     this.options.logger.logMessage('Attempting to merge url', LogLevel.TRACE, url);
     try {
       return new URL(url);
-    } catch (e) {
-      this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
-      this.options.logger.logMessage(e.title, LogLevel.TRACE, { message: e.message });
-
+    } catch (err) {
+      if (err instanceof Error) {
+        this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
+        this.options.logger.logMessage(err.name, LogLevel.TRACE, {message: err.message});
+      }
       if (this.options.host.endsWith('/')) {
         return new URL(this.options.host.concat(url));
       }
