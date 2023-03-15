@@ -39,7 +39,8 @@ export class IqRequestService implements RequestService {
   private internalId = '';
   private isInitialized = false;
   private timeoutAttempts = 0;
-  private xcsrfToken: string | null;
+  private xcsrfToken = '';
+  // private xcsrfToken: string | null;
 
   constructor(readonly options: RequestServiceOptions) {
     if (!this.options.application || !this.options.user || !this.options.host || !this.options.user) {
@@ -88,12 +89,14 @@ export class IqRequestService implements RequestService {
     try {
       this.internalId = await this.getApplicationInternalId();
       this.isInitialized = true;
-    } catch (e) {
-      throw new Error(e);
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
-  private async getApplicationInternalId(): Promise<string> {
+  private async getApplicationInternalId(): Promise<string>  {
     try {
       const headers = await this.getHeaders();
       const res = await fetch(`${this.options.host}${APPLICATION_INTERNAL_ID_ENDPOINT}${this.options.application}`, {
@@ -109,12 +112,16 @@ export class IqRequestService implements RequestService {
         );
       }
     } catch (err) {
-      throw new Error(err);
+        if (err instanceof Error) {
+          throw new Error(err.message);
+        }
     }
+    return '';
   }
 
   public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
-    const request = { components: [] };
+    const components: any[] = [];
+    const request = { components: components };
     purls.forEach((purl) => {
       request.components.push({ packageUrl: purl.toString().replace('%2F', '/') });
     });
@@ -136,7 +143,6 @@ export class IqRequestService implements RequestService {
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
-
         return compDetails;
       } else {
         const text = await res.text();
@@ -149,7 +155,10 @@ export class IqRequestService implements RequestService {
         throw new Error('Unable to get component details, non 200 response');
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error("Unknown error in getComponentDetails");
     }
   }
 
@@ -179,7 +188,10 @@ export class IqRequestService implements RequestService {
         throw new Error('Unable to get vulnerability details, non 200 response');
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error("Unknown error in getVulnerabilityDetails");
     }
   }
 
@@ -307,7 +319,10 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error(`Unable to get license legal component report`);
     }
   }
 
@@ -345,7 +360,9 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
     }
   }
 
@@ -383,7 +400,10 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error(`Unable to get component remediation`);
     }
   }
 
@@ -423,8 +443,12 @@ export class IqRequestService implements RequestService {
         throw new Error(text);
       }
     } catch (err) {
-      throw new Error(err);
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error(`Unable to get component evaluated against policy`);
     }
+
   }
 
   public async asyncPollForResults(
@@ -456,7 +480,7 @@ export class IqRequestService implements RequestService {
         this.options.logger.logMessage('Polled, no valid response', LogLevel.TRACE, {
           timeoutAttempts: this.timeoutAttempts,
         });
-        if (this.timeoutAttempts > this.options.timeout) {
+        if (this.timeoutAttempts > this.options.timeout!) {
           errorHandler({
             message:
               'Polling attempts exceeded, please either provide a higher limit via the command line using the timeout flag, or re-examine your project and logs to see if another error happened',
@@ -480,14 +504,15 @@ export class IqRequestService implements RequestService {
     this.options.logger.logMessage('Attempting to merge url', LogLevel.TRACE, url);
     try {
       return new URL(url);
-    } catch (e) {
-      this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
-      this.options.logger.logMessage(e.title, LogLevel.TRACE, { message: e.message });
-
-      if (this.options.host.endsWith('/')) {
-        return new URL(this.options.host.concat(url));
+    } catch (err) {
+      if (err instanceof Error) {
+        this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
+        this.options.logger.logMessage(err.name, LogLevel.TRACE, {message: err.message});
       }
-      return new URL(this.options.host.concat('/' + url));
+      if (this.options.host!.endsWith('/')) {
+        return new URL(this.options.host!.concat(url));
+      }
+      return new URL(this.options.host!.concat('/' + url));
     }
   }
 
