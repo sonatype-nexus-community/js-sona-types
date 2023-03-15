@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.1.0...v1.1.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* rebuild to replace lock file references to 'repo.phorton.eu.ngrok.io' with 'registry.yarnpkg.com'. ([9d96c7d](https://github.com/sonatype-nexus-community/js-sona-types/commit/9d96c7dcbb25074bcd52aff2e079ec1b9ca9659c))
+* rebuild to replace lock file references to 'repo.phorton.eu.ngrok.io' with 'registry.yarnpkg.com'. bump example terser version ([76762a5](https://github.com/sonatype-nexus-community/js-sona-types/commit/76762a57e5048b7d9209cbecbd380cb6bbc71170))
+
 # [1.1.0](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.0.74...v1.1.0) (2023-02-28)
 
 
