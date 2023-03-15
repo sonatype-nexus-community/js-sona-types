@@ -20,6 +20,7 @@ import { LogLevel } from './ILogger';
 import { OSSIndexCoordinates } from './OSSIndexCoordinates';
 import { RequestService, RequestServiceOptions } from './RequestService';
 import { UserAgentHelper } from './UserAgentHelper';
+import {OSSIndexServerResult} from "./OSSIndexServerResult";
 
 const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
 
@@ -70,7 +71,7 @@ export class OSSIndexRequestService implements RequestService {
       const responseData = await res.json();
 
       //responseData.forEach((val) => {
-      responseData.map((val) => {
+      responseData.map((val: OSSIndexServerResult) => {
         const purl = PackageURL.fromString(val.coordinates);
 
         const securityIssues: SecurityIssue[] = new Array<SecurityIssue>();
@@ -128,7 +129,8 @@ export class OSSIndexRequestService implements RequestService {
   }
 
   private combineResponseChunks(data: ComponentDetails[]): ComponentDetails {
-    const response = { componentDetails: [] };
+    const components: any[] = [];
+    const response = { componentDetails: components };
     data.map((compDetails) => {
       compDetails.componentDetails.map((compDetail) => {
         response.componentDetails.push(compDetail);
@@ -147,7 +149,7 @@ export class OSSIndexRequestService implements RequestService {
     return combinedChunks;
   }
 
-  private async insertResponsesIntoCache(response: ComponentDetails): Promise<ComponentDetails> {
+  private async insertResponsesIntoCache(response: ComponentDetails): Promise<ComponentDetails | undefined> {
     if (response && response.componentDetails) {
       for (let i = 0; i < response.componentDetails.length; i++) {
         const item = {
@@ -215,7 +217,10 @@ export class OSSIndexRequestService implements RequestService {
 
         responses.push(res);
       } catch (err) {
-        throw Error(err);
+        if (err instanceof Error) {
+          throw new Error(err.message);
+        }
+        throw new Error("Unknown error in getComponentDetails");
       }
     }
 

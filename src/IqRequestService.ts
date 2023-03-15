@@ -120,10 +120,10 @@ export class IqRequestService implements RequestService {
     return '';
   }
 
-  private async getApplications(): Promise<IqApplicationResponse>  {
+  public async getApplications(): Promise<IqApplicationResponse>  {
     try {
       const headers = await this.getHeaders();
-      const res = await fetch(`${this.options.host}${APPLICATIONS_ENDPOINT}${this.options.application}`, {
+      const res = await fetch(`${this.options.host}${APPLICATIONS_ENDPOINT}`, {
         headers: headers,
       });
 
