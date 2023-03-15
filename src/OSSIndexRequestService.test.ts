@@ -61,8 +61,8 @@ describe('OSS Index Request Service', () => {
     expect(res.componentDetails.length).toBe(1);
     expect(res.componentDetails[0].component.name).toBe('jquery');
     expect(res.componentDetails[0].component.packageUrl).toBe('pkg:npm/jquery@3.1.1');
-    expect(res.componentDetails[0].securityData.securityIssues.length).toBe(0);
-    expect(res.componentDetails[0].component.componentIdentifier.format).toBe('npm');
+    expect(res.componentDetails[0].securityData?.securityIssues.length).toBe(0);
+    expect(res.componentDetails[0].component.componentIdentifier?.format).toBe('npm');
     expect(res.componentDetails[0].matchState).toBe('PURL');
   });
 
