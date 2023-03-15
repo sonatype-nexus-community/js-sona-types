@@ -39,7 +39,8 @@ export class IqRequestService implements RequestService {
   private internalId = '';
   private isInitialized = false;
   private timeoutAttempts = 0;
-  private xcsrfToken: string | null;
+  private xcsrfToken = '';
+  // private xcsrfToken: string | null;
 
   constructor(readonly options: RequestServiceOptions) {
     if (!this.options.application || !this.options.user || !this.options.host || !this.options.user) {
@@ -95,7 +96,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  private async getApplicationInternalId(): Promise<string> {
+  private async getApplicationInternalId(): Promise<string>  {
     try {
       const headers = await this.getHeaders();
       const res = await fetch(`${this.options.host}${APPLICATION_INTERNAL_ID_ENDPOINT}${this.options.application}`, {
@@ -115,6 +116,7 @@ export class IqRequestService implements RequestService {
           throw new Error(err.message);
         }
     }
+    return '';
   }
 
   public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
@@ -141,7 +143,6 @@ export class IqRequestService implements RequestService {
 
       if (res.status == 200) {
         const compDetails: ComponentDetails = await res.json();
-
         return compDetails;
       } else {
         const text = await res.text();
@@ -157,6 +158,7 @@ export class IqRequestService implements RequestService {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
+      throw new Error("Unknown error in getComponentDetails");
     }
   }
 
@@ -189,6 +191,7 @@ export class IqRequestService implements RequestService {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
+      throw new Error("Unknown error in getVulnerabilityDetails");
     }
   }
 
@@ -277,7 +280,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult | undefined> {
+  public async getLicenseLegalComponentReport(purl: PackageURL): Promise<IqServerLicenseLegalMetadataResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -319,6 +322,7 @@ export class IqRequestService implements RequestService {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
+      throw new Error(`Unable to get license legal component report`);
     }
   }
 
@@ -362,7 +366,7 @@ export class IqRequestService implements RequestService {
     }
   }
 
-  public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> | undefined {
+  public async getComponentRemediation(purl: PackageURL): Promise<IqServerComponentRemediationResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -399,10 +403,11 @@ export class IqRequestService implements RequestService {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
+      throw new Error(`Unable to get component remediation`);
     }
   }
 
-  public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> | undefined {
+  public async getComponentEvaluatedAgainstPolicy(purls: PackageURL[]): Promise<ComponentPolicyEvaluationStatusResult> {
     if (!this.isInitialized) {
       await this.init();
     }
@@ -441,8 +446,9 @@ export class IqRequestService implements RequestService {
       if (err instanceof Error) {
         throw new Error(err.message);
       }
+      throw new Error(`Unable to get component evaluated against policy`);
     }
-    return undefined;
+
   }
 
   public async asyncPollForResults(
@@ -474,7 +480,7 @@ export class IqRequestService implements RequestService {
         this.options.logger.logMessage('Polled, no valid response', LogLevel.TRACE, {
           timeoutAttempts: this.timeoutAttempts,
         });
-        if (this.timeoutAttempts > this.options.timeout) {
+        if (this.timeoutAttempts > this.options.timeout!) {
           errorHandler({
             message:
               'Polling attempts exceeded, please either provide a higher limit via the command line using the timeout flag, or re-examine your project and logs to see if another error happened',
@@ -503,10 +509,10 @@ export class IqRequestService implements RequestService {
         this.options.logger.logMessage('URL not valid as it sits, try to merge it', LogLevel.TRACE);
         this.options.logger.logMessage(err.name, LogLevel.TRACE, {message: err.message});
       }
-      if (this.options.host.endsWith('/')) {
-        return new URL(this.options.host.concat(url));
+      if (this.options.host!.endsWith('/')) {
+        return new URL(this.options.host!.concat(url));
       }
-      return new URL(this.options.host.concat('/' + url));
+      return new URL(this.options.host!.concat('/' + url));
     }
   }
 
