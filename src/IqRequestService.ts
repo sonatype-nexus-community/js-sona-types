@@ -27,6 +27,7 @@ import { IqServerComponentRemediationResult } from './IqServerComponentRemediati
 import { LogLevel } from './ILogger';
 
 const APPLICATION_INTERNAL_ID_ENDPOINT = '/api/v2/applications?publicId=';
+const APPLICATIONS_ENDPOINT = '/api/v2/applications';
 
 const X_CSRF_TOKEN = 'X-CSRF-TOKEN';
 const CSRF_COOKIE_NAME = 'CLM-CSRF-TOKEN';
@@ -117,6 +118,29 @@ export class IqRequestService implements RequestService {
         }
     }
     return '';
+  }
+
+  public async getApplications(): Promise<IqApplicationResponse>  {
+    try {
+      const headers = await this.getHeaders();
+      const res = await fetch(`${this.options.host}${APPLICATIONS_ENDPOINT}`, {
+        headers: headers,
+      });
+
+      if (res.status == 200) {
+        const data: IqApplicationResponse = await res.json();
+        return data
+      } else {
+        throw new Error(
+            `Unable to get the list of applications`,
+        );
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      }
+      throw new Error("Unknown error in getApplications");
+    }
   }
 
   public async getComponentDetails(purls: PackageURL[]): Promise<ComponentDetails> {
