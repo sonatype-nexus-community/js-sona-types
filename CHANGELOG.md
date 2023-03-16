@@ -1,3 +1,18 @@
+# [1.2.0](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.1.1...v1.2.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* more ts stuff TS2533 ([0ccf9e2](https://github.com/sonatype-nexus-community/js-sona-types/commit/0ccf9e24716206e2fd14cfbb87b429c5772e6613))
+* update example yarn.lock to remove phorton repo] ([8aa14e8](https://github.com/sonatype-nexus-community/js-sona-types/commit/8aa14e8a73cee51533c37a61a26fb479cf9b045d))
+
+
+### Features
+
+* add application tag to iqapplicationresponse ([51ef92f](https://github.com/sonatype-nexus-community/js-sona-types/commit/51ef92f918f5fc5442458ef804a65de2bf0627d0))
+* add function to get a list of all applications ([7d7315f](https://github.com/sonatype-nexus-community/js-sona-types/commit/7d7315fc26b6e63925e82d5192d1b3e6a9096e36))
+* get list of applications ([615a3b9](https://github.com/sonatype-nexus-community/js-sona-types/commit/615a3b98927b87eeae1871d0b30564054450de41))
+
 ## [1.1.1](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.1.0...v1.1.1) (2023-03-14)
 
 
