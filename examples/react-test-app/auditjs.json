@@ -51,6 +51,10 @@
     {
       "id": "CVE-2022-38900",
       "reason": "ignore CVE-2022-38900 because no non-vulnerable version of decode-uri-component available right now."
+    },
+    {
+      "id": "CVE-2023-26115",
+      "reason": "ignore CVE-2023-26115 because no non-vulnerable version of word-wrap available right now."
     }
   ]
 }
