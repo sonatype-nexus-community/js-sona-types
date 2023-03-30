@@ -55,6 +55,10 @@
     {
       "id": "CVE-2023-26115",
       "reason": "ignore CVE-2023-26115 because no non-vulnerable version of word-wrap available right now."
+    },
+    {
+      "id": "sonatype-2021-0078",
+      "reason": "ignore sonatype-2021-0078 because no non-vulnerable version of express available right now."
     }
   ]
 }
