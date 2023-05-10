@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.0...v1.2.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* ignore CVE-2023-29827 in react example ([fea3230](https://github.com/sonatype-nexus-community/js-sona-types/commit/fea323083fcf85df3a404a929b65fbe9c8135ed7))
+
 # [1.2.0](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.1.1...v1.2.0) (2023-03-16)
 
 
