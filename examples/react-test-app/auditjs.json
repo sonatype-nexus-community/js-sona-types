@@ -59,6 +59,10 @@
     {
       "id": "sonatype-2021-0078",
       "reason": "ignore sonatype-2021-0078 because no non-vulnerable version of express available right now."
+    },
+    {
+      "id": "CVE-2023-29827",
+      "reason": "ignore sonatype-2021-0078 because from referenced links, this appears to be a false alarm."
     }
   ]
 }
