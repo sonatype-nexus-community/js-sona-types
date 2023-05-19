@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.1...v1.2.2) (2023-05-19)
+
+
+### Bug Fixes
+
+* return true only when successful login via REST [#28](https://github.com/sonatype-nexus-community/js-sona-types/issues/28) ([7dfb446](https://github.com/sonatype-nexus-community/js-sona-types/commit/7dfb446c6cd38df590dcd08ea56344b4f1f4de29))
+
 ## [1.2.1](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.0...v1.2.1) (2023-05-10)
 
 
