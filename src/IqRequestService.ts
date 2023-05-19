@@ -239,7 +239,11 @@ export class IqRequestService implements RequestService {
         statusText: res.statusText,
       });
 
-      return true;
+      if (res.status >= 200 && res.status < 300) {
+        return true
+      } else {
+        return false
+      }
     } catch (err) {
       this.options.logger.logMessage('Unable to login', LogLevel.TRACE, { error: err });
       return false;
