@@ -26,6 +26,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "@cyclonedx/cyclonedx-library": "^2.0.0",
     "@sonatype/ossindex-api-client": "^2023.5.2",
     "browser-cookies": "^1.2.0",
     "cross-fetch": "3.1.5",
