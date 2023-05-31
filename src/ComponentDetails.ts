@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import { ComponentReport } from "@sonatype/ossindex-api-client";
+import { PackageURL } from 'packageurl-js';
+
 export interface ComponentDetails {
   componentDetails: ComponentContainer[];
 }
@@ -90,4 +94,49 @@ export interface ProjectMetadata {
 
 export interface SourceControlManagement {
   scmUrl: string;
+}
+
+export function componentReportToComponentContainer(componentReport: ComponentReport): ComponentContainer | undefined {
+  if (!componentReport.coordinates) {
+    return undefined
+  }
+  const purl = PackageURL.fromString(componentReport.coordinates);
+
+  const securityIssues: SecurityIssue[] = new Array<SecurityIssue>();
+  if (componentReport.vulnerabilities) {
+    componentReport.vulnerabilities.forEach((vuln) => {
+      const source: string = vuln.cve ? 'cve' : vuln.cwe ? 'cwe' : 'unknown';
+      const securityIssue: SecurityIssue = {
+        id: vuln.id,
+        reference: vuln.title !== undefined ? vuln.title : 'UNKNOWN',
+        severity: vuln.cvssScore !== undefined ? vuln.cvssScore : 0,
+        url: vuln.reference !== undefined ? vuln.reference : '',
+        vector: vuln.cvssVector,
+        source: source,
+        description: vuln.description,
+      };
+      securityIssues.push(securityIssue);
+    });
+  }
+
+  const component: ComponentContainer = {
+    component: {
+      componentIdentifier: {
+        format: purl.type
+      },
+      packageUrl: componentReport.coordinates,
+      name: purl.name,
+      description: componentReport.description,
+      hash: ''
+    },
+    matchState: 'PURL',
+    catalogDate: '',
+    relativePopularity: '',
+    securityData: {
+      securityIssues: securityIssues
+    },
+    licenseData: undefined
+  }
+
+  return component
 }
