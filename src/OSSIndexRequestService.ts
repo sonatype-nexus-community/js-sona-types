@@ -76,7 +76,7 @@ export class OSSIndexRequestService implements RequestService {
           const cd = componentReportToComponentContainer(componentReport)
           if (cd !== undefined) {
             allResponses.componentDetails.push(cd)
-            this.insertResponseIntoCache(cd)
+            await this.insertResponseIntoCache(cd)
           }
         }
       } catch (err) {
@@ -127,13 +127,13 @@ export class OSSIndexRequestService implements RequestService {
     return chunks;
   }
 
-  private insertResponseIntoCache(component: ComponentContainer): void {
+  private async insertResponseIntoCache(component: ComponentContainer): Promise<void> {
     const item = {
       value: component,
       expiry: new Date().getTime() + TWELVE_HOURS,
     };
 
-    this.store.setItem(component.component.packageUrl, JSON.stringify(item));
+    await this.store.setItem(component.component.packageUrl, JSON.stringify(item));
   }
 
   private async checkIfResultsAreInCache(data: PackageURL[]): Promise<CacheQueryResult> {
@@ -155,7 +155,7 @@ export class OSSIndexRequestService implements RequestService {
           if (new Date().getTime() > value.expiry) {
             this.options.logger.logMessage(`Cache item expired: ${coord.toString()}`, LogLevel.TRACE);
 
-            this.store.removeItem(coord.toString());
+            await this.store.removeItem(coord.toString());
             notInCache.push(coord);
           } else {
             inCache.componentDetails.push(value.value);

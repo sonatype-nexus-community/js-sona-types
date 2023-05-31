@@ -25,7 +25,7 @@ import { Response } from 'cross-fetch';
 const PATH = join(homedir(), '.ossindex', 'js-sona-types-test');
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
-describe.skip('OSS Index Request Service', () => {
+describe('OSS Index Request Service', () => {
   let service: OSSIndexRequestService;
 
   beforeEach(async () => {
