@@ -25,7 +25,7 @@ import {
 } from "@sonatype/ossindex-api-client"
 import { ILogger } from '.';
 
-const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org/';
+const OSS_INDEX_BASE_URL = 'https://ossindex.sonatype.org';
 const MAX_COORDINATES = 128;
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
 
@@ -60,17 +60,28 @@ export class OSSIndexRequestService implements RequestService {
     const cacheResults: CacheQueryResult = await this.checkIfResultsAreInCache(data);
     const allResponses: ComponentDetails = cacheResults.inCache
     const chunkedPurls = this.chunkPurls(cacheResults.notInCache);
-
-    const apiClient = new ComponentVulnerabilityReportsApi(await this._getApiConfiguration())
+    const apiClientConfiguration = await this._getApiConfiguration()
+    const apiClient = new ComponentVulnerabilityReportsApi(apiClientConfiguration)
 
     for (const chunk of chunkedPurls) {
       this.logger.logMessage(`Checking chunk against OSS Index`, LogLevel.INFO);
       try {
-        const response = await apiClient.authorizedComponentReport({
-          body: {
-            "coordinates": chunk.map((purl) => purl.toString())
-          }
-        })
+        let response
+        if (apiClientConfiguration.username == undefined || apiClientConfiguration.password == undefined) {
+          this.logger.logMessage('Calling OSS Index without authentication', LogLevel.INFO)
+          response = await apiClient.componentReport({
+            body: {
+              "coordinates": chunk.map((purl) => purl.toString())
+            }
+          })
+        } else {
+          this.logger.logMessage('Calling OSS Index WITH authentication', LogLevel.INFO)
+          response = await apiClient.authorizedComponentReport({
+            body: {
+              "coordinates": chunk.map((purl) => purl.toString())
+            }
+          })
+        }
 
         for (const componentReport of response) {
           const cd = componentReportToComponentContainer(componentReport)
@@ -80,9 +91,9 @@ export class OSSIndexRequestService implements RequestService {
           }
         }
       } catch (err) {
-        this.logger.logMessage(`Error calling OSS Index: `, LogLevel.ERROR)
+        this.logger.logMessage(`Error calling OSS Index`, LogLevel.ERROR)
         if (err instanceof Error) {
-          throw new Error(err.message);
+          throw err
         }
         throw new Error("Unknown error in getComponentDetails");
       }
