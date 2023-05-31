@@ -9,5 +9,7 @@ module.exports = {
     'ts-jest': {
       tsconfig: 'tsconfig.test.json'
     }  
-  }
+  },
+  automock: false,
+  setupFiles: ["./setupJest.js"]
 };
