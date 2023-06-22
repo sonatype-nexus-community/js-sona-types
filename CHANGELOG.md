@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.2...v1.2.3) (2023-06-22)
+
+
+### Bug Fixes
+
+* CVE-2022-25883 in semver : 5.7.1 ([a52d992](https://github.com/sonatype-nexus-community/js-sona-types/commit/a52d992f64d748ac1624924b453cc312f3fb59ed))
+* CVE-2022-25883 in semver : 5.7.1 in examples ([ca7dd6f](https://github.com/sonatype-nexus-community/js-sona-types/commit/ca7dd6f7c8b013165dc49c2a52ac12d3f6a8a8d5))
+
 ## [1.2.2](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.1...v1.2.2) (2023-05-19)
 
 
