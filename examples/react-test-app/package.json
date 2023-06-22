@@ -76,7 +76,8 @@
     "terser": "^5.16.5",
     "tmpl": "^1.0.5",
     "unset-value": "^2.0.1",
-    "ws": "^7.4.6"
+    "ws": "^7.4.6",
+    "semver": "^7.5.2"
   },
   "devDependencies": {
     "buffer": "^6.0.3",
