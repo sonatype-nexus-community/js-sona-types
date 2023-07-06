@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.3...v1.2.4) (2023-07-06)
+
+
+### Bug Fixes
+
+* CVE-2023-26136 in tough-cookie : 4.1.3 in react example ([3a23b7c](https://github.com/sonatype-nexus-community/js-sona-types/commit/3a23b7c0eed403a9f1785dbee0a0cef788a9506d))
+
 ## [1.2.3](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.2...v1.2.3) (2023-06-22)
 
 
