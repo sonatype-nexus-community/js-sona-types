@@ -1,3 +1,11 @@
+## [1.2.5](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.4...v1.2.5) (2023-09-05)
+
+
+### Bug Fixes
+
+* CVE-2023-26115 in word-wrap : 1.2.3 in react example ([eb3b284](https://github.com/sonatype-nexus-community/js-sona-types/commit/eb3b28431338647bb72e555fe113512cd28b962d))
+* CVE-2023-26364 in css-tools : 4.2.0 in react example ([cc46da7](https://github.com/sonatype-nexus-community/js-sona-types/commit/cc46da7aaeff10839c885b2bec08cfea2b8a7cfb))
+
 ## [1.2.4](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.3...v1.2.4) (2023-07-06)
 
 
