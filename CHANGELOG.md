@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.5...v1.2.6) (2023-09-29)
+
+
+### Bug Fixes
+
+* CVE-2023-44270 in postcss : 8.4.21 in react example ([ccf4a50](https://github.com/sonatype-nexus-community/js-sona-types/commit/ccf4a509d9c70a9d55ee85fc58d5b83216eb9936))
+
 ## [1.2.5](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.4...v1.2.5) (2023-09-05)
 
 
