@@ -2,11 +2,11 @@
 
 [![CircleCI](https://circleci.com/gh/sonatype-nexus-community/js-sona-types.svg?style=svg)](https://circleci.com/gh/sonatype-nexus-community/js-sona-types)
 
-Hi, hello! This library is mostly for consumption by Sonatype projects that need a common way to talk to OSS Index, Nexus IQ, and etc...
+Hi, hello! This library is mostly for consumption by Sonatype projects that need a common way to talk to OSS Index and Sonatype IQ Server.
 
 ## Goals 
 
-`js-sona-types` is just a library, meant to be used by our JavaScript/TypeScript projects so that we can share some common code around communicating with OSS Index, Nexus IQ Server, etc...
+`js-sona-types` is just a library, meant to be used by our JavaScript/TypeScript projects so that we can share some common code around communicating with OSS Index, Sonatype IQ Server, etc...
 
 Since we also include examples, there are a few living breathing sub projects that show how to use it.
 

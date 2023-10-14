@@ -50,7 +50,9 @@ describe('OSS Index Request Service', () => {
       },
     ];
 
-    jest.spyOn(global, 'fetch').mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(expectedOutput))));
+    jest
+      .spyOn(global, 'fetch')
+      .mockReturnValueOnce(Promise.resolve(new Response(JSON.stringify(expectedOutput))));
 
     const coordinates = [];
     coordinates.push(new PackageURL('npm', undefined, 'jquery', '3.1.1', undefined, undefined));
@@ -67,7 +69,8 @@ describe('OSS Index Request Service', () => {
   });
 
   it('can handle an invalid request to the service, and to return an empty array', async () => {
-    expect(await service.getComponentDetails([])).toStrictEqual({ componentDetails: [] });
+    const res = await service.getComponentDetails([])
+    expect(res).toStrictEqual({ componentDetails: [] });
   });
 
   it('can handle a multi-chunk request to the service, and to return a reliably sized array', async () => {
