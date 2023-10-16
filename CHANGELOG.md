@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.6...v1.2.7) (2023-10-16)
+
+
+### Bug Fixes
+
+* CVE-2023-45133 in @babel/traverse : 7.21.2 in react example ([38f783a](https://github.com/sonatype-nexus-community/js-sona-types/commit/38f783a272e0381d63c878dc72511593fbfd789a))
+
 ## [1.2.6](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.5...v1.2.6) (2023-09-29)
 
 
