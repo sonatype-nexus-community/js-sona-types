@@ -5,6 +5,9 @@
     "esModuleInterop": true,
     "rootDir": "./src",
     "outDir": "dist/types",
+    "target": "es2022",
+    "module": "ESNext",
+    "moduleResolution":"node"
   },
   "exclude": [
     "examples/**/*"
