@@ -1,3 +1,11 @@
+## [1.2.12](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.11...v1.2.12) (2023-12-06)
+
+
+### Bug Fixes
+
+* sonatype-2023-4801 in inflight : 1.0.6 (change to make yarn build happy) ([bcd02ef](https://github.com/sonatype-nexus-community/js-sona-types/commit/bcd02ef9da3f56dfd49c19089e52c527bd6bc281))
+* sonatype-2023-4801 in inflight : 1.0.6 (force newer glob to remove dependency on inflight) ([72ea6fa](https://github.com/sonatype-nexus-community/js-sona-types/commit/72ea6faa98f7e4b34649096885c33952d5420392))
+
 ## [1.2.11](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.10...v1.2.11) (2023-12-06)
 
 
