@@ -1,6 +1,6 @@
 {
   "name": "@sonatype/js-sona-types",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "Useful libraries for talking to Sonatype services, using javascript",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
