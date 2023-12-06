@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.9...v1.2.10) (2023-12-06)
+
+
+### Bug Fixes
+
+* sonatype-2023-4801 in inflight : 1.0.6 in node example (force newer read-package-json to remove dependency on inflight) ([43bdc7b](https://github.com/sonatype-nexus-community/js-sona-types/commit/43bdc7b0c1fe4018517c367dc0e290eca6d15adb))
+
 ## [1.2.9](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.8...v1.2.9) (2023-12-05)
 
 
