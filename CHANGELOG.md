@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.8...v1.2.9) (2023-12-05)
+
+
+### Bug Fixes
+
+* CVE-2023-48631 in @adobe/css-tools : 4.3.1 in react example (missed lock file) ([983a96c](https://github.com/sonatype-nexus-community/js-sona-types/commit/983a96c3fabcfb6da34c506edb26b2f2a88f6874))
+
 ## [1.2.8](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.7...v1.2.8) (2023-12-05)
 
 
