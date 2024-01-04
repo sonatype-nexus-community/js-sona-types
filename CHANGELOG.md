@@ -1,3 +1,10 @@
+## [1.2.15](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.14...v1.2.15) (2024-01-04)
+
+
+### Bug Fixes
+
+* CVE-2023-26159 in follow-redirects : 1.15.2 in react-test-app example (updated lock file) [skip ci] ([91542d9](https://github.com/sonatype-nexus-community/js-sona-types/commit/91542d942c62fe91cfb4c6225d307558da1cdcfa))
+
 ## [1.2.14](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.13...v1.2.14) (2024-01-04)
 
 
