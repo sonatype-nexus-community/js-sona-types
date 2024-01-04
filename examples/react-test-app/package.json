@@ -60,7 +60,7 @@
     "eventsource": "^1.1.1",
     "execa": "^2.0.0",
     "express": "^4.17.3",
-    "follow-redirects": "^1.14.8",
+    "follow-redirects": "^1.15.4",
     "hosted-git-info": "^3.0.8",
     "immer": "^9.0.6",
     "istanbul-reports": "^3.1.3",
