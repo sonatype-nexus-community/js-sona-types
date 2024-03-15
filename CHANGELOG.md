@@ -1,3 +1,11 @@
+## [1.2.16](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.15...v1.2.16) (2024-03-15)
+
+
+### Bug Fixes
+
+* doco: update local build commands to latest circleci args ([6e0ae35](https://github.com/sonatype-nexus-community/js-sona-types/commit/6e0ae354cb5ce7706aae174dd8a7549aa49bf397))
+* resolve CVE-2024-28849 in react-test-app in follow-redirects@1.15.4 ([576f026](https://github.com/sonatype-nexus-community/js-sona-types/commit/576f026f13193bb847baddb5b93128d8903b4fb6))
+
 ## [1.2.15](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.14...v1.2.15) (2024-01-04)
 
 
