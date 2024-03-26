@@ -1,3 +1,10 @@
+## [1.2.17](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.16...v1.2.17) (2024-03-26)
+
+
+### Bug Fixes
+
+* ignore CVE-2024-29180 in webpack-dev-middleware : 5.3.3 in react-test-app. ([eed258a](https://github.com/sonatype-nexus-community/js-sona-types/commit/eed258a9fc5b436a9fea24673203081d7ad11da2))
+
 ## [1.2.16](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.15...v1.2.16) (2024-03-15)
 
 
