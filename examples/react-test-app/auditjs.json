@@ -63,6 +63,10 @@
     {
       "id": "CVE-2023-29827",
       "reason": "ignore sonatype-2021-0078 because from referenced links, this appears to be a false alarm."
+    },
+    {
+      "id": "CVE-2024-29180",
+      "reason": "ignore CVE-2024-29180 in webpack-dev-middleware : 5.3.3 in react-test-app."
     }
   ]
 }
