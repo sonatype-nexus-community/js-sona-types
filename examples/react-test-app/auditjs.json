@@ -67,6 +67,10 @@
     {
       "id": "CVE-2024-29180",
       "reason": "ignore CVE-2024-29180 in webpack-dev-middleware : 5.3.3 in react-test-app."
+    },
+    {
+      "id": "CVE-2024-29041",
+      "reason": "ignore CVE-2024-29041 in express : 4.18.2 in react-test-app."
     }
   ]
 }
