@@ -1,3 +1,10 @@
+## [1.2.18](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.17...v1.2.18) (2024-03-27)
+
+
+### Bug Fixes
+
+* ignore CVE-2024-29041 in express : 4.18.2 in react-test-app ([609f2e2](https://github.com/sonatype-nexus-community/js-sona-types/commit/609f2e2e72090193502b314a39d9367c84ca434f))
+
 ## [1.2.17](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.16...v1.2.17) (2024-03-26)
 
 
