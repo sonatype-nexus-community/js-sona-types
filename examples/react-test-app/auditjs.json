@@ -71,6 +71,10 @@
     {
       "id": "CVE-2024-29041",
       "reason": "ignore CVE-2024-29041 in express : 4.18.2 in react-test-app."
+    },
+    {
+      "id": "CVE-2024-33883",
+      "reason": "ignore CVE-2024-33883 in ejs : 3.1.9 in react-test-app."
     }
   ]
 }
