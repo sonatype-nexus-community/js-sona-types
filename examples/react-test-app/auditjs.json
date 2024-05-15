@@ -75,6 +75,14 @@
     {
       "id": "CVE-2024-33883",
       "reason": "ignore CVE-2024-33883 in ejs : 3.1.9 in react-test-app."
+    },
+    {
+      "id": "CVE-2024-4068",
+      "reason": "ignore CVE-2024-4068 in braces : 3.0.2 in react-test-app."
+    },
+    {
+      "id": "CVE-2024-4067",
+      "reason": "ignore CVE-2024-4067 in micromatch : 4.0.5 in react-test-app."
     }
   ]
 }
