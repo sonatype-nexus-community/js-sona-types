@@ -1,3 +1,10 @@
+## [1.2.20](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.19...v1.2.20) (2024-05-15)
+
+
+### Bug Fixes
+
+* ignore vulns in react-test-app ([c5bafac](https://github.com/sonatype-nexus-community/js-sona-types/commit/c5bafaca405ae9fe4329273a387dafd1e146c30d))
+
 ## [1.2.19](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.18...v1.2.19) (2024-04-29)
 
 
