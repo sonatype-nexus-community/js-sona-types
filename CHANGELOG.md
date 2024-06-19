@@ -1,3 +1,11 @@
+## [1.2.21](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.20...v1.2.21) (2024-06-19)
+
+
+### Bug Fixes
+
+* resolve CVE-2024-37890 in ws@7.5.9 ([b008ce9](https://github.com/sonatype-nexus-community/js-sona-types/commit/b008ce9d63054e61ea5ac977543ec3a9678fb0f7))
+* resolve CVE-2024-37890 in ws@7.5.9 (react-test-app) ([2d4942b](https://github.com/sonatype-nexus-community/js-sona-types/commit/2d4942be795bf243df3434b43f74b11836b8a04f))
+
 ## [1.2.20](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.19...v1.2.20) (2024-05-15)
 
 
