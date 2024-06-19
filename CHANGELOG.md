@@ -1,3 +1,10 @@
+## [1.2.22](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.21...v1.2.22) (2024-06-19)
+
+
+### Bug Fixes
+
+* resolve CVE-2024-4068 in braces : 3.0.2 ([dd3506a](https://github.com/sonatype-nexus-community/js-sona-types/commit/dd3506aaa858091d263ca3b52c5044c88243d936))
+
 ## [1.2.21](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.20...v1.2.21) (2024-06-19)
 
 
