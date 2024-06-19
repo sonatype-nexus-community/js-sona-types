@@ -1,3 +1,10 @@
+## [1.2.23](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.22...v1.2.23) (2024-06-19)
+
+
+### Bug Fixes
+
+* resolve CVE-2024-4068 in braces : 3.0.2 (react-test-app) ([c6b7757](https://github.com/sonatype-nexus-community/js-sona-types/commit/c6b775782b45f2db7c4ce4b9ce241a081cb8878e))
+
 ## [1.2.22](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.21...v1.2.22) (2024-06-19)
 
 
