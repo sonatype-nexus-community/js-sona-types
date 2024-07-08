@@ -83,6 +83,10 @@
     {
       "id": "CVE-2024-4067",
       "reason": "ignore CVE-2024-4067 in micromatch : 4.0.5 in react-test-app."
+    },
+    {
+      "id": "CVE-2024-39249",
+      "reason": "ignore CVE-2024-39249 in npm/async@2.6.4 in react-test-app."
     }
   ]
 }
