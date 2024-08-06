@@ -1,3 +1,10 @@
+## [1.2.25](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.24...v1.2.25) (2024-08-06)
+
+
+### Bug Fixes
+
+* CVE-2024-33883 in ejs@3.1.9 in react-test-app. ([64ab8d8](https://github.com/sonatype-nexus-community/js-sona-types/commit/64ab8d800fb45cd7d37c65854e899ed85aa0b310))
+
 ## [1.2.24](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.23...v1.2.24) (2024-07-08)
 
 
