@@ -1,3 +1,10 @@
+## [1.2.26](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.25...v1.2.26) (2024-08-28)
+
+
+### Bug Fixes
+
+* CVE-2024-39249 in async@2.6.4 in react-test-app. ([8ae7f34](https://github.com/sonatype-nexus-community/js-sona-types/commit/8ae7f34d900a7de98934481b22c4e66480fd53dc))
+
 ## [1.2.25](https://github.com/sonatype-nexus-community/js-sona-types/compare/v1.2.24...v1.2.25) (2024-08-06)
 
 
